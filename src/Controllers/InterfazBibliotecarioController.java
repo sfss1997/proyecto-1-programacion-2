@@ -45,37 +45,52 @@ public class InterfazBibliotecarioController implements Initializable {
     
     //Cambiar a la ventada de libros
     public void libroButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/Bibliotecario/IBLibro.fxml");
+        cambioScene(event, "/GUI/BibliotecarioObras/IBLibro.fxml");
     }
     
     //Cambiar a la ventada de revistas
     public void revistaButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/Bibliotecario/IBRevista.fxml");
+        cambioScene(event, "/GUI/BibliotecarioObras/IBRevista.fxml");
     }
     
     //Cambiar a la ventada de tesis
     public void tesisButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/Bibliotecario/IBTesis.fxml");
+        cambioScene(event, "/GUI/BibliotecarioObras/IBTesis.fxml");
     }
     
     //Cambiar a la ventada de periodicos
     public void periodicoButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/Bibliotecario/IBPeriodico.fxml");
+        cambioScene(event, "/GUI/BibliotecarioObras/IBPeriodico.fxml");
     }
     
     //Cambiar a la ventada de memorias
     public void memoriaButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/Bibliotecario/IBMemoria.fxml");
+        cambioScene(event, "/GUI/BibliotecarioObras/IBMemoria.fxml");
     }
     
     //Cambiar a la ventada de memorias
     public void otroButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/Bibliotecario/IBOtro.fxml");
+        cambioScene(event, "/GUI/BibliotecarioObras/IBOtro.fxml");
     }
     
     /**
      * Usuarios
      */
+    
+    //Cambiar a la ventada de memorias
+    public void bibliotecarioButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBBibliotecario.fxml");
+    }
+    
+    //Cambiar a la ventada de memorias
+    public void autorButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
+    }
+    
+    //Cambiar a la ventada de memorias
+    public void clienteButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBCliente.fxml");
+    }
     
     //Codigo para cambiar de ventana
     private void cambioScene(ActionEvent event, String destino) throws IOException{

@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBBibliotecarioController implements Initializable {
+public class IBClienteController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -29,7 +29,7 @@ public class IBBibliotecarioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }   
+    }    
     
     //Cambiar a la ventada de bibliotecario
     public void volverButton(ActionEvent event) throws IOException{

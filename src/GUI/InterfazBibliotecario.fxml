@@ -72,17 +72,17 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Bibliotecarios" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#bibliotecarioButton" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Bibliotecarios" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Autores" textFill="#eeeeee">
+            <Button mnemonicParsing="false" onAction="#autorButton" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Autores" textFill="#eeeeee">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Usuarios" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#clienteButton" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Clientes" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

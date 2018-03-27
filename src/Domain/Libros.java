@@ -16,16 +16,14 @@ import javafx.beans.property.SimpleStringProperty;
 public class Libros extends Catalogo {
 //    libro1
     private SimpleStringProperty isbn;
-    private SimpleStringProperty codigo;
     private SimpleStringProperty tema;
     private SimpleStringProperty subtema;
 
     public Libros() {
     }
 
-    public Libros(SimpleStringProperty isbn, SimpleStringProperty codigo, SimpleStringProperty tema, SimpleStringProperty subtema) {
+    public Libros(SimpleStringProperty isbn, SimpleStringProperty tema, SimpleStringProperty subtema) {
         this.isbn = isbn;
-        this.codigo = codigo;
         this.tema = tema;
         this.subtema = subtema;
     }
@@ -33,7 +31,6 @@ public class Libros extends Catalogo {
     public Libros(SimpleStringProperty isbn, SimpleStringProperty codigo, SimpleStringProperty tema, SimpleStringProperty subtema, SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
         super(titulo, fecha, ListaAutores);
         this.isbn = isbn;
-        this.codigo = codigo;
         this.tema = tema;
         this.subtema = subtema;
     }
@@ -46,13 +43,6 @@ public class Libros extends Catalogo {
         this.isbn = isbn;
     }
 
-    public SimpleStringProperty getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(SimpleStringProperty codigo) {
-        this.codigo = codigo;
-    }
 
     public SimpleStringProperty getTema() {
         return tema;

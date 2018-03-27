@@ -66,7 +66,31 @@ public class IBLibroController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inicializarTablaLibro();
+        llenarChoiceBox();
     }
+    
+    /**
+     * On Antion
+     */
+    
+    //Cambiar a la ventada de bibliotecario
+    public void volverButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
+    }
+    
+    public void agregarButton(){
+        Libros libro = new Libros(codigoTextField.getText(), 
+                                  temaTextField.getText(), 
+                                  subTemaTextField.getText(), 
+                                  tituloTextField.getText(), 
+                                  fechaDatePicker.getValue(), 
+                                  autorChoiceBox.getValue().toString());
+        listaLibros.add(libro);
+    }
+    
+    /**
+     * Metodos
+     */
     
     //Inicializa la tabla
     private void inicializarTablaLibro(){
@@ -85,11 +109,6 @@ public class IBLibroController implements Initializable {
         return listaLibros;
     }
     
-    //Cambiar a la ventada de bibliotecario
-    public void volverButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
-    }
-    
     //Codigo para cambiar de ventana
     private void cambioScene(ActionEvent event, String destino) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
@@ -100,6 +119,10 @@ public class IBLibroController implements Initializable {
         
         window.setScene(tableViewScene);
         window.show();
+    }
+    
+    private void llenarChoiceBox(){
+        autorChoiceBox.getItems().add("aaaa");
     }
     
 }

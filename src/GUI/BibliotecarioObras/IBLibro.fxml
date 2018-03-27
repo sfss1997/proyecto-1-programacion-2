@@ -75,7 +75,7 @@
       </VBox>
       <HBox alignment="CENTER_LEFT" layoutY="372.0" prefHeight="51.0" prefWidth="363.0" spacing="10.0">
          <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Agregar" textFill="#fcfcfc" />
+            <Button mnemonicParsing="false" onAction="#agregarButton" style="-fx-background-color: #ff0808;" text="Agregar" textFill="#fcfcfc" />
             <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Modificar" textFill="WHITE" />
             <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Eliminar" textFill="#fcfcfc" />
             <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Limpiar" textFill="WHITE" />

@@ -5,54 +5,71 @@
  */
 package Domain;
 
+import java.time.LocalDate;
+import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author fabian
  */
-public class Libros {
+public class Libros extends Catalogo {
 //    libro1
-    private String codigo;
-    private String tema;
-    private String edicion;
+    private SimpleStringProperty isbn;
+    private SimpleStringProperty codigo;
+    private SimpleStringProperty tema;
+    private SimpleStringProperty subtema;
 
     public Libros() {
     }
 
-    public Libros(String codigo, String tema, String edicion) {
+    public Libros(SimpleStringProperty isbn, SimpleStringProperty codigo, SimpleStringProperty tema, SimpleStringProperty subtema) {
+        this.isbn = isbn;
         this.codigo = codigo;
         this.tema = tema;
-        this.edicion = edicion;
+        this.subtema = subtema;
     }
 
-    public String getCodigo() {
+    public Libros(SimpleStringProperty isbn, SimpleStringProperty codigo, SimpleStringProperty tema, SimpleStringProperty subtema, SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
+        super(titulo, fecha, ListaAutores);
+        this.isbn = isbn;
+        this.codigo = codigo;
+        this.tema = tema;
+        this.subtema = subtema;
+    }
+
+    public SimpleStringProperty getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(SimpleStringProperty isbn) {
+        this.isbn = isbn;
+    }
+
+    public SimpleStringProperty getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(SimpleStringProperty codigo) {
         this.codigo = codigo;
     }
 
-    public String getTema() {
+    public SimpleStringProperty getTema() {
         return tema;
     }
 
-    public void setTema(String tema) {
+    public void setTema(SimpleStringProperty tema) {
         this.tema = tema;
     }
 
-    public String getEdicion() {
-        return edicion;
+    public SimpleStringProperty getSubtema() {
+        return subtema;
     }
 
-    public void setEdicion(String edicion) {
-        this.edicion = edicion;
+    public void setSubtema(SimpleStringProperty subtema) {
+        this.subtema = subtema;
     }
 
-    @Override
-    public String toString() {
-        return "Libros{" + "codigo=" + codigo + ", tema=" + tema + ", edicion=" + edicion + '}';
-    }
-    
     
     
 }

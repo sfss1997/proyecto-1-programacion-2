@@ -6,6 +6,7 @@
 package Domain;
 
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -22,15 +23,11 @@ public class Autor extends Usuarios{
         this.listaObrasEscritas = listaObrasEscritas;
     }
 
-    public Autor(String nombreUnico, String contraseña, String nombreCompleto, String tipoDeIdentificacion, String identificacion) {
-        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion);
-    }
-    
-    public Autor(List<Object> listaObrasEscritas, String nombreUnico, String contraseña, String nombreCompleto, String tipoDeIdentificacion, String identificacion) {
-        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion);
+    public Autor(List<Object> listaObrasEscritas, SimpleStringProperty nombreUnico, SimpleStringProperty contraseña, SimpleStringProperty nombreCompleto, SimpleStringProperty tipoDeIdentificacion, SimpleStringProperty identificacion, SimpleStringProperty tipoDeUsuario) {
+        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
         this.listaObrasEscritas = listaObrasEscritas;
     }
-    
+
     public List<Object> getListaObrasEscritas() {
         return listaObrasEscritas;
     }
@@ -38,18 +35,11 @@ public class Autor extends Usuarios{
     public void setListaObrasEscritas(List<Object> listaObrasEscritas) {
         this.listaObrasEscritas = listaObrasEscritas;
     }
-
-    @Override
-    public String toString() {
-        return "Autor{" + "listaObrasEscritas=" + listaObrasEscritas + '}';
-    }
-    
-    
     
     
 
-    
-    
+
+  
     
     
 }

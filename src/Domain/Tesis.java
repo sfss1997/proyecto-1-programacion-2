@@ -5,42 +5,50 @@
  */
 package Domain;
 
+import java.time.LocalDate;
+import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author fabian
  */
-public class Tesis {
-    private String resumen;
-    private String abstracto;
+public class Tesis extends Catalogo {
+    
+    private SimpleStringProperty resumen;
+    private SimpleStringProperty abstracto;
 
     public Tesis() {
     }
 
-    public Tesis(String resumen, String abstracto) {
+    public Tesis(SimpleStringProperty resumen, SimpleStringProperty abstracto) {
         this.resumen = resumen;
         this.abstracto = abstracto;
     }
 
-    public String getResumen() {
+    public Tesis(SimpleStringProperty resumen, SimpleStringProperty abstracto, SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
+        super(titulo, fecha, ListaAutores);
+        this.resumen = resumen;
+        this.abstracto = abstracto;
+    }
+
+    public SimpleStringProperty getResumen() {
         return resumen;
     }
 
-    public void setResumen(String resumen) {
+    public void setResumen(SimpleStringProperty resumen) {
         this.resumen = resumen;
     }
 
-    public String getAbstracto() {
+    public SimpleStringProperty getAbstracto() {
         return abstracto;
     }
 
-    public void setAbstracto(String abstracto) {
+    public void setAbstracto(SimpleStringProperty abstracto) {
         this.abstracto = abstracto;
     }
 
-    @Override
-    public String toString() {
-        return "Tesis{" + "resumen=" + resumen + ", abstracto=" + abstracto + '}';
-    }
     
+
     
 }

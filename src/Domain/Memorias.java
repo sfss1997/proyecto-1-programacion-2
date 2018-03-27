@@ -5,53 +5,60 @@
  */
 package Domain;
 
+import java.time.LocalDate;
+import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author fabian
  */
-public class Memorias {
+public class Memorias extends Catalogo{
     
-    private String resumen;
-    private String abstracto;
-    private String conferencia;
+    private SimpleStringProperty resumen;
+    private SimpleStringProperty abstracto;
+    private SimpleStringProperty conferencia;
 
     public Memorias() {
     }
 
-    public Memorias(String resumen, String abstracto, String conferencia) {
+    public Memorias(SimpleStringProperty resumen, SimpleStringProperty abstracto, SimpleStringProperty conferencia) {
         this.resumen = resumen;
         this.abstracto = abstracto;
         this.conferencia = conferencia;
     }
 
-    public String getResumen() {
+    public Memorias(SimpleStringProperty resumen, SimpleStringProperty abstracto, SimpleStringProperty conferencia, SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
+        super(titulo, fecha, ListaAutores);
+        this.resumen = resumen;
+        this.abstracto = abstracto;
+        this.conferencia = conferencia;
+    }
+
+    public SimpleStringProperty getResumen() {
         return resumen;
     }
 
-    public void setResumen(String resumen) {
+    public void setResumen(SimpleStringProperty resumen) {
         this.resumen = resumen;
     }
 
-    public String getAbstracto() {
+    public SimpleStringProperty getAbstracto() {
         return abstracto;
     }
 
-    public void setAbstracto(String abstracto) {
+    public void setAbstracto(SimpleStringProperty abstracto) {
         this.abstracto = abstracto;
     }
 
-    public String getConferencia() {
+    public SimpleStringProperty getConferencia() {
         return conferencia;
     }
 
-    public void setConferencia(String conferencia) {
+    public void setConferencia(SimpleStringProperty conferencia) {
         this.conferencia = conferencia;
     }
 
-    @Override
-    public String toString() {
-        return "Memorias{" + "resumen=" + resumen + ", abstracto=" + abstracto + ", conferencia=" + conferencia + '}';
-    }
     
     
 }

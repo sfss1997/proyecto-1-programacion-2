@@ -6,6 +6,7 @@
 package Domain;
 
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -17,33 +18,18 @@ public class Usuario extends Usuarios {
 
     public Usuario() {
     }
-    
+
     public Usuario(List<Object> listaLibrosPrestados) {
         this.listaLibrosPrestados = listaLibrosPrestados;
     }
 
-    public Usuario(String nombreUnico, String contraseña, String nombreCompleto, String tipoDeIdentificacion, String identificacion) {
-        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion);
-    }
-
-    public Usuario(List<Object> listaLibrosPrestados, String nombreUnico, String contraseña, String nombreCompleto, String tipoDeIdentificacion, String identificacion) {
-        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion);
+    public Usuario(List<Object> listaLibrosPrestados, SimpleStringProperty nombreUnico, SimpleStringProperty contraseña, SimpleStringProperty nombreCompleto, SimpleStringProperty tipoDeIdentificacion, SimpleStringProperty identificacion, SimpleStringProperty tipoDeUsuario) {
+        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
         this.listaLibrosPrestados = listaLibrosPrestados;
-    }
-
-    public List<Object> getListaLibrosPrestados() {
-        return listaLibrosPrestados;
-    }
-
-    public void setListaLibrosPrestados(List<Object> listaLibrosPrestados) {
-        this.listaLibrosPrestados = listaLibrosPrestados;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" + "listaLibrosPrestados=" + listaLibrosPrestados + '}';
     }
     
+    
+
     
     
     

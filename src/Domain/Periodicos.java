@@ -5,53 +5,51 @@
  */
 package Domain;
 
+import java.time.LocalDate;
+import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author fabian
  */
-public class Periodicos {
+public class Periodicos extends Catalogo {
     
-    private String issn;
-    private String edicion;
-    private String fecha;
+    private SimpleStringProperty issn;
+    private SimpleStringProperty edicion;
+    
 
     public Periodicos() {
     }
 
-    public Periodicos(String issn, String edicion, String fecha) {
+    public Periodicos(SimpleStringProperty issn, SimpleStringProperty edicion) {
         this.issn = issn;
         this.edicion = edicion;
-        this.fecha = fecha;
     }
 
-    public String getIssn() {
+    public Periodicos(SimpleStringProperty issn, SimpleStringProperty edicion, SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
+        super(titulo, fecha, ListaAutores);
+        this.issn = issn;
+        this.edicion = edicion;
+    }
+
+    public SimpleStringProperty getIssn() {
         return issn;
     }
 
-    public void setIssn(String issn) {
+    public void setIssn(SimpleStringProperty issn) {
         this.issn = issn;
     }
 
-    public String getEdicion() {
+    public SimpleStringProperty getEdicion() {
         return edicion;
     }
 
-    public void setEdicion(String edicion) {
+    public void setEdicion(SimpleStringProperty edicion) {
         this.edicion = edicion;
     }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    @Override
-    public String toString() {
-        return "Periodicos{" + "issn=" + issn + ", edicion=" + edicion + ", fecha=" + fecha + '}';
-    }
     
     
+    
+
 }

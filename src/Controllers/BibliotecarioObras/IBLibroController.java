@@ -5,8 +5,10 @@
  */
 package Controllers.BibliotecarioObras;
 
+import Archivos.MantenimientoLibroArchivo;
 import Domain.Libros;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,7 +35,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBLibroController implements Initializable {
+public class IBLibroController implements Initializable, Serializable {
 
     //Tabla
     @FXML TableView libroTableView;
@@ -57,6 +59,7 @@ public class IBLibroController implements Initializable {
     @FXML ChoiceBox autorChoiceBox;
     
     //Lista para la tabla
+    MantenimientoLibroArchivo archivoLibro = new MantenimientoLibroArchivo();
     private ObservableList<Libros> listaLibros = FXCollections.observableArrayList();
     
     
@@ -67,6 +70,8 @@ public class IBLibroController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         inicializarTablaLibro();
         llenarChoiceBox();
+        
+        listaLibros = archivoLibro.getListaLibro();
     }
     
     /**
@@ -86,6 +91,7 @@ public class IBLibroController implements Initializable {
                                   fechaDatePicker.getValue(), 
                                   autorChoiceBox.getValue().toString());
         listaLibros.add(libro);
+        archivoLibro.insertarLibro(listaLibros);
     }
     
     /**
@@ -106,6 +112,7 @@ public class IBLibroController implements Initializable {
     
     private ObservableList llenarTablaLibros(){
         listaLibros.add(new Libros("a", "a", "a", "a", LocalDate.MIN, "a"));
+        archivoLibro.insertarLibro(listaLibros);
         return listaLibros;
     }
     

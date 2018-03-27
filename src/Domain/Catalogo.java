@@ -5,6 +5,7 @@
  */
 package Domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author fabian
  */
-public class Catalogo {
+public class Catalogo implements Serializable{
     
     private SimpleStringProperty titulo;
     private LocalDate fecha;

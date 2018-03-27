@@ -22,17 +22,21 @@ public class Libros extends Catalogo {
     public Libros() {
     }
 
+
     public Libros(String isbn, String tema, String subtema) {
         this.isbn = new SimpleStringProperty(isbn);
         this.tema = new SimpleStringProperty(tema);
         this.subtema = new SimpleStringProperty(subtema);
+
     }
 
     public Libros(String isbn, String tema, String subtema, String titulo, LocalDate fecha, String ListaAutores) {
         super(titulo, fecha, ListaAutores);
+
         this.isbn = new SimpleStringProperty(isbn);
         this.tema = new SimpleStringProperty(tema);
         this.subtema = new SimpleStringProperty(subtema);
+
     }
 
     public String getIsbn() {
@@ -42,6 +46,7 @@ public class Libros extends Catalogo {
     public void setIsbn(String isbn) {
         this.isbn = new SimpleStringProperty(isbn);
     }
+
 
     public String getTema() {
         return tema.get();

@@ -28,7 +28,7 @@ public class Memorias extends Catalogo{
         this.conferencia = conferencia;
     }
 
-    public Memorias(SimpleStringProperty resumen, SimpleStringProperty abstracto, SimpleStringProperty conferencia, SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
+    public Memorias(SimpleStringProperty resumen, SimpleStringProperty abstracto, SimpleStringProperty conferencia, String titulo, LocalDate fecha, String ListaAutores) {
         super(titulo, fecha, ListaAutores);
         this.resumen = resumen;
         this.abstracto = abstracto;

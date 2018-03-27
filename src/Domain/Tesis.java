@@ -26,7 +26,7 @@ public class Tesis extends Catalogo {
         this.abstracto = abstracto;
     }
 
-    public Tesis(SimpleStringProperty resumen, SimpleStringProperty abstracto, SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
+    public Tesis(SimpleStringProperty resumen, SimpleStringProperty abstracto, String titulo, LocalDate fecha, String ListaAutores) {
         super(titulo, fecha, ListaAutores);
         this.resumen = resumen;
         this.abstracto = abstracto;

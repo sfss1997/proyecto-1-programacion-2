@@ -17,23 +17,24 @@ public class Catalogo {
     
     private SimpleStringProperty titulo;
     private LocalDate fecha;
-    private List<Object> ListaAutores;
+//    private List<Object> ListaAutores;
+    private SimpleStringProperty listaAutores;
 
     public Catalogo() {
     }
 
-    public Catalogo(SimpleStringProperty titulo, LocalDate fecha, List<Object> ListaAutores) {
-        this.titulo = titulo;
+    public Catalogo(String titulo, LocalDate fecha, String ListaAutores) {
+        this.titulo = new SimpleStringProperty(titulo);
         this.fecha = fecha;
-        this.ListaAutores = ListaAutores;
+        this.listaAutores = new SimpleStringProperty(ListaAutores);
     }
 
-    public SimpleStringProperty getTitulo() {
-        return titulo;
+    public String getTitulo() {
+        return titulo.get();
     }
 
-    public void setTitulo(SimpleStringProperty titulo) {
-        this.titulo = titulo;
+    public void setTitulo(String titulo) {
+        this.titulo = new SimpleStringProperty(titulo);
     }
 
     public LocalDate getFecha() {
@@ -44,17 +45,17 @@ public class Catalogo {
         this.fecha = fecha;
     }
 
-    public List<Object> getListaAutores() {
-        return ListaAutores;
+    public String getListaAutores() {
+        return listaAutores.get();
     }
 
-    public void setListaAutores(List<Object> ListaAutores) {
-        this.ListaAutores = ListaAutores;
+    public void setListaAutores(String ListaAutores) {
+        this.listaAutores = new SimpleStringProperty(ListaAutores);
     }
 
     @Override
     public String toString() {
-        return "Catalogo{" + "titulo=" + titulo + ", fecha=" + fecha + ", ListaAutores=" + ListaAutores + '}';
+        return "Catalogo{" + "titulo=" + titulo + ", fecha=" + fecha + ", ListaAutores=" + listaAutores + '}';
     }
     
     

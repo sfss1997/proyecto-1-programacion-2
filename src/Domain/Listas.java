@@ -16,18 +16,18 @@ import javafx.collections.ObservableList;
  */
 public class Listas {
     
-    public static List<Object> usuariosList = new LinkedList<Object>();
+    public static List<Object> listaUsuarios = new LinkedList<Object>();
     public static ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
 
     public Listas() {
     }
 
     public static List<Object> getUsuariosList() {
-        return usuariosList;
+        return listaUsuarios;
     }
 
     public static void setUsuariosList(List<Object> usuariosList) {
-        Listas.usuariosList = usuariosList;
+        Listas.listaUsuarios = usuariosList;
     }
 
     public static ObservableList<Libro> getListaLibros() {

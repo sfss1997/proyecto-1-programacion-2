@@ -5,7 +5,6 @@
  */
 package Controllers.BibliotecarioObras;
 
-import Archivos.MantenimientoLibroArchivo;
 import Domain.Libros;
 import Domain.Listas;
 import java.io.IOException;
@@ -36,7 +35,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBLibroController extends Listas implements Initializable, Serializable  {
+public class IBLibroController extends Listas implements Initializable{
 
     //Tabla
     @FXML TableView libroTableView;
@@ -60,7 +59,6 @@ public class IBLibroController extends Listas implements Initializable, Serializ
     @FXML ChoiceBox autorChoiceBox;
     
     //Lista para la tabla
-    MantenimientoLibroArchivo archivoLibro = new MantenimientoLibroArchivo();
     private ObservableList<Libros> listaLibros = FXCollections.observableArrayList();
     
     
@@ -72,7 +70,6 @@ public class IBLibroController extends Listas implements Initializable, Serializ
         inicializarTablaLibro();
         llenarChoiceBox();
         
-        listaLibros = archivoLibro.getListaLibro();
     }
     
     /**
@@ -91,9 +88,8 @@ public class IBLibroController extends Listas implements Initializable, Serializ
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorChoiceBox.getValue().toString());
-        listaLibros.add(libro);
+//        listaLibros.add(libro);
         ObrasList.add(libro);
-        archivoLibro.insertarLibro(listaLibros);
     }
     
     /**
@@ -109,13 +105,13 @@ public class IBLibroController extends Listas implements Initializable, Serializ
         fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, LocalDate>("fecha"));
         codigoTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, String>("isbn"));
         
-        libroTableView.setItems(llenarTablaLibros());
+        libroTableView.setItems(ObrasList);
     }
     
     private ObservableList llenarTablaLibros(){
-        listaLibros.add(new Libros("a", "a", "a", "a", LocalDate.MIN, "a"));
-        archivoLibro.insertarLibro(listaLibros);
-        return listaLibros;
+//        listaLibros.add(new Libros("a", "a", "a", "a", LocalDate.MIN, "a"));
+        ObrasList.add(new Libros("a", "a", "a", "a", LocalDate.MIN, "a"));
+        return ObrasList;
     }
     
     //Codigo para cambiar de ventana

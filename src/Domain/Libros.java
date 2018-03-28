@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author fabian
  */
-public class Libros extends Catalogo implements Serializable{
+public class Libros extends Catalogo {
 //    libro1
     private SimpleStringProperty isbn;
     private SimpleStringProperty tema;

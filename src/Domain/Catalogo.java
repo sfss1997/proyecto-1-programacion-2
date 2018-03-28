@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author fabian
  */
-public class Catalogo implements Serializable{
+public class Catalogo {
     
     private SimpleStringProperty titulo;
     private LocalDate fecha;

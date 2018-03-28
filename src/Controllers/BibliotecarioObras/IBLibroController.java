@@ -7,6 +7,7 @@ package Controllers.BibliotecarioObras;
 
 import Archivos.MantenimientoLibroArchivo;
 import Domain.Libros;
+import Domain.Listas;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
@@ -35,7 +36,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBLibroController implements Initializable, Serializable {
+public class IBLibroController extends Listas implements Initializable, Serializable  {
 
     //Tabla
     @FXML TableView libroTableView;
@@ -91,6 +92,7 @@ public class IBLibroController implements Initializable, Serializable {
                                   fechaDatePicker.getValue(), 
                                   autorChoiceBox.getValue().toString());
         listaLibros.add(libro);
+        ObrasList.add(libro);
         archivoLibro.insertarLibro(listaLibros);
     }
     

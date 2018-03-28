@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Domain.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class PrincipalController implements Initializable {
+public class PrincipalController extends Listas implements Initializable {
     
     
     @Override

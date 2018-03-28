@@ -12,18 +12,19 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author fabian
  */
-public class Usuario extends Usuarios {
+public class Cliente extends Usuarios {
     
     private List<Object> listaLibrosPrestados;
 
-    public Usuario() {
+    public Cliente() {
     }
 
-    public Usuario(List<Object> listaLibrosPrestados) {
+    public Cliente(List<Object> listaLibrosPrestados) {
         this.listaLibrosPrestados = listaLibrosPrestados;
     }
 
-    public Usuario(List<Object> listaLibrosPrestados, SimpleStringProperty nombreUnico, SimpleStringProperty contraseña, SimpleStringProperty nombreCompleto, SimpleStringProperty tipoDeIdentificacion, SimpleStringProperty identificacion, SimpleStringProperty tipoDeUsuario) {
+    public Cliente(List<Object> listaLibrosPrestados, String nombreUnico, String contraseña, String nombreCompleto, 
+            String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
         super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
         this.listaLibrosPrestados = listaLibrosPrestados;
     }

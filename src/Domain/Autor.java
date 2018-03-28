@@ -23,7 +23,8 @@ public class Autor extends Usuarios{
         this.listaObrasEscritas = listaObrasEscritas;
     }
 
-    public Autor(List<Object> listaObrasEscritas, SimpleStringProperty nombreUnico, SimpleStringProperty contraseña, SimpleStringProperty nombreCompleto, SimpleStringProperty tipoDeIdentificacion, SimpleStringProperty identificacion, SimpleStringProperty tipoDeUsuario) {
+    public Autor(List<Object> listaObrasEscritas, String nombreUnico, String contraseña, String nombreCompleto, 
+            String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
         super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
         this.listaObrasEscritas = listaObrasEscritas;
     }

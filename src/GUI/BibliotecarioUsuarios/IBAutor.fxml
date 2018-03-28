@@ -12,49 +12,55 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controllers.BibliotecarioUsuarios.IBAutorController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BibliotecarioUsuarios.IBAutorController">
    <children>
-      <VBox prefHeight="357.0" prefWidth="600.0">
+      <VBox prefHeight="357.0" prefWidth="825.0">
          <children>
             <Label text="Autores" textFill="#a2a2a2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView prefHeight="210.0" prefWidth="600.0">
+            <TableView prefHeight="153.0" prefWidth="700.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="C1" />
-                  <TableColumn prefWidth="75.0" text="C2" />
+                  <TableColumn minWidth="115.0" prefWidth="75.0" text="Nombre" />
+                  <TableColumn minWidth="115.0" prefWidth="75.0" text="Nombre de usuario" />
+                  <TableColumn minWidth="115.0" prefWidth="75.0" text="Contraseña" />
+                  <TableColumn minWidth="115.0" prefWidth="75.0" text="ID" />
+                  <TableColumn minWidth="115.0" prefWidth="75.0" text="Tipo de ID" />
+                  <TableColumn minWidth="115.0" prefWidth="75.0" text="Tipo de Usuario" />
+                  <TableColumn minWidth="115.0" prefWidth="75.0" text="Libro" />
                </columns>
             </TableView>
             <HBox prefHeight="121.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
-                        <TextField promptText="Nombre de usuario" />
-                        <TextField promptText="Nombre completo" />
-                        <TextField promptText="ID" />
+                        <TextField fx:id="nombreUsuarioTextField" promptText="Nombre de usuario" />
+                        <TextField fx:id="nombreTextField" promptText="Nombre completo" />
+                        <TextField fx:id="iDTextField" promptText="ID" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                      </padding>
                   </VBox>
-                  <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
+                  <VBox prefHeight="135.0" prefWidth="187.0" spacing="20.0">
                      <children>
-                        <TextField promptText="Contraseña" style="-fx-border-color: #ff0808;" />
-                        <TextField editable="false" text="Autor" />
-                        <ChoiceBox prefHeight="25.0" prefWidth="194.0" />
-                        <AnchorPane prefHeight="32.0" prefWidth="165.0" />
+                        <TextField fx:id="contraseñaTextField" promptText="Contraseña" style="-fx-border-color: #ff0808;" />
+                        <TextField fx:id="tipoUsuarioTextField" editable="false" text="Autor" />
+                        <TextField promptText="Tipo de ID" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                      </padding>
                   </VBox>
-                  <VBox prefHeight="201.0" prefWidth="236.0" spacing="20.0">
+                  <VBox prefHeight="135.0" prefWidth="186.0" spacing="20.0">
                      <padding>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                      </padding>
+                     <children>
+                        <ChoiceBox fx:id="libroChoiceBox" onMouseClicked="#llenarChoiceBox" prefHeight="25.0" prefWidth="301.0" />
+                     </children>
                   </VBox>
                </children>
             </HBox>
@@ -74,6 +80,6 @@
             <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <Button layoutX="536.0" layoutY="362.0" mnemonicParsing="false" onAction="#volverButton" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
+      <Button layoutX="771.0" layoutY="362.0" mnemonicParsing="false" onAction="#volverButton" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
    </children>
 </AnchorPane>

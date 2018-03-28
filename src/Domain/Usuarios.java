@@ -12,84 +12,77 @@ import javafx.beans.property.SimpleStringProperty;
  * @author fabian
  */
 public class Usuarios {
-    
-    private SimpleStringProperty nombreUnico;
+
+    private SimpleStringProperty nombre;
+    private SimpleStringProperty nombreUsuario;
     private SimpleStringProperty contraseña;
-    private SimpleStringProperty nombreCompleto;
-    private SimpleStringProperty tipoDeIdentificacion;
     private SimpleStringProperty identificacion;
+    private SimpleStringProperty tipoDeIdentificacion;
     private SimpleStringProperty tipoDeUsuario;
 
     public Usuarios() {
     }
 
-    public Usuarios(SimpleStringProperty nombreUnico, SimpleStringProperty contraseña, SimpleStringProperty nombreCompleto, SimpleStringProperty tipoDeIdentificacion, SimpleStringProperty identificacion, SimpleStringProperty tipoDeUsuario) {
-        this.nombreUnico = nombreUnico;
-        this.contraseña = contraseña;
-        this.nombreCompleto = nombreCompleto;
-        this.tipoDeIdentificacion = tipoDeIdentificacion;
-        this.identificacion = identificacion;
-        this.tipoDeUsuario = tipoDeUsuario;
+    public Usuarios(String nombreUsuario, String contraseña, String nombre, String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
+        this.nombreUsuario = new SimpleStringProperty(nombreUsuario);
+        this.contraseña = new SimpleStringProperty(contraseña);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.tipoDeIdentificacion = new SimpleStringProperty(tipoDeIdentificacion);
+        this.identificacion = new SimpleStringProperty(identificacion);
+        this.tipoDeUsuario = new SimpleStringProperty(tipoDeUsuario);
     }
 
-    public SimpleStringProperty getNombreUnico() {
-        return nombreUnico;
+    public String getNombreUsuario() {
+        return nombreUsuario.get();
     }
 
-    public void setNombreUnico(SimpleStringProperty nombreUnico) {
-        this.nombreUnico = nombreUnico;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = new SimpleStringProperty(nombreUsuario);
     }
 
-    public SimpleStringProperty getContraseña() {
-        return contraseña;
+    public String getContraseña() {
+        return contraseña.get();
     }
 
-    public void setContraseña(SimpleStringProperty contraseña) {
-        this.contraseña = contraseña;
+    public void setContraseña(String contraseña) {
+        this.contraseña = new SimpleStringProperty(contraseña);
     }
 
-    public SimpleStringProperty getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre.get();
     }
 
-    public void setNombreCompleto(SimpleStringProperty nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombre(String nombre) {
+        this.nombre = new SimpleStringProperty(nombre);
     }
 
-    public SimpleStringProperty getTipoDeIdentificacion() {
-        return tipoDeIdentificacion;
+    public String getTipoDeIdentificacion() {
+        return tipoDeIdentificacion.get();
     }
 
-    public void setTipoDeIdentificacion(SimpleStringProperty tipoDeIdentificacion) {
-        this.tipoDeIdentificacion = tipoDeIdentificacion;
+    public void setTipoDeIdentificacion(String tipoDeIdentificacion) {
+        this.tipoDeIdentificacion = new SimpleStringProperty(tipoDeIdentificacion);
     }
 
-    public SimpleStringProperty getIdentificacion() {
-        return identificacion;
+    public String getIdentificacion() {
+        return identificacion.get();
     }
 
-    public void setIdentificacion(SimpleStringProperty identificacion) {
-        this.identificacion = identificacion;
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = new SimpleStringProperty(identificacion);
     }
 
-    public SimpleStringProperty getTipoDeUsuario() {
-        return tipoDeUsuario;
+    public String getTipoDeUsuario() {
+        return tipoDeUsuario.get();
     }
 
-    public void setTipoDeUsuario(SimpleStringProperty tipoDeUsuario) {
-        this.tipoDeUsuario = tipoDeUsuario;
+    public void setTipoDeUsuario(String tipoDeUsuario) {
+        this.tipoDeUsuario = new SimpleStringProperty(tipoDeUsuario);
     }
 
     @Override
     public String toString() {
-        return "Usuarios{" + "nombreUnico=" + nombreUnico + ", contrase\u00f1a=" + contraseña + ", nombreCompleto=" + nombreCompleto + ", tipoDeIdentificacion=" + tipoDeIdentificacion + ", identificacion=" + identificacion + ", tipoDeUsuario=" + tipoDeUsuario + '}';
+        return "Usuarios{" + "nombreUnico=" + nombreUsuario + ", contrase\u00f1a=" + contraseña + ", nombreCompleto=" + nombre + ", tipoDeIdentificacion=" + tipoDeIdentificacion + ", identificacion=" + identificacion + ", tipoDeUsuario=" + tipoDeUsuario + '}';
     }
 
-    
- 
-    
-    
-    
-    
-    
 }

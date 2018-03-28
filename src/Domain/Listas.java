@@ -18,6 +18,7 @@ public class Listas {
     
     public static List<Object> usuariosList = new LinkedList<Object>();
     public static ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
+    public static ObservableList<Libro> listaAutores = FXCollections.observableArrayList();
 
     public Listas() {
     }
@@ -36,6 +37,14 @@ public class Listas {
 
     public static void setListaLibros(ObservableList<Libro> listaLibros) {
         Listas.listaLibros = listaLibros;
+    }
+
+    public static ObservableList<Libro> getListaAutores() {
+        return listaAutores;
+    }
+
+    public static void setListaAutores(ObservableList<Libro> listaAutores) {
+        Listas.listaAutores = listaAutores;
     }
     
     

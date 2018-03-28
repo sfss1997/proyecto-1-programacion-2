@@ -14,24 +14,24 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author fabian
  */
-public class Libros extends Catalogo {
+public class Libro extends Catalogo {
 //    libro1
     private SimpleStringProperty isbn;
     private SimpleStringProperty tema;
     private SimpleStringProperty subtema;
 
-    public Libros() {
+    public Libro() {
     }
 
 
-    public Libros(String isbn, String tema, String subtema) {
+    public Libro(String isbn, String tema, String subtema) {
         this.isbn = new SimpleStringProperty(isbn);
         this.tema = new SimpleStringProperty(tema);
         this.subtema = new SimpleStringProperty(subtema);
 
     }
 
-    public Libros(String isbn, String tema, String subtema, String titulo, LocalDate fecha, String ListaAutores) {
+    public Libro(String isbn, String tema, String subtema, String titulo, LocalDate fecha, String ListaAutores) {
         super(titulo, fecha, ListaAutores);
 
         this.isbn = new SimpleStringProperty(isbn);

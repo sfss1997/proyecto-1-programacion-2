@@ -5,15 +5,17 @@
  */
 package Controllers.BibliotecarioObras;
 
-import Domain.Libros;
+import Domain.Libro;
 import Domain.Listas;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,7 +61,9 @@ public class IBLibroController extends Listas implements Initializable{
     @FXML ChoiceBox autorChoiceBox;
     
     //Lista para la tabla
-    private ObservableList<Libros> listaLibros = FXCollections.observableArrayList();
+    private ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
+    
+    private int posicionEnTabla;
     
     
     /**
@@ -69,7 +73,10 @@ public class IBLibroController extends Listas implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         inicializarTablaLibro();
         llenarChoiceBox();
+        autorChoiceBox.setValue("Autor");
         
+        final ObservableList<Libro> tablaLibroSel = libroTableView.getSelectionModel().getSelectedItems();
+        tablaLibroSel.addListener(selectorTablaLibros);
     }
     
     /**
@@ -82,14 +89,43 @@ public class IBLibroController extends Listas implements Initializable{
     }
     
     public void agregarButton(){
-        Libros libro = new Libros(codigoTextField.getText(), 
+        Libro libro = new Libro(codigoTextField.getText(), 
                                   temaTextField.getText(), 
                                   subTemaTextField.getText(), 
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorChoiceBox.getValue().toString());
-//        listaLibros.add(libro);
-        ObrasList.add(libro);
+        if(validarInformacion() == true){
+            super.listaLibros.add(libro);
+            limpiarButton();  
+        }
+        
+    }
+    
+    public void modificarButton(){
+        Libro libro = new Libro(codigoTextField.getText(), 
+                                  temaTextField.getText(), 
+                                  subTemaTextField.getText(), 
+                                  tituloTextField.getText(), 
+                                  fechaDatePicker.getValue(), 
+                                  autorChoiceBox.getValue().toString());
+        if(validarInformacion() == true){
+            super.listaLibros.set(posicionEnTabla, libro);
+            limpiarButton();  
+        }
+    }
+    
+    public void eliminarButton(){
+        listaLibros.remove(posicionEnTabla);
+    }
+    
+    public void limpiarButton(){
+        codigoTextField.setText("");
+        temaTextField.setText("");
+        subTemaTextField.setText("");
+        tituloTextField.setText("");
+        fechaDatePicker.setValue(LocalDate.now());
+        autorChoiceBox.setValue("Autor");
     }
     
     /**
@@ -98,20 +134,14 @@ public class IBLibroController extends Listas implements Initializable{
     
     //Inicializa la tabla
     private void inicializarTablaLibro(){
-        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, String>("titulo"));
-        temaTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, String>("tema"));
-        subTemaTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, String>("subtema"));
-        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, String>("listaAutores"));
-        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, LocalDate>("fecha"));
-        codigoTableColumn.setCellValueFactory(new PropertyValueFactory<Libros, String>("isbn"));
+        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
+        temaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("tema"));
+        subTemaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("subtema"));
+        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("listaAutores"));
+        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, LocalDate>("fecha"));
+        codigoTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("isbn"));
         
-        libroTableView.setItems(ObrasList);
-    }
-    
-    private ObservableList llenarTablaLibros(){
-//        listaLibros.add(new Libros("a", "a", "a", "a", LocalDate.MIN, "a"));
-        ObrasList.add(new Libros("a", "a", "a", "a", LocalDate.MIN, "a"));
-        return ObrasList;
+        libroTableView.setItems(super.listaLibros);
     }
     
     //Codigo para cambiar de ventana
@@ -126,8 +156,69 @@ public class IBLibroController extends Listas implements Initializable{
         window.show();
     }
     
+    //Llena el ChoiceBox con todos los autores existentes
     private void llenarChoiceBox(){
-        autorChoiceBox.getItems().add("aaaa");
+        autorChoiceBox.getItems().addAll("Autor","aaaa");
+    }
+    
+    private boolean validarInformacion(){
+        if(tituloTextField.getText().equals("") ||
+           temaTextField.getText().equals("") ||
+           subTemaTextField.getText().equals("") ||
+           autorChoiceBox.getValue().equals("Autor"))
+            return false;
+        return true;
+    }
+    
+    
+    
+    /**
+     * Listener de la tabla personas
+     */
+    private final ListChangeListener<Libro> selectorTablaLibros =
+            new ListChangeListener<Libro>() {
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Libro> c) {
+                    ponerLibroSeleccionado();
+                }
+            };
+
+    /**
+     * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
+     */
+    public Libro getTablaLibrosSeleccionado() {
+        if (libroTableView != null) {
+            List<Libro> tabla = libroTableView.getSelectionModel().getSelectedItems();
+            if (tabla.size() == 1) {
+                final Libro competicionSeleccionada = tabla.get(0);
+                return competicionSeleccionada;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Método para poner en los textFields la tupla que selccionemos
+     */
+    private void ponerLibroSeleccionado() {
+        final Libro libro = getTablaLibrosSeleccionado();
+        posicionEnTabla = listaLibros.indexOf(libro);
+
+        if (libro != null) {
+
+            // Pongo los textFields con los datos correspondientes
+            tituloTextField.setText(libro.getTitulo());
+            temaTextField.setText(libro.getTema());
+            subTemaTextField.setText(libro.getSubtema());
+            autorChoiceBox.setValue(libro.getListaAutores());
+            fechaDatePicker.setValue(libro.getFecha());
+            codigoTextField.setText(libro.getIsbn());
+
+            // Pongo los botones en su estado correspondiente
+//            libroButtonModificar.setDisable(false);
+//            libroButtonEliminar.setDisable(false);
+
+        }
     }
     
 }

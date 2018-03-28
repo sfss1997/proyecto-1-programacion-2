@@ -63,7 +63,7 @@
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                      </padding>
                      <children>
-                        <DatePicker fx:id="fechaDatePicker" promptText="Fecha" />
+                        <DatePicker fx:id="fechaDatePicker" editable="false" promptText="Fecha" />
                      </children>
                   </VBox>
                </children>
@@ -76,9 +76,9 @@
       <HBox alignment="CENTER_LEFT" layoutY="372.0" prefHeight="51.0" prefWidth="363.0" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#agregarButton" style="-fx-background-color: #ff0808;" text="Agregar" textFill="#fcfcfc" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Modificar" textFill="WHITE" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Eliminar" textFill="#fcfcfc" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Limpiar" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#modificarButton" style="-fx-background-color: #ff0808;" text="Modificar" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#eliminarButton" style="-fx-background-color: #ff0808;" text="Eliminar" textFill="#fcfcfc" />
+            <Button mnemonicParsing="false" onAction="#limpiarButton" style="-fx-background-color: #ff0808;" text="Limpiar" textFill="WHITE" />
          </children>
          <padding>
             <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />

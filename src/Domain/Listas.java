@@ -17,7 +17,7 @@ import javafx.collections.ObservableList;
 public class Listas {
     
     public static List<Object> usuariosList = new LinkedList<Object>();
-    public static ObservableList<Libros> ObrasList = FXCollections.observableArrayList();
+    public static ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
 
     public Listas() {
     }
@@ -30,12 +30,12 @@ public class Listas {
         Listas.usuariosList = usuariosList;
     }
 
-    public static ObservableList<Libros> getObrasList() {
-        return ObrasList;
+    public static ObservableList<Libro> getListaLibros() {
+        return listaLibros;
     }
 
-    public static void setObrasList(ObservableList<Libros> ObrasList) {
-        Listas.ObrasList = ObrasList;
+    public static void setListaLibros(ObservableList<Libro> listaLibros) {
+        Listas.listaLibros = listaLibros;
     }
     
     

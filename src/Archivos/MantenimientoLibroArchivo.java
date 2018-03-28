@@ -5,7 +5,7 @@
  */
 package Archivos;
 
-import Domain.Libros;
+import Domain.Libro;
 import java.io.File;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +37,7 @@ public class MantenimientoLibroArchivo {
      doble con los parqueos que se encuentran en el archivo
      */
     public ObservableList getListaLibro() {
-        ObservableList<Libros> nuevaLista  = FXCollections.observableArrayList();
+        ObservableList<Libro> nuevaLista  = FXCollections.observableArrayList();
         File file = new File(nombreArchivo);
         if (!file.exists()) {
             return nuevaLista;
@@ -45,7 +45,7 @@ public class MantenimientoLibroArchivo {
         else {
             Object ob = manejo.cargarArchivo();
             if (ob != null) {
-                return (ObservableList<Libros>) manejo.cargarArchivo();//Convierte el objeto en una lista enlazada simple,realiza un cast
+                return (ObservableList<Libro>) manejo.cargarArchivo();//Convierte el objeto en una lista enlazada simple,realiza un cast
             } else {
                 return nuevaLista;
             }

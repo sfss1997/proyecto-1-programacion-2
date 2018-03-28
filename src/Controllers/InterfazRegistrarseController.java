@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Domain.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class InterfazRegistrarseController implements Initializable {
+public class InterfazRegistrarseController extends Listas implements Initializable {
 
     /**
      * Initializes the controller class.

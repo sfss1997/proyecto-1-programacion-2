@@ -5,6 +5,7 @@
  */
 package Controllers.BibliotecarioObras;
 
+import Domain.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBMemoriaController implements Initializable {
+public class IBMemoriaController extends Listas implements Initializable {
 
     /**
      * Initializes the controller class.

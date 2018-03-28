@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Domain.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class InterfazBibliotecarioController implements Initializable {
+public class InterfazBibliotecarioController extends Listas implements Initializable {
 
     
     /**

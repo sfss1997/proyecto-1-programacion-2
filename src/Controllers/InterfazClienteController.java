@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Domain.Listas;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -14,7 +15,7 @@ import javafx.fxml.Initializable;
  *
  * @author hvill
  */
-public class InterfazClienteController implements Initializable {
+public class InterfazClienteController extends Listas implements Initializable {
 
     /**
      * Initializes the controller class.

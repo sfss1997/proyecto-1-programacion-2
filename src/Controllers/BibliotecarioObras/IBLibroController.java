@@ -6,7 +6,7 @@
 package Controllers.BibliotecarioObras;
 
 import Domain.Libro;
-import Domain.Listas;
+import Datos.Listas;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;

@@ -7,8 +7,8 @@ package Controllers.BibliotecarioUsuarios;
 
 import Domain.Autor;
 import Domain.Libro;
-import Domain.Listas;
-import static Domain.Listas.listaLibros;
+import Datos.Listas;
+import static Datos.Listas.listaLibros;
 import Domain.OnAction;
 import java.io.IOException;
 import java.net.URL;

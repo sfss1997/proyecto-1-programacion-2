@@ -5,7 +5,7 @@
  */
 package Controllers.BibliotecarioObras;
 
-import Domain.Listas;
+import Datos.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

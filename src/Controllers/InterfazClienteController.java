@@ -5,7 +5,7 @@
  */
 package Controllers;
 
-import Domain.Listas;
+import Datos.Listas;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;

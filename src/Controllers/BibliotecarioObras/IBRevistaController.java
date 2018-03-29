@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBRevistaController extends Listas implements Initializable,OnAction {
+public class IBRevistaController extends Listas implements Initializable {
 
     //Tabla
     @FXML TableView   revistaTableView;
@@ -96,7 +96,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
 
-    @Override
+    
     public void agregarButton() {
         Revistas revista = new Revistas(isbnTextField.getText(),
                                   edicionTextField.getText(),
@@ -110,17 +110,17 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
         }
     }
 
-    @Override
+    
     public void modificarButton() {
       
     }
 
-    @Override
+    
     public void eliminarButton() {
         
     }
 
-    @Override
+    
     public void limpiarButton() {
         
     }

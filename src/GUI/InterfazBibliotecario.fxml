@@ -28,7 +28,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#revistaButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Revistas" textFill="#eeeeee">
+            <Button fx:id="botonRevista" mnemonicParsing="false" onAction="#revistaButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Revistas" textFill="#eeeeee">
                <font>
                   <Font size="14.0" />
                </font>

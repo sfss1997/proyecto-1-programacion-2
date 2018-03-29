@@ -32,8 +32,8 @@ public class Libro extends Catalogo {
     }
 
     public Libro(String isbn, String tema, String subtema, String titulo, LocalDate fecha, String ListaAutores) {
+        
         super(titulo, fecha, ListaAutores);
-
         this.isbn = new SimpleStringProperty(isbn);
         this.tema = new SimpleStringProperty(tema);
         this.subtema = new SimpleStringProperty(subtema);

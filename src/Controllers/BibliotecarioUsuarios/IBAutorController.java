@@ -45,7 +45,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML TableColumn iDTableColumn;
     @FXML TableColumn tipoIDTableColumn;
     @FXML TableColumn tipoUsuarioTableColumn;
-    @FXML TableColumn libroTableColumn;
+    @FXML TableColumn obrasTableColumn;
     
     @FXML TextField nombreTextField;
     @FXML TextField nombreUsuarioTextField;
@@ -54,7 +54,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML TextField tipoUsuarioTextField;
     @FXML TextField tipoIDTextField;
     
-    @FXML ChoiceBox libroChoiceBox;
+    @FXML ChoiceBox obrasChoiceBox;
     
     private int cont;
     private int posicionEnTabla;
@@ -76,14 +76,16 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     
     @Override
     public void agregarButton() {
-//        Autor autor = new Autor(codigoTextField.getText(), 
-//                                temaTextField.getText(), 
-//                                subTemaTextField.getText(), 
-//                                tituloTextField.getText(), 
-//                                fechaDatePicker.getValue(), 
-//                                autorChoiceBox.getValue().toString());
+        
+//        Autor autor = new Autor(listaObrasEscritas, 
+//                                nombreUnico, 
+//                                contraseña, 
+//                                nombreCompleto, 
+//                                tipoDeIdentificacion, 
+//                                identificacion, 
+//                                tipoDeUsuario);
 //            super.listaAutores.add(autor);
-//            limpiarButton();  
+            limpiarButton();  
         
     }
 
@@ -108,10 +110,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     }
     
     public void llenarChoiceBox(){
-        if(nombreTextField.getText().equals("aaaa") && cont==0){
-            libroChoiceBox.getItems().add("aaaa");
-            cont++;
-        }  
+          
     }
     
     /**
@@ -126,7 +125,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         iDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("identificacion"));
         tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeIdentificacion"));
         tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeUsuario"));
-        tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObrasEscritas"));
+        obrasTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObrasEscritas"));
         
         autorTableView.setItems(super.listaAutores);
     }
@@ -184,7 +183,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
             iDTextField.setText(autor.getIdentificacion());
             tipoIDTextField.setText(autor.getTipoDeIdentificacion());
             tipoUsuarioTextField.setText(autor.getTipoDeUsuario());
-            libroChoiceBox.setValue(autor.getListaObrasEscritas());
+            obrasChoiceBox.setValue(autor.getListaObrasEscritas());
 
             // Pongo los botones en su estado correspondiente
 //            libroButtonModificar.setDisable(false);

@@ -14,26 +14,35 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Autor extends Usuarios{
     
-    private List<Object> listaObrasEscritas;
+    private List<Libro> listaObrasEscritas;
 
     public Autor() {
     }
 
-    public Autor(List<Object> listaObrasEscritas) {
+    public Autor(List<Libro> listaObrasEscritas) {
         this.listaObrasEscritas = listaObrasEscritas;
     }
 
-    public Autor(List<Object> listaObrasEscritas, String nombreUnico, String contraseña, String nombreCompleto, 
+    public Autor(List<Libro> listaObrasEscritas, String nombreUnico, String contraseña, String nombreCompleto, 
             String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
         super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
         this.listaObrasEscritas = listaObrasEscritas;
     }
 
-    public List<Object> getListaObrasEscritas() {
+    public String getListaObrasEscritas() {
+        String salida = "";
+        for(int i = 0; i<listaObrasEscritas.size(); i++){
+            Libro libro = new Libro();
+            salida = listaObrasEscritas.get(i).getTitulo() + ", ";
+        }
+        return salida;
+    }
+    
+    public List<Libro> getListaObras(){
         return listaObrasEscritas;
     }
 
-    public void setListaObrasEscritas(List<Object> listaObrasEscritas) {
+    public void setListaObrasEscritas(List<Libro> listaObrasEscritas) {
         this.listaObrasEscritas = listaObrasEscritas;
     }
     

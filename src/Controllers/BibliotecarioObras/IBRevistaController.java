@@ -62,8 +62,10 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
     //Esto es para reconocer el numero de la fila que se selecicona en la tabla
     private int posicionEnTabla;
 
-    /**
-     * Initializes the controller class.
+    
+   /**
+     * Este metodo es el que se ejecuta apenas entra a la interfaz.
+     * Es como un constructor
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,21 +88,13 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
         tablaRevistaSel.addListener(selectorTablaRevista);
     }    
     
+     /**
+     * On Antion ----------------------------- Metodos que se van a utilizar como On Action
+     */
+    
     //Cambiar a la ventada de bibliotecario
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
-    }
-    
-    //Codigo para cambiar de ventana
-    private void cambioScene(ActionEvent event, String destino) throws IOException{
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
-        Scene tableViewScene = new Scene(tableViewParent);
-        
-        //Esta linea obtiene la informacion del Stage
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        
-        window.setScene(tableViewScene);
-        window.show();
     }
 
     @Override
@@ -119,35 +113,54 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
 
     @Override
     public void modificarButton() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      
     }
 
     @Override
     public void eliminarButton() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void limpiarButton() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
+     /**
+     * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
+     */
+    
+    //Inicializa la tabla
     private void inicializarTablaRevista() {
         //Solo hay que hacerlo con las columnas
         //Ejemplo:
 //  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
         
-        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("issn"));
-        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
+        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("issn"));  
         edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("edición"));
-        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("listaAutores"));
+        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
         fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, LocalDate>("fecha"));
+        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("listaAutores"));
+        
         
         
         revistaTableView.setItems(super.listaRevistas);
     }
-//Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
+    
+    //Codigo para cambiar de ventana
+    private void cambioScene(ActionEvent event, String destino) throws IOException{
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //Esta linea obtiene la informacion del Stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        window.setScene(tableViewScene);
+        window.show();
+    }
+    
+    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
     private void llenarChoiceBox() {
         autorChoiceBox.getItems().addAll("Autor","aaaa");
     }
@@ -179,7 +192,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
             new ListChangeListener<Revistas>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Revistas> c) {
-                    ponerRevistaSeleccionado();
+                    ponerRevistaSeleccionada ();
                 }
             };
 
@@ -200,7 +213,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
     /**
      * Método para poner en los textFields la tupla que selccionemos
      */
-    private void ponerRevistaSeleccionado() {
+    private void ponerRevistaSeleccionada() {
         final Revistas revistas = getTablaRevistaSeleccionado();
         posicionEnTabla = listaRevistas.indexOf(revistas);
 

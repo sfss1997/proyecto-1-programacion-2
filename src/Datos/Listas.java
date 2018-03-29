@@ -18,82 +18,83 @@ import javafx.collections.ObservableList;
 public class Listas {
     
     
-    public static ObservableList<Libro> listaUsuarios = FXCollections.observableArrayList();
-    public static ObservableList<Libro> listaAutores = FXCollections.observableArrayList();
-    public static ObservableList<Libro> listaBibliotecarios = FXCollections.observableArrayList();
-    public static ObservableList<Libro> listaRevistas = FXCollections.observableArrayList();
-    public static ObservableList<Libro> listaTesis = FXCollections.observableArrayList();
-    public static ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
-    public static ObservableList<Libro> listaPeriodicos = FXCollections.observableArrayList();
-    public static ObservableList<Libro> listaMemorias = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaUsuarios = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaAutores = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaBibliotecarios = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaRevistas = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaTesis = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaLibros = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaPeriodicos = FXCollections.observableArrayList();
+    public static ObservableList<Object> listaMemorias = FXCollections.observableArrayList();
     
     public Listas() {
     }
 
-    public static ObservableList<Libro> getListaUsuarios() {
+    public static ObservableList<Object> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public static void setListaUsuarios(ObservableList<Libro> listaUsuarios) {
+    public static void setListaUsuarios(ObservableList<Object> listaUsuarios) {
         Listas.listaUsuarios = listaUsuarios;
     }
 
-    public static ObservableList<Libro> getListaAutores() {
+    public static ObservableList<Object> getListaAutores() {
         return listaAutores;
     }
 
-    public static void setListaAutores(ObservableList<Libro> listaAutores) {
+    public static void setListaAutores(ObservableList<Object> listaAutores) {
         Listas.listaAutores = listaAutores;
     }
 
-    public static ObservableList<Libro> getListaBibliotecarios() {
+    public static ObservableList<Object> getListaBibliotecarios() {
         return listaBibliotecarios;
     }
 
-    public static void setListaBibliotecarios(ObservableList<Libro> listaBibliotecarios) {
+    public static void setListaBibliotecarios(ObservableList<Object> listaBibliotecarios) {
         Listas.listaBibliotecarios = listaBibliotecarios;
     }
 
-    public static ObservableList<Libro> getListaRevistas() {
+    public static ObservableList<Object> getListaRevistas() {
         return listaRevistas;
     }
 
-    public static void setListaRevistas(ObservableList<Libro> listaRevistas) {
+    public static void setListaRevistas(ObservableList<Object> listaRevistas) {
         Listas.listaRevistas = listaRevistas;
     }
 
-    public static ObservableList<Libro> getListaTesis() {
+    public static ObservableList<Object> getListaTesis() {
         return listaTesis;
     }
 
-    public static void setListaTesis(ObservableList<Libro> listaTesis) {
+    public static void setListaTesis(ObservableList<Object> listaTesis) {
         Listas.listaTesis = listaTesis;
     }
 
-    public static ObservableList<Libro> getListaLibros() {
+    public static ObservableList<Object> getListaLibros() {
         return listaLibros;
     }
 
-    public static void setListaLibros(ObservableList<Libro> listaLibros) {
+    public static void setListaLibros(ObservableList<Object> listaLibros) {
         Listas.listaLibros = listaLibros;
     }
 
-    public static ObservableList<Libro> getListaPeriodicos() {
+    public static ObservableList<Object> getListaPeriodicos() {
         return listaPeriodicos;
     }
 
-    public static void setListaPeriodicos(ObservableList<Libro> listaPeriodicos) {
+    public static void setListaPeriodicos(ObservableList<Object> listaPeriodicos) {
         Listas.listaPeriodicos = listaPeriodicos;
     }
 
-    public static ObservableList<Libro> getListaMemorias() {
+    public static ObservableList<Object> getListaMemorias() {
         return listaMemorias;
     }
 
-    public static void setListaMemorias(ObservableList<Libro> listaMemorias) {
+    public static void setListaMemorias(ObservableList<Object> listaMemorias) {
         Listas.listaMemorias = listaMemorias;
     }
 
+    
     
     
     

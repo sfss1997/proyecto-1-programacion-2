@@ -41,7 +41,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
 
     //Tabla
     @FXML TableView   revistaTableView;
-    @FXML TableColumn issnTableColumn;
+    @FXML TableColumn isbnTableColumn;
     @FXML TableColumn tituloTableColumn;
     @FXML TableColumn edicionTableColumn;
     @FXML TableColumn autorTableColumn;
@@ -50,7 +50,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
     
     //TextFields
     @FXML TextField tituloTextField;
-    @FXML TextField issnTextField;
+    @FXML TextField isbnTextField;
     @FXML TextField edicionTextField;
     
     //DatePicker
@@ -58,6 +58,10 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
     
     //ChoiceBox
     @FXML ChoiceBox autorChoiceBox;
+        
+    //Esto es para reconocer el numero de la fila que se selecicona en la tabla
+    private int posicionEnTabla;
+
     /**
      * Initializes the controller class.
      */
@@ -78,8 +82,8 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
         //Esto ni lo vea jaja solo se agrega y ya
         //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
         //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
-        final ObservableList<Libro> tablaLibroSel = revistaTableView.getSelectionModel().getSelectedItems();
-        tablaLibroSel.addListener(selectorTablaRevista);
+        final ObservableList<Revistas> tablaRevistaSel = revistaTableView.getSelectionModel().getSelectedItems();
+        tablaRevistaSel.addListener(selectorTablaRevista);
     }    
     
     //Cambiar a la ventada de bibliotecario
@@ -101,7 +105,16 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
 
     @Override
     public void agregarButton() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Revistas revista = new Revistas(isbnTextField.getText(),
+                                  edicionTextField.getText(),
+                                  tituloTextField.getText(), 
+                                  fechaDatePicker.getValue(), 
+                                  autorChoiceBox.getValue().toString());
+        if(validarInformacion() == true){
+            //Se utiliza la listaLibros de la clase Listas
+            super.listaRevistas.add(revista);
+            limpiarButton();  
+        }
     }
 
     @Override
@@ -125,7 +138,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
 //  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
         
-        issnTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("issn"));
+        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("issn"));
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
         edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("edición"));
         autorTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("listaAutores"));
@@ -134,9 +147,18 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
         
         revistaTableView.setItems(super.listaRevistas);
     }
-
+//Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
     private void llenarChoiceBox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        autorChoiceBox.getItems().addAll("Autor","aaaa");
+    }
+    //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
+    private boolean validarInformacion(){
+        if(tituloTextField.getText().equals("") ||
+           edicionTextField.getText().equals("") ||
+           isbnTextField.getText().equals("") ||
+           autorChoiceBox.getValue().equals("Autor"))
+            return false;
+        return true;
     }
     
     //********* IMPORTANTE *********
@@ -153,22 +175,22 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
     /**
      * Listener de la tabla personas
      */
-    private final ListChangeListener<Libro> selectorTablaLibros =
-            new ListChangeListener<Libro>() {
+    private final ListChangeListener<Revistas> selectorTablaRevista =
+            new ListChangeListener<Revistas>() {
                 @Override
-                public void onChanged(ListChangeListener.Change<? extends Libro> c) {
-                    ponerLibroSeleccionado();
+                public void onChanged(ListChangeListener.Change<? extends Revistas> c) {
+                    ponerRevistaSeleccionado();
                 }
             };
 
     /**
      * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
      */
-    public Libro getTablaLibrosSeleccionado() {
-        if (libroTableView != null) {
-            List<Libro> tabla = libroTableView.getSelectionModel().getSelectedItems();
+    public Revistas getTablaRevistaSeleccionado() {
+        if (revistaTableView != null) {
+            List<Revistas> tabla = revistaTableView.getSelectionModel().getSelectedItems();
             if (tabla.size() == 1) {
-                final Libro competicionSeleccionada = tabla.get(0);
+                final Revistas competicionSeleccionada = tabla.get(0);
                 return competicionSeleccionada;
             }
         }
@@ -178,7 +200,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
     /**
      * Método para poner en los textFields la tupla que selccionemos
      */
-    private void ponerLibroSeleccionado() {
+    private void ponerRevistaSeleccionado() {
         final Revistas revistas = getTablaRevistaSeleccionado();
         posicionEnTabla = listaRevistas.indexOf(revistas);
 
@@ -188,7 +210,7 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
             tituloTextField.setText(revistas.getTitulo());
             autorChoiceBox.setValue(revistas.getListaAutores());
             fechaDatePicker.setValue(revistas.getFecha());
-            issnTextField.setText(revistas.getIssn());
+            isbnTextField.setText(revistas.getIsbn());
 
             // Pongo los botones en su estado correspondiente
 //            libroButtonModificar.setDisable(false);

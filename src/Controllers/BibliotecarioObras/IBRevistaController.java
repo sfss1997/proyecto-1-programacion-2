@@ -6,7 +6,6 @@
 package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
-import static Datos.Listas.listaLibros;
 import Domain.Libro;
 import Domain.OnAction;
 import Domain.Revistas;
@@ -137,11 +136,11 @@ public class IBRevistaController extends Listas implements Initializable,OnActio
 //  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
         
-        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("issn"));  
-        edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("edición"));
-        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
-        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, LocalDate>("fecha"));
-        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("listaAutores"));
+        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("issn"));  
+        edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("edición"));
+        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("titulo"));
+        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, LocalDate>("fecha"));
+        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("listaAutores"));
         
         
         

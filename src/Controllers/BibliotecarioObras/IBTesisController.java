@@ -6,8 +6,6 @@
 package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
-import static Datos.Listas.listaLibros;
-import Domain.Libro;
 import Domain.Tesis;
 import java.io.IOException;
 import java.net.URL;
@@ -212,7 +210,7 @@ public class IBTesisController extends Listas implements Initializable {
     /**
      * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
      */
-    public Tesis getTablaTesisSeleccionada() {
+    public Tesis getTablaTesisSeleccionado() {
         if (tesisTableView != null) {
             List<Tesis> tabla = tesisTableView.getSelectionModel().getSelectedItems();
             if (tabla.size() == 1) {
@@ -227,7 +225,7 @@ public class IBTesisController extends Listas implements Initializable {
      * Método para poner en los textFields la tupla que selccionemos
      */
     private void ponerTesisSeleccionada() {
-        final Tesis tesis = getTablaTesisSeleccionada();
+        final Tesis tesis = getTablaTesisSeleccionado();
         posicionEnTabla = listaTesis.indexOf(tesis);
 
         if (tesis != null) {

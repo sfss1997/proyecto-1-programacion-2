@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BibliotecarioObras.IBLibroController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BibliotecarioObras.IBTesisController">
    <children>
       <VBox prefHeight="353.0" prefWidth="600.0">
          <children>
@@ -35,7 +35,7 @@
                <children>
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
-                        <TextField fx:id="tituloTextField" promptText="Nombre de la obra" text="Titulo de la obra" />
+                        <TextField fx:id="tituloTextField" promptText="Nombre de la obra" />
                         <TextField fx:id="resumenTextField" promptText="Resumen" />
                      </children>
                      <padding>
@@ -69,15 +69,15 @@
       </VBox>
       <HBox alignment="CENTER_LEFT" layoutY="349.0" prefHeight="51.0" prefWidth="363.0" spacing="10.0">
          <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Agregar" textFill="#fcfcfc" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Modificar" textFill="WHITE" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Eliminar" textFill="#fcfcfc" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Limpiar" textFill="WHITE" />
+            <Button fx:id="botonAgregar" mnemonicParsing="false" onAction="#agregarButton" style="-fx-background-color: #ff0808;" text="Agregar" textFill="#fcfcfc" />
+            <Button fx:id="botonModificar" mnemonicParsing="false" onAction="#modificarButton" style="-fx-background-color: #ff0808;" text="Modificar" textFill="WHITE" />
+            <Button fx:id="botonEliminar" mnemonicParsing="false" onAction="#eliminarButton" style="-fx-background-color: #ff0808;" text="Eliminar" textFill="#fcfcfc" />
+            <Button fx:id="botonLimpiar" mnemonicParsing="false" onAction="#limpiarButton" style="-fx-background-color: #ff0808;" text="Limpiar" textFill="WHITE" />
          </children>
          <padding>
             <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <Button layoutX="536.0" layoutY="362.0" mnemonicParsing="false" onAction="#volverButton" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
+      <Button fx:id="botonVolver" layoutX="536.0" layoutY="362.0" mnemonicParsing="false" onAction="#volverButton" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
    </children>
 </AnchorPane>

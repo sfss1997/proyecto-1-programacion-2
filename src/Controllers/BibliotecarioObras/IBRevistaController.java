@@ -113,22 +113,24 @@ public class IBRevistaController extends Listas implements Initializable {
     
     public void modificarButton() {
         Revistas revistas = new Revistas(isbnTextField.getText(), 
-            edicionTextField.getText(),  
-            tituloTextField.getText(), 
-            fechaDatePicker.getValue(), 
-            autorChoiceBox.getValue().toString());
+                                        edicionTextField.getText(),  
+                                        tituloTextField.getText(), 
+                                        fechaDatePicker.getValue(), 
+                                        autorChoiceBox.getValue().toString());
         if(validarInformacion() == true){
             super.listaRevistas.set(posicionEnTabla, revistas);
             limpiarButton();  
         }
     }
 
-    
+    //Elimina el elemento seleccionado en la tabla
     public void eliminarButton() {
         listaRevistas.remove(posicionEnTabla);
     }
-
     
+    //Limpia lo que hay en los TextFields
+    //Asigna al ChoiceBox el elemento de "Autor"
+    //Asigna al DatePicker la fecha actual
     public void limpiarButton() {
         
         isbnTextField.setText("");
@@ -174,8 +176,10 @@ public class IBRevistaController extends Listas implements Initializable {
     
     //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
     private void llenarChoiceBox() {
+         //El addAll es para agregar más de un elemento a la ves
         autorChoiceBox.getItems().addAll("Autor","aaaa");
     }
+    
     //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
     private boolean validarInformacion(){
         if(tituloTextField.getText().equals("") ||
@@ -233,6 +237,7 @@ public class IBRevistaController extends Listas implements Initializable {
 
             // Pongo los textFields con los datos correspondientes
             tituloTextField.setText(revistas.getTitulo());
+            edicionTextField.setText(revistas.getEdicion());
             autorChoiceBox.setValue(revistas.getListaAutores());
             fechaDatePicker.setValue(revistas.getFecha());
             isbnTextField.setText(revistas.getIsbn());

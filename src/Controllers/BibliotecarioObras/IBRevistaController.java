@@ -163,7 +163,7 @@ public class IBRevistaController extends Listas implements Initializable {
 //  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
         
-        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("isbn"));  
+        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("issn"));  
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("titulo"));
         edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("edicion"));
         autorTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("listaAutores"));

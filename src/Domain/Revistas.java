@@ -15,29 +15,29 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Revistas extends Catalogo {
     
-    private SimpleStringProperty issn;
+    private SimpleStringProperty isbn;
     private SimpleStringProperty edicion;
 
     public Revistas() {
     }
 
     public Revistas(String isbn, String edicion) {
-        this.issn = new SimpleStringProperty(isbn);
+        this.isbn = new SimpleStringProperty(isbn);
         this.edicion = new SimpleStringProperty(edicion);
     }
 
-    public Revistas(String issn, String edicion, String titulo, LocalDate fecha, String ListaAutores) {    
+    public Revistas(String isbn, String edicion, String titulo, LocalDate fecha, String ListaAutores) {    
         super(titulo, fecha, ListaAutores);
-        this.issn = new SimpleStringProperty(issn);
+        this.isbn = new SimpleStringProperty(isbn);
         this.edicion = new SimpleStringProperty(edicion);
     }
 
     public String getIssn() {
-        return issn.get();
+        return isbn.get();
     }
 
     public void setIssn(String isbn) {
-        this.issn = new SimpleStringProperty(isbn);
+        this.isbn = new SimpleStringProperty(isbn);
     }
 
     public String getEdicion() {

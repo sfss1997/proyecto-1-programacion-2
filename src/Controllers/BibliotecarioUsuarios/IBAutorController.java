@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -63,12 +65,12 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     public void initialize(URL url, ResourceBundle rb) {
         
         inicializarTablaLibro();
-//        obrasChoiceBox.getItems().add("aaa");
-//        obrasChoiceBox.getItems().add("aaa");
+
+        obrasChoiceBox.getItems().add("aaa");
         
         
-//        final ObservableList<Autor> tablaLibroSel = autorTableView.getSelectionModel().getSelectedItems();
-//        tablaLibroSel.addListener(selectorTablaAutores);
+        final ObservableList<Autor> tablaLibroSel = autorTableView.getSelectionModel().getSelectedItems();
+        tablaLibroSel.addListener(selectorTablaAutores);
 //        
     } 
     
@@ -125,15 +127,15 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     
     //Inicializa la tabla
     private void inicializarTablaLibro(){
-//        nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombre"));
-//        nombreUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombreUsuario"));
-//        contraseñaTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("contraseña"));
-//        iDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("identificacion"));
-//        tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeIdentificacion"));
-//        tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeUsuario"));
-//        obrasTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObrasEscritas"));
-//        
-//        autorTableView.setItems(super.listaAutores);
+        nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombre"));
+        nombreUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombreUsuario"));
+        contraseñaTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("contraseña"));
+        iDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("identificacion"));
+        tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeIdentificacion"));
+        tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeUsuario"));
+        obrasTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObrasEscritas"));
+        
+        autorTableView.setItems(super.listaAutores);
     }
     
     //Codigo para cambiar de ventana

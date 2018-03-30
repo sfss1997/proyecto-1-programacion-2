@@ -112,17 +112,30 @@ public class IBRevistaController extends Listas implements Initializable {
 
     
     public void modificarButton() {
-      
+        Revistas revistas = new Revistas(isbnTextField.getText(), 
+            edicionTextField.getText(),  
+            tituloTextField.getText(), 
+            fechaDatePicker.getValue(), 
+            autorChoiceBox.getValue().toString());
+        if(validarInformacion() == true){
+            super.listaRevistas.set(posicionEnTabla, revistas);
+            limpiarButton();  
+        }
     }
 
     
     public void eliminarButton() {
-        
+        listaRevistas.remove(posicionEnTabla);
     }
 
     
     public void limpiarButton() {
         
+        isbnTextField.setText("");
+        edicionTextField.setText("");
+        tituloTextField.setText("");
+        fechaDatePicker.setValue(LocalDate.now());
+        autorChoiceBox.setValue("Autor");
     }
 
      /**

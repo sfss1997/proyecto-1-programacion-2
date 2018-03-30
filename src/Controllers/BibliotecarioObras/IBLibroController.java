@@ -75,7 +75,7 @@ public class IBLibroController extends Listas implements Initializable{
         inicializarTablaLibro();
         
         //Llena el choiceBox 
-        llenarChoiceBox();
+        llenarComboBox();
         
         //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
         //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
@@ -146,6 +146,19 @@ public class IBLibroController extends Listas implements Initializable{
         autorComboBox.setValue("Autor");
     }
     
+    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
+    public void llenarComboBox(){
+        //El addAll es para agregar más de un elemento a la ves
+        autorComboBox.getItems().add("Autor");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
+    }
+    
+    public void agregarAutorButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
+    }
+    
     /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
@@ -178,11 +191,7 @@ public class IBLibroController extends Listas implements Initializable{
         window.show();
     }
     
-    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
-    private void llenarChoiceBox(){
-        //El addAll es para agregar más de un elemento a la ves
-        autorComboBox.getItems().addAll("Autor","aaaa");
-    }
+    
     
     //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
     private boolean validarInformacion(){

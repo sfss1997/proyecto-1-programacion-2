@@ -16,7 +16,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Autor extends Usuarios{
     
     private ArrayList<Object> listaObrasEscritas;
-    private String listaObras;
+    private SimpleStringProperty listaObras;
 
     public Autor() {
     }
@@ -28,16 +28,17 @@ public class Autor extends Usuarios{
     public Autor(String listaObras, String nombreUnico, String contraseña, String nombreCompleto, 
             String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
         super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
-        this.listaObras = listaObras;
+        this.listaObras = new SimpleStringProperty(listaObras);
+    }
+
+    public String getListaObras() {
+        return listaObras.get();
+    }
+
+    public void setListaObras(String listaObras) {
+        this.listaObras = new SimpleStringProperty(listaObras);
     }
     
-    public String getListaObras(){
-        String salida = "";
-        for(int i = 0; i < listaObrasEscritas.size(); i++){
-            
-        }
-        return salida;
-    }
     
     public ArrayList<Object> getListaObrasEscritas(){
         return listaObrasEscritas;

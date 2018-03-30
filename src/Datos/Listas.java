@@ -5,6 +5,7 @@
  */
 package Datos;
 
+import Domain.Autor;
 import Domain.Libro;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,11 +20,11 @@ public class Listas {
     
     
     public static ObservableList<Object> listaUsuarios = FXCollections.observableArrayList();
-    public static ObservableList<Object> listaAutores = FXCollections.observableArrayList();
+    public static ObservableList<Autor> listaAutores = FXCollections.observableArrayList();
     public static ObservableList<Object> listaBibliotecarios = FXCollections.observableArrayList();
     public static ObservableList<Object> listaRevistas = FXCollections.observableArrayList();
     public static ObservableList<Object> listaTesis = FXCollections.observableArrayList();
-    public static ObservableList<Object> listaLibros = FXCollections.observableArrayList();
+    public static ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
     public static ObservableList<Object> listaPeriodicos = FXCollections.observableArrayList();
     public static ObservableList<Object> listaMemorias = FXCollections.observableArrayList();
     
@@ -38,11 +39,11 @@ public class Listas {
         Listas.listaUsuarios = listaUsuarios;
     }
 
-    public static ObservableList<Object> getListaAutores() {
+    public static ObservableList<Autor> getListaAutores() {
         return listaAutores;
     }
 
-    public static void setListaAutores(ObservableList<Object> listaAutores) {
+    public static void setListaAutores(ObservableList<Autor> listaAutores) {
         Listas.listaAutores = listaAutores;
     }
 
@@ -70,11 +71,11 @@ public class Listas {
         Listas.listaTesis = listaTesis;
     }
 
-    public static ObservableList<Object> getListaLibros() {
+    public static ObservableList<Libro> getListaLibros() {
         return listaLibros;
     }
 
-    public static void setListaLibros(ObservableList<Object> listaLibros) {
+    public static void setListaLibros(ObservableList<Libro> listaLibros) {
         Listas.listaLibros = listaLibros;
     }
 

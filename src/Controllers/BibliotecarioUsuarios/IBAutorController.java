@@ -7,6 +7,7 @@ package Controllers.BibliotecarioUsuarios;
 
 import Domain.Autor;
 import Datos.Listas;
+import Domain.Libro;
 import Domain.OnAction;
 import java.io.IOException;
 import java.net.URL;
@@ -67,7 +68,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         
         inicializarTablaLibro();
 
-        tipoObraComboBox.getItems().addAll("Libro", "Revista", "Tesis", "Periódico", "Memoria", "Otro");
+        tipoObraComboBox.getItems().addAll("Ninguno", "Libro", "Revista", "Tesis", "Periódico", "Memoria", "Otro");
         
         llenarComboBox();
         
@@ -82,20 +83,16 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     
     @Override
     public void agregarButton() {
-        ArrayList<Object> listaObras = new ArrayList<Object>();
-        listaObras.add(obrasComboBox.getValue());
-        Autor autor = new Autor((String) listaObras.get(0), 
+
+        Autor autor = new Autor(obrasComboBox.getValue().toString(), 
                                 nombreUsuarioTextField.getText(), 
                                 contraseñaTextField.getText(), 
                                 nombreTextField.getText(), 
                                 tipoIDTextField.getText(), 
                                 iDTextField.getText(), 
                                 tipoUsuarioTextField.getText());
-        autor.setListaObrasEscritas(listaObras);
-        
         super.listaAutores.add(autor);
             
-        System.out.println(autor.getListaObrasEscritas().get(0));
         
     }
 
@@ -106,7 +103,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
 
     @Override
     public void eliminarButton() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        listaAutores.remove(posicionEnTabla);
     }
 
     @Override
@@ -120,7 +117,10 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     }
     
     public void llenarComboBox(){
-        obrasComboBox.getItems().add("aaa");
+        obrasComboBox.getItems().add("Ninguno");
+        for (int i = 0; i < listaLibros.size(); i++) {
+            obrasComboBox.getItems().add(listaLibros.get(i).getTitulo());
+        }
     }
     
     /**
@@ -135,7 +135,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         iDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("identificacion"));
         tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeIdentificacion"));
         tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeUsuario"));
-        obrasTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObrasEscritas"));
+        obrasTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObras"));
         
         autorTableView.setItems(super.listaAutores);
     }

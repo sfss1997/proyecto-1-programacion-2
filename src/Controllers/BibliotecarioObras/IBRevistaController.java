@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  */
 public class IBRevistaController extends Listas implements Initializable {
 
-    //Tabla
+    ///Tabla
     @FXML TableView   revistaTableView;
     @FXML TableColumn isbnTableColumn;
     @FXML TableColumn tituloTableColumn;

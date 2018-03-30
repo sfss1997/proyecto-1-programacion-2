@@ -137,6 +137,19 @@ public class IBRevistaController extends Listas implements Initializable {
         fechaDatePicker.setValue(LocalDate.now());
         autorComboBox.setValue("Autor");
     }
+    
+     //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
+    public void llenarComboBox(){
+        //El addAll es para agregar más de un elemento a la ves
+        autorComboBox.getItems().add("Autor");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
+    }
+    
+    public void agregarAutorButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
+    }
 
      /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
@@ -172,14 +185,8 @@ public class IBRevistaController extends Listas implements Initializable {
         window.show();
     }
     
-    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
-    private void llenarComboBox() {
-         //El addAll es para agregar más de un elemento a la ves
-        autorComboBox.getItems().addAll("Autor","aaaa");
-        for (int i = 0; i < listaAutores.size(); i++) {
-            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
-        }
-    }
+   
+  
     
     //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
     private boolean validarInformacion(){

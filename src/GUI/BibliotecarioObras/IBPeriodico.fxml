@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controllers.BibliotecarioObras.IBLibroController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BibliotecarioObras.IBPeriodicoController">
    <children>
       <VBox prefHeight="353.0" prefWidth="600.0">
          <children>
@@ -25,17 +24,19 @@
             </Label>
             <TableView prefHeight="210.0" prefWidth="600.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="C1" />
-                  <TableColumn prefWidth="75.0" text="C2" />
+                  <TableColumn prefWidth="120.0" text="isbn" />
+                  <TableColumn prefWidth="114.0" text="Titulo" />
+                  <TableColumn prefWidth="116.0" text="Edicion " />
+                  <TableColumn prefWidth="104.0" text="Fecha" />
+                  <TableColumn prefWidth="125.0" text="Autor" />
                </columns>
             </TableView>
             <HBox prefHeight="121.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
-                        <TextField promptText="Nombre de la obra" />
-                        <TextField promptText="Edición" />
-                        <DatePicker promptText="Fecha" />
+                        <TextField fx:id="tituloTextField" promptText="Titulo de la obra" />
+                        <TextField fx:id="isbnTextField" promptText="isbn" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
@@ -43,8 +44,8 @@
                   </VBox>
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
-                        <TextField promptText="Código" style="-fx-border-color: #ff0808;" />
-                        <ChoiceBox prefHeight="25.0" prefWidth="194.0" />
+                        <TextField fx:id="edicionTextField" promptText="Edicion" style="-fx-border-color: #ff0808;" />
+                        <ChoiceBox fx:id="autorChoiceBox" prefHeight="25.0" prefWidth="194.0" />
                         <AnchorPane prefHeight="32.0" prefWidth="165.0">
                            <children>
                               <Button layoutX="64.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: #ff0808;" text="Agregar Autor" textFill="WHITE" />
@@ -55,7 +56,10 @@
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                      </padding>
                   </VBox>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <DatePicker fx:id="fechaDatePicker" layoutX="21.0" layoutY="16.0" promptText="Fecha" />
+                     </children></AnchorPane>
                </children>
             </HBox>
          </children>

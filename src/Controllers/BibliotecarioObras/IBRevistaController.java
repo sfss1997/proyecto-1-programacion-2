@@ -60,6 +60,7 @@ public class IBRevistaController extends Listas implements Initializable {
     private int posicionEnTabla;
 
     
+    
    /**
      * Este metodo es el que se ejecuta apenas entra a la interfaz.
      * Es como un constructor

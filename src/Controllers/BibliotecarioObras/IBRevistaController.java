@@ -142,7 +142,7 @@ public class IBRevistaController extends Listas implements Initializable {
      //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
     public void llenarComboBox(){
         //El addAll es para agregar más de un elemento a la ves
-        autorComboBox.getItems().add("Autor");
+        autorComboBox.getItems().addAll("Autor", "aaaa");
         for (int i = 0; i < listaAutores.size(); i++) {
             autorComboBox.getItems().add(listaAutores.get(i).getNombre());
         }

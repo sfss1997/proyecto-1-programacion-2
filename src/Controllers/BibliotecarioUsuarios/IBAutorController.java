@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -52,8 +53,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML TextField tipoUsuarioTextField;
     @FXML TextField tipoIDTextField;
     
-    @FXML ChoiceBox tipoObraChoiceBox;
-    @FXML ChoiceBox obrasChoiceBox;
+    @FXML ComboBox tipoObraComboBox;
+    @FXML ComboBox obrasComboBox;
     
     private int cont;
     private int posicionEnTabla;
@@ -66,12 +67,13 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         
         inicializarTablaLibro();
 
-        obrasChoiceBox.getItems().add("aaa");
+        tipoObraComboBox.getItems().addAll("Libro", "Revista", "Tesis", "Periódico", "Memoria", "Otro");
         
+        llenarComboBox();
         
         final ObservableList<Autor> tablaLibroSel = autorTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaAutores);
-//        
+        
     } 
     
     /**
@@ -81,7 +83,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @Override
     public void agregarButton() {
         ArrayList<Object> listaObras = new ArrayList<Object>();
-        listaObras.add(obrasChoiceBox.getValue());
+        listaObras.add(obrasComboBox.getValue());
         Autor autor = new Autor((String) listaObras.get(0), 
                                 nombreUsuarioTextField.getText(), 
                                 contraseñaTextField.getText(), 
@@ -93,7 +95,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         
         super.listaAutores.add(autor);
             
-            System.out.println(autor.getListaObrasEscritas().get(0));
+        System.out.println(autor.getListaObrasEscritas().get(0));
         
     }
 
@@ -117,8 +119,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
     
-    public void llenarChoiceBox(){
-          
+    public void llenarComboBox(){
+        obrasComboBox.getItems().add("aaa");
     }
     
     /**
@@ -191,7 +193,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
             iDTextField.setText(autor.getIdentificacion());
             tipoIDTextField.setText(autor.getTipoDeIdentificacion());
             tipoUsuarioTextField.setText(autor.getTipoDeUsuario());
-            obrasChoiceBox.setValue(autor.getListaObrasEscritas());
+            obrasComboBox.setValue(autor.getListaObrasEscritas());
 
             // Pongo los botones en su estado correspondiente
 //            libroButtonModificar.setDisable(false);

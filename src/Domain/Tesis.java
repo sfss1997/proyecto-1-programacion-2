@@ -21,31 +21,31 @@ public class Tesis extends Catalogo {
     public Tesis() {
     }
 
-    public Tesis(SimpleStringProperty resumen, SimpleStringProperty abstracto) {
-        this.resumen = resumen;
-        this.abstracto = abstracto;
+    public Tesis(String resumen, String abstracto) {
+        this.resumen = new SimpleStringProperty(resumen);
+        this.abstracto = new SimpleStringProperty(abstracto);
     }
 
-    public Tesis(SimpleStringProperty resumen, SimpleStringProperty abstracto, String titulo, LocalDate fecha, String ListaAutores) {
+    public Tesis(String resumen, String abstracto, String titulo, LocalDate fecha, String ListaAutores) {
         super(titulo, fecha, ListaAutores);
-        this.resumen = resumen;
-        this.abstracto = abstracto;
+        this.resumen = new SimpleStringProperty(resumen);
+        this.abstracto = new SimpleStringProperty(abstracto);
     }
 
-    public SimpleStringProperty getResumen() {
-        return resumen;
+    public String getResumen() {
+        return resumen.get();
     }
 
-    public void setResumen(SimpleStringProperty resumen) {
-        this.resumen = resumen;
+    public void setResumen(String resumen) {
+        this.resumen = new SimpleStringProperty(resumen);
     }
 
-    public SimpleStringProperty getAbstracto() {
-        return abstracto;
+    public String getAbstracto() {
+        return abstracto.get();
     }
 
-    public void setAbstracto(SimpleStringProperty abstracto) {
-        this.abstracto = abstracto;
+    public void setAbstracto(String abstracto) {
+        this.abstracto = new SimpleStringProperty(abstracto);
     }
 
     

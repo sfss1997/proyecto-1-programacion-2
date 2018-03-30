@@ -26,8 +26,7 @@ public class Revistas extends Catalogo {
         this.edicion = new SimpleStringProperty(edicion);
     }
 
-    public Revistas(String isbn, String edicion, String titulo, LocalDate fecha, String ListaAutores) {
-        
+    public Revistas(String isbn, String edicion, String titulo, LocalDate fecha, String ListaAutores) {    
         super(titulo, fecha, ListaAutores);
         this.isbn = new SimpleStringProperty(isbn);
         this.edicion = new SimpleStringProperty(edicion);

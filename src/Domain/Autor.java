@@ -31,6 +31,14 @@ public class Autor extends Usuarios{
         this.listaObras = listaObras;
     }
     
+    public String getListaObras(){
+        String salida = "";
+        for(int i = 0; i < listaObrasEscritas.size(); i++){
+            
+        }
+        return salida;
+    }
+    
     public ArrayList<Object> getListaObrasEscritas(){
         return listaObrasEscritas;
     }

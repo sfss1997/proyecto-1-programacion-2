@@ -27,8 +27,8 @@ public class Periodico extends Catalogo {
         this.edicion = new SimpleStringProperty(edicion);
     }
 
-    public Periodico(String isbn, String edicion, String titulo, LocalDate fecha, String ListaAutores) {
-        super(titulo, fecha, ListaAutores);
+    public Periodico(String isbn, String edicion, String titulo, LocalDate fecha, String listaAutores) {
+        super(titulo, fecha, listaAutores);
         this.isbn = new SimpleStringProperty(isbn);
         this.edicion = new SimpleStringProperty(edicion);
     }

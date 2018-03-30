@@ -23,7 +23,7 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <Button mnemonicParsing="false" onAction="#libroButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Libros" textFill="WHITE">
+            <Button fx:id="botonLibro" mnemonicParsing="false" onAction="#libroButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Libros" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -33,17 +33,17 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#tesisButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Tesis" textFill="WHITE">
+            <Button fx:id="botonTesis" mnemonicParsing="false" onAction="#tesisButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Tesis" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#periodicoButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Periódicos" textFill="#fcfcfc">
+            <Button fx:id="botonPeriodico" mnemonicParsing="false" onAction="#periodicoButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Periódicos" textFill="#fcfcfc">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#memoriaButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Memorias" textFill="WHITE">
+            <Button fx:id="botonMemoria" mnemonicParsing="false" onAction="#memoriaButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Memorias" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

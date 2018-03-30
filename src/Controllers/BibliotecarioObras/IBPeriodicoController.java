@@ -6,8 +6,6 @@
 package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
-import static Datos.Listas.listaLibros;
-import Domain.Libro;
 import Domain.Periodico;
 import java.io.IOException;
 import java.net.URL;
@@ -68,7 +66,7 @@ public class IBPeriodicoController extends Listas implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Inicializa la tabla y las columnas para que funcione
-        inicializarTablaLibro();
+        inicializarTablaPeriodico();
         
         //Llena el choiceBox 
         llenarChoiceBox();
@@ -83,7 +81,7 @@ public class IBPeriodicoController extends Listas implements Initializable {
         //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
         //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
         final ObservableList<Periodico> tablaPeriodicoSel = periodicoTableView.getSelectionModel().getSelectedItems();
-        tablaPeriodicoSel.addListener(selectorTablaPeriodicos);
+        tablaPeriodicoSel.addListener(selectorTablaPeriodico);
     }    
     
     /**
@@ -144,16 +142,18 @@ public class IBPeriodicoController extends Listas implements Initializable {
      */
     
     //Inicializa la tabla
-    private void inicializarTablaLibro(){
+    private void inicializarTablaPeriodico(){
         //Solo hay que hacerlo con las columnas
         //Ejemplo:
 //  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
-        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
-        edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("edicion"));
-        autoresTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("listaAutores"));
-        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, LocalDate>("fecha"));
-        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("isbn"));
+        
+        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("isbn"));
+        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("titulo"));
+        edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("edicion"));
+        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, LocalDate>("fecha"));
+        autoresTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("listaAutores"));
+        
         
         periodicoTableView.setItems(super.listaPeriodicos);
     }
@@ -200,7 +200,7 @@ public class IBPeriodicoController extends Listas implements Initializable {
     /**
      * Listener de la tabla personas
      */
-    private final ListChangeListener<Periodico> selectorTablaPeriodicos =
+    private final ListChangeListener<Periodico> selectorTablaPeriodico =
             new ListChangeListener<Periodico>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Periodico> c) {

@@ -24,10 +24,10 @@ public class Catalogo {
     public Catalogo() {
     }
 
-    public Catalogo(String titulo, LocalDate fecha, String ListaAutores) {
+    public Catalogo(String titulo, LocalDate fecha, String listaAutores) {
         this.titulo = new SimpleStringProperty(titulo);
         this.fecha = fecha;
-        this.listaAutores = new SimpleStringProperty(ListaAutores);
+        this.listaAutores = new SimpleStringProperty(listaAutores);
     }
 
     public String getTitulo() {
@@ -50,8 +50,8 @@ public class Catalogo {
         return listaAutores.get();
     }
 
-    public void setListaAutores(String ListaAutores) {
-        this.listaAutores = new SimpleStringProperty(ListaAutores);
+    public void setListaAutores(String listaAutores) {
+        this.listaAutores = new SimpleStringProperty(listaAutores);
     }
 
     @Override

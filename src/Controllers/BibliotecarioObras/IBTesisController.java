@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -54,7 +55,7 @@ public class IBTesisController extends Listas implements Initializable {
     @FXML DatePicker fechaDatePicker;
     
     //ChoiceBox
-    @FXML ChoiceBox autorChoiceBox;
+    @FXML ComboBox autorComboBox;
     
     //Esto es para reconocer el numero de la fila que se selecicona en la tabla
     private int posicionEnTabla;
@@ -70,13 +71,13 @@ public class IBTesisController extends Listas implements Initializable {
         inicializarTablaTesis();
         
         //Llena el choiceBox 
-        llenarChoiceBox();
+        llenarComboBox();
         
         //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
         //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
         //se hubiera seleccionado
         //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-        autorChoiceBox.setValue("Autor");
+        autorComboBox.setValue("Autor");
         
         //Esto ni lo vea jaja solo se agrega y ya
         //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
@@ -100,7 +101,7 @@ public class IBTesisController extends Listas implements Initializable {
                                   abstractTextField.getText(), 
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
-                                  autorChoiceBox.getValue().toString());
+                                  autorComboBox.getValue().toString());
         if(validarInformacion() == true){
             //Se utiliza la listaLibros de la clase Listas
             super.listaTesis.add(tesis);
@@ -115,7 +116,7 @@ public class IBTesisController extends Listas implements Initializable {
                                 abstractTextField.getText(),
                                 tituloTextField.getText(), 
                                 fechaDatePicker.getValue(), 
-                                autorChoiceBox.getValue().toString());
+                                autorComboBox.getValue().toString());
         if(validarInformacion() == true){
             super.listaTesis.set(posicionEnTabla, tesis);
             limpiarButton();  
@@ -135,9 +136,20 @@ public class IBTesisController extends Listas implements Initializable {
         abstractTextField.setText("");
         tituloTextField.setText("");
         fechaDatePicker.setValue(LocalDate.now());
-        autorChoiceBox.setValue("Autor");
+        autorComboBox.setValue("Autor");
     }
     
+    public void llenarComboBox(){
+        //El addAll es para agregar más de un elemento a la ves
+        autorComboBox.getItems().add("Autor");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
+    }
+    
+    public void agregarAutorButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
+    }
     /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
@@ -172,7 +184,7 @@ public class IBTesisController extends Listas implements Initializable {
     //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
     private void llenarChoiceBox(){
         //El addAll es para agregar más de un elemento a la ves
-        autorChoiceBox.getItems().addAll("Autor","aaaa");
+        autorComboBox.getItems().addAll("Autor","aaaa");
     }
     
     //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
@@ -180,7 +192,7 @@ public class IBTesisController extends Listas implements Initializable {
         if(tituloTextField.getText().equals("") ||
            resumenTextField.getText().equals("") ||
            abstractTextField.getText().equals("") ||
-           autorChoiceBox.getValue().equals("Autor"))
+           autorComboBox.getValue().equals("Autor"))
             return false;
         return true;
     }
@@ -233,7 +245,7 @@ public class IBTesisController extends Listas implements Initializable {
             // Pongo los textFields con los datos correspondientes
             tituloTextField.setText(tesis.getTitulo());
             resumenTextField.setText(tesis.getResumen());
-            autorChoiceBox.setValue(tesis.getListaAutores());
+            autorComboBox.setValue(tesis.getListaAutores());
             fechaDatePicker.setValue(tesis.getFecha());
             abstractTextField.setText(tesis.getAbstracto());
 

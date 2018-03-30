@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -22,12 +22,12 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView prefHeight="210.0" prefWidth="600.0">
+            <TableView fx:id="tesisTableView" prefHeight="210.0" prefWidth="600.0">
                <columns>
-                  <TableColumn prefWidth="102.0" text="Titulo" />
-                  <TableColumn prefWidth="121.0" text="Resumen" />
-                  <TableColumn prefWidth="120.0" text="Asbtract" />
-                  <TableColumn prefWidth="113.0" text="Fecha" />
+                  <TableColumn fx:id="tituloTableColumn" prefWidth="102.0" text="Titulo" />
+                  <TableColumn fx:id="resumenTableColumn" prefWidth="121.0" text="Resumen" />
+                  <TableColumn fx:id="abstractTableColumn" prefWidth="120.0" text="Asbtract" />
+                  <TableColumn fx:id="fechaTableColumn" prefWidth="113.0" text="Fecha" />
                   <TableColumn fx:id="autoresTableColumn" prefWidth="123.0" text="Autores" />
                </columns>
             </TableView>
@@ -45,10 +45,10 @@
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
                         <TextField fx:id="abstractTextField" promptText="Abstract" style="-fx-border-color: #ff0808;" />
-                        <ChoiceBox fx:id="autorChoiceBox" prefHeight="25.0" prefWidth="194.0" />
+                        <ComboBox fx:id="autorComboBox" onAction="#llenarComboBox" prefHeight="25.0" prefWidth="170.0" />
                         <AnchorPane prefHeight="32.0" prefWidth="165.0">
                            <children>
-                              <Button layoutX="64.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: #ff0808;" text="Agregar Autor" textFill="WHITE" />
+                              <Button fx:id="botonAgregarAutor" layoutX="64.0" layoutY="2.0" mnemonicParsing="false" onAction="#agregarAutorButton" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: #ff0808;" text="Agregar Autor" textFill="WHITE" />
                            </children>
                         </AnchorPane>
                      </children>

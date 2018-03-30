@@ -6,8 +6,6 @@
 package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
-import Domain.Libro;
-import Domain.OnAction;
 import Domain.Revistas;
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -56,7 +54,7 @@ public class IBRevistaController extends Listas implements Initializable {
     @FXML DatePicker fechaDatePicker;
     
     //ChoiceBox
-    @FXML ChoiceBox autorChoiceBox;
+    @FXML ComboBox autorComboBox;
         
     //Esto es para reconocer el numero de la fila que se selecicona en la tabla
     private int posicionEnTabla;
@@ -72,13 +70,13 @@ public class IBRevistaController extends Listas implements Initializable {
         inicializarTablaRevista();
         
         //Llena el choiceBox 
-        llenarChoiceBox();
+        llenarComboBox();
         
         //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
         //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
         //se hubiera seleccionado
         //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-        autorChoiceBox.setValue("Autor");
+        autorComboBox.setValue("Autor");
         
         //Esto ni lo vea jaja solo se agrega y ya
         //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
@@ -102,7 +100,7 @@ public class IBRevistaController extends Listas implements Initializable {
                                   edicionTextField.getText(),
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
-                                  autorChoiceBox.getValue().toString());
+                                  autorComboBox.getValue().toString());
         if(validarInformacion() == true){
             //Se utiliza la listaLibros de la clase Listas
             super.listaRevistas.add(revista);
@@ -116,7 +114,7 @@ public class IBRevistaController extends Listas implements Initializable {
                                         edicionTextField.getText(),  
                                         tituloTextField.getText(), 
                                         fechaDatePicker.getValue(), 
-                                        autorChoiceBox.getValue().toString());
+                                        autorComboBox.getValue().toString());
         if(validarInformacion() == true){
             super.listaRevistas.set(posicionEnTabla, revistas);
             limpiarButton();  
@@ -137,7 +135,7 @@ public class IBRevistaController extends Listas implements Initializable {
         edicionTextField.setText("");
         tituloTextField.setText("");
         fechaDatePicker.setValue(LocalDate.now());
-        autorChoiceBox.setValue("Autor");
+        autorComboBox.setValue("Autor");
     }
 
      /**
@@ -175,9 +173,12 @@ public class IBRevistaController extends Listas implements Initializable {
     }
     
     //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
-    private void llenarChoiceBox() {
+    private void llenarComboBox() {
          //El addAll es para agregar más de un elemento a la ves
-        autorChoiceBox.getItems().addAll("Autor","aaaa");
+        autorComboBox.getItems().addAll("Autor","aaaa");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
     }
     
     //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
@@ -185,7 +186,7 @@ public class IBRevistaController extends Listas implements Initializable {
         if(tituloTextField.getText().equals("") ||
            edicionTextField.getText().equals("") ||
            isbnTextField.getText().equals("") ||
-           autorChoiceBox.getValue().equals("Autor"))
+           autorComboBox.getValue().equals("Autor"))
             return false;
         return true;
     }
@@ -238,7 +239,7 @@ public class IBRevistaController extends Listas implements Initializable {
             // Pongo los textFields con los datos correspondientes
             tituloTextField.setText(revistas.getTitulo());
             edicionTextField.setText(revistas.getEdicion());
-            autorChoiceBox.setValue(revistas.getListaAutores());
+            autorComboBox.setValue(revistas.getListaAutores());
             fechaDatePicker.setValue(revistas.getFecha());
             isbnTextField.setText(revistas.getIssn());
 

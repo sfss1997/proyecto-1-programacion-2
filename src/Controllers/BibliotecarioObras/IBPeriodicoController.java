@@ -176,6 +176,9 @@ public class IBPeriodicoController extends Listas implements Initializable {
     private void llenarComboBox(){
         //El addAll es para agregar más de un elemento a la ves
         autorComboBox.getItems().addAll("Autor","aaaa");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
     }
     
      //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"

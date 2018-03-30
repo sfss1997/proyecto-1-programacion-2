@@ -5,6 +5,7 @@
  */
 package Domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -14,35 +15,27 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Autor extends Usuarios{
     
-    private List<Libro> listaObrasEscritas;
+    private ArrayList<Object> listaObrasEscritas;
+    private String listaObras;
 
     public Autor() {
     }
 
-    public Autor(List<Libro> listaObrasEscritas) {
+    public Autor(ArrayList<Object> listaObrasEscritas) {
         this.listaObrasEscritas = listaObrasEscritas;
     }
 
-    public Autor(List<Libro> listaObrasEscritas, String nombreUnico, String contraseña, String nombreCompleto, 
+    public Autor(String listaObras, String nombreUnico, String contraseña, String nombreCompleto, 
             String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
         super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
-        this.listaObrasEscritas = listaObrasEscritas;
-    }
-
-    public String getListaObrasEscritas() {
-        String salida = "";
-        for(int i = 0; i<listaObrasEscritas.size(); i++){
-            Libro libro = new Libro();
-            salida = listaObrasEscritas.get(i).getTitulo() + ", ";
-        }
-        return salida;
+        this.listaObras = listaObras;
     }
     
-    public List<Libro> getListaObras(){
+    public ArrayList<Object> getListaObrasEscritas(){
         return listaObrasEscritas;
     }
 
-    public void setListaObrasEscritas(List<Libro> listaObrasEscritas) {
+    public void setListaObrasEscritas(ArrayList<Object> listaObrasEscritas) {
         this.listaObrasEscritas = listaObrasEscritas;
     }
     

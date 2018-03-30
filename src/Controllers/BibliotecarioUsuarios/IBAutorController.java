@@ -9,6 +9,7 @@ import Domain.Autor;
 import Datos.Listas;
 import Domain.Libro;
 import Domain.OnAction;
+import Domain.Usuarios;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        veridicaAutores();
+        
         inicializarTablaLibro();
 
         tipoObraComboBox.getItems().addAll("Ninguno", "Libro", "Revista", "Tesis", "Periódico", "Memoria", "Otro");
@@ -92,7 +95,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
                                 iDTextField.getText(), 
                                 tipoUsuarioTextField.getText());
         super.listaAutores.add(autor);
-            
+        super.listaUsuarios.add(autor);
         
     }
 
@@ -103,7 +106,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
 
     @Override
     public void eliminarButton() {
-        listaAutores.remove(posicionEnTabla);
+        super.listaAutores.remove(posicionEnTabla);
+        
     }
 
     @Override
@@ -126,6 +130,10 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     /**
      * Metodos ---------------------------------------- 
      */
+    
+    private void veridicaAutores(){
+        
+    }
     
     //Inicializa la tabla
     private void inicializarTablaLibro(){

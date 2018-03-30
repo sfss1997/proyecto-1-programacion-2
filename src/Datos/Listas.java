@@ -6,7 +6,9 @@
 package Datos;
 
 import Domain.Autor;
+import Domain.Cliente;
 import Domain.Libro;
+import Domain.Usuarios;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -19,7 +21,7 @@ import javafx.collections.ObservableList;
 public class Listas {
     
     
-    public static ObservableList<Object> listaUsuarios = FXCollections.observableArrayList();
+    public static ObservableList<Usuarios> listaUsuarios = FXCollections.observableArrayList();
     public static ObservableList<Autor> listaAutores = FXCollections.observableArrayList();
     public static ObservableList<Object> listaBibliotecarios = FXCollections.observableArrayList();
     public static ObservableList<Object> listaRevistas = FXCollections.observableArrayList();
@@ -27,15 +29,16 @@ public class Listas {
     public static ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
     public static ObservableList<Object> listaPeriodicos = FXCollections.observableArrayList();
     public static ObservableList<Object> listaMemorias = FXCollections.observableArrayList();
+    public static ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
     
     public Listas() {
     }
 
-    public static ObservableList<Object> getListaUsuarios() {
+    public static ObservableList<Usuarios> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public static void setListaUsuarios(ObservableList<Object> listaUsuarios) {
+    public static void setListaUsuarios(ObservableList<Usuarios> listaUsuarios) {
         Listas.listaUsuarios = listaUsuarios;
     }
 

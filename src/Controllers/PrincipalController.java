@@ -17,6 +17,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -26,10 +28,28 @@ import javafx.stage.Stage;
 public class PrincipalController extends Listas implements Initializable {
     
     
+    @FXML TextField nombreUsuarioTextField;
+    
+    @FXML PasswordField contraseñaPasswordField;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     } 
+    
+    public void iniciarButton(ActionEvent event) throws IOException{
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuarioTextField.getText()) &&
+               listaUsuarios.get(i).getContraseña().equals(contraseñaPasswordField.getText())){
+                if(listaUsuarios.get(i).getTipoDeUsuario().equals("Bibliotecario"))
+                    cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
+                if(listaUsuarios.get(i).getTipoDeUsuario().equals("Autor"))
+                    cambioScene(event, "/GUI/InterfazAutor.fxml");
+                if(listaUsuarios.get(i).getTipoDeUsuario().equals("Cliente"))
+                    cambioScene(event, "/GUI/InterfazCliente.fxml");
+            }
+        }
+    }
     
     public void bibliotecario(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");

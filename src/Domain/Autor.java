@@ -47,6 +47,11 @@ public class Autor extends Usuarios{
     public void setListaObrasEscritas(ArrayList<Object> listaObrasEscritas) {
         this.listaObrasEscritas = listaObrasEscritas;
     }
+
+    @Override
+    public String toString() {
+        return "Autor{" + "listaObras=" + listaObras + '}';
+    }
     
     
 

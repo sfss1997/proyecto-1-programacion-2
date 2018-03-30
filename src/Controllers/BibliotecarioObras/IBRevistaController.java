@@ -109,7 +109,7 @@ public class IBRevistaController extends Listas implements Initializable {
         }
     }
 
-    
+    //Modifica un elemento seleccionado en la tabla
     public void modificarButton() {
         Revistas revistas = new Revistas(isbnTextField.getText(), 
                                         edicionTextField.getText(),  
@@ -163,12 +163,11 @@ public class IBRevistaController extends Listas implements Initializable {
 //  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
         
-        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("issn"));  
-        edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("edicion"));
+        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("isbn"));  
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("titulo"));
-        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, LocalDate>("fecha"));
+        edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("edicion"));
         autorTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, String>("listaAutores"));
-        
+        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Revistas, LocalDate>("fecha"));
         
         
         revistaTableView.setItems(super.listaRevistas);

@@ -95,6 +95,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
                                                              tipoIDComboBox.getValue().toString(), 
                                                              tipoUsuarioTextField.getText());
         listaBibliotecarios.set(posicionEnTabla, nuevoBibliotecario);
+        modificarUsuarioBibliotecario(nuevoBibliotecario);
         limpiarButton();
     }
 
@@ -119,6 +120,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
         contraseñaTextField.setText("");
         iDTextField.setText("");
         tipoIDComboBox.setValue("Seleccione una opción");
+        avisoLabel.setText("");
     }
     
     //Cambiar a la ventada de bibliotecario
@@ -133,6 +135,20 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     /**
      * Metodos.
      */
+    
+    private void modificarUsuarioBibliotecario(Bibliotecario bibliotecario){
+        final Bibliotecario b = getTablaLibrosSeleccionado();
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuarioTextField.getText())){
+                listaUsuarios.get(i).setNombre(bibliotecario.getNombre());
+                listaUsuarios.get(i).setNombreUsuario(bibliotecario.getNombreUsuario());
+                listaUsuarios.get(i).setContraseña(bibliotecario.getContraseña());
+                listaUsuarios.get(i).setIdentificacion(bibliotecario.getIdentificacion());
+                listaUsuarios.get(i).setTipoDeIdentificacion(bibliotecario.getTipoDeIdentificacion());
+                listaUsuarios.get(i).setTipoDeUsuario(bibliotecario.getTipoDeUsuario());
+            }
+        }
+    }
     
     private boolean verificaUsuarioActivo(){
         final Bibliotecario bibliotecario = getTablaLibrosSeleccionado();

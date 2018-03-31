@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -52,6 +53,8 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     
     @FXML ComboBox tipoIDComboBox;
     
+    @FXML Label avisoLabel;
+    
     private int posicionEnTabla;
     
     /**
@@ -60,7 +63,8 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inicializarTabla();
-        tipoIDComboBox.getItems().add("Cedula");
+        tipoIDComboBox.getItems().addAll("Seleccione una opción", "Cedula");
+        tipoIDComboBox.setValue("Seleccione una opción");
         
         final ObservableList<Bibliotecario> tablaLibroSel = bibliotecarioTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaLibros);
@@ -74,9 +78,12 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
                                                              iDTextField.getText(), 
                                                              tipoIDComboBox.getValue().toString(), 
                                                              tipoUsuarioTextField.getText());
-        listaBibliotecarios.add(nuevoBibliotecario);
-        listaUsuarios.add(nuevoBibliotecario);
-        limpiarButton();
+        if(verificaInformacion() == true)
+            if(verificaUsuarioExistente() == false){
+                listaBibliotecarios.add(nuevoBibliotecario);
+                listaUsuarios.add(nuevoBibliotecario);
+                limpiarButton();
+            }
     }
 
     @Override
@@ -93,8 +100,16 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
 
     @Override
     public void eliminarButton() {
-        listaBibliotecarios.remove(posicionEnTabla);
-        limpiarButton();
+        if(verificaUsuarioActivo() == false){
+            final Bibliotecario bibliotecario = getTablaLibrosSeleccionado();
+            for (int i = 0; i < listaUsuarios.size(); i++) {
+                if(bibliotecario.getNombreUsuario().equals(listaUsuarios.get(i).getNombreUsuario()))
+                    listaUsuarios.remove(i);
+            }
+            listaBibliotecarios.remove(posicionEnTabla);
+            limpiarButton();
+            
+        }
     }
 
     @Override
@@ -103,13 +118,51 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
         nombreUsuarioTextField.setText("");
         contraseñaTextField.setText("");
         iDTextField.setText("");
-        tipoIDComboBox.setValue("Cedula");
-        tipoUsuarioTextField.setText("");
+        tipoIDComboBox.setValue("Seleccione una opción");
     }
     
     //Cambiar a la ventada de bibliotecario
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
+    }
+    
+    
+
+    
+    
+    /**
+     * Metodos.
+     */
+    
+    private boolean verificaUsuarioActivo(){
+        final Bibliotecario bibliotecario = getTablaLibrosSeleccionado();
+        if(bibliotecario.getEstado().equals("activo")){
+            avisoLabel.setText("Este usuario está activo\nNo puede ser eliminado");
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean verificaInformacion(){
+        if(nombreTextField.getText().equals("") ||
+           nombreUsuarioTextField.getText().equals("") ||
+           contraseñaTextField.getText().equals("") ||
+           iDTextField.getText().equals("") ||
+           tipoIDComboBox.getValue().equals("Seleccione una opción")){
+            avisoLabel.setText("Complete todos los espacios");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean verificaUsuarioExistente(){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(nombreUsuarioTextField.getText().equals(listaUsuarios.get(i).getNombreUsuario())){
+                avisoLabel.setText("El usuario ya existe\nIngrese otro");
+                return true;
+            }
+        }
+        return false;
     }
     
     //Codigo para cambiar de ventana
@@ -123,12 +176,6 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
         window.setScene(tableViewScene);
         window.show();
     }
-
-    
-    
-    /**
-     * Metodos.
-     */
     
     public void inicializarTabla(){
         nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Bibliotecario, String>("nombre"));

@@ -37,7 +37,15 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
     
     //Volver a la ventana principal
     public void salirButton(ActionEvent event) throws IOException{
+        buscaUsuarioActivo();
         cambioScene(event, "/GUI/Principal.fxml");
+    }
+    
+    private void buscaUsuarioActivo(){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getEstado().equals("activo"))
+                listaUsuarios.get(i).setEstado("inactivo");
+        }
     }
     
     /**

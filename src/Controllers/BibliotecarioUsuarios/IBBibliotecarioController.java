@@ -5,15 +5,28 @@
  */
 package Controllers.BibliotecarioUsuarios;
 
+import Datos.Listas;
+import static Datos.Listas.listaLibros;
+import Domain.Bibliotecario;
+import Domain.OnAction;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -21,15 +34,78 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBBibliotecarioController implements Initializable {
+public class IBBibliotecarioController extends Listas implements Initializable, OnAction {
 
+    @FXML TableView bibliotecarioTableView;
+    @FXML TableColumn nombreTableColumn;
+    @FXML TableColumn nombreUsuarioTableColumn;
+    @FXML TableColumn contraseñaTableColumn;
+    @FXML TableColumn iDTableColumn;
+    @FXML TableColumn tipoIDTableColumn;
+    @FXML TableColumn tipoUsuarioTableColumn;
+    
+    @FXML TextField nombreTextField;
+    @FXML TextField nombreUsuarioTextField;
+    @FXML TextField contraseñaTextField;
+    @FXML TextField iDTextField;
+    @FXML TextField tipoUsuarioTextField;
+    
+    @FXML ComboBox tipoIDComboBox;
+    
+    private int posicionEnTabla;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }   
+        inicializarTabla();
+        tipoIDComboBox.getItems().add("Cedula");
+        
+        final ObservableList<Bibliotecario> tablaLibroSel = bibliotecarioTableView.getSelectionModel().getSelectedItems();
+        tablaLibroSel.addListener(selectorTablaLibros);
+    }
+    
+    @Override
+    public void agregarButton() {
+        Bibliotecario nuevoBibliotecario = new Bibliotecario(nombreTextField.getText(), 
+                                                             nombreUsuarioTextField.getText(), 
+                                                             contraseñaTextField.getText(), 
+                                                             iDTextField.getText(), 
+                                                             tipoIDComboBox.getValue().toString(), 
+                                                             tipoUsuarioTextField.getText());
+        listaBibliotecarios.add(nuevoBibliotecario);
+        listaUsuarios.add(nuevoBibliotecario);
+        limpiarButton();
+    }
+
+    @Override
+    public void modificarButton() {
+        Bibliotecario nuevoBibliotecario = new Bibliotecario(nombreTextField.getText(), 
+                                                             nombreUsuarioTextField.getText(), 
+                                                             contraseñaTextField.getText(), 
+                                                             iDTextField.getText(), 
+                                                             tipoIDComboBox.getValue().toString(), 
+                                                             tipoUsuarioTextField.getText());
+        listaBibliotecarios.set(posicionEnTabla, nuevoBibliotecario);
+        limpiarButton();
+    }
+
+    @Override
+    public void eliminarButton() {
+        listaBibliotecarios.remove(posicionEnTabla);
+        limpiarButton();
+    }
+
+    @Override
+    public void limpiarButton() {
+        nombreTextField.setText("");
+        nombreUsuarioTextField.setText("");
+        contraseñaTextField.setText("");
+        iDTextField.setText("");
+        tipoIDComboBox.setValue("Cedula");
+        tipoUsuarioTextField.setText("");
+    }
     
     //Cambiar a la ventada de bibliotecario
     public void volverButton(ActionEvent event) throws IOException{
@@ -46,6 +122,72 @@ public class IBBibliotecarioController implements Initializable {
         
         window.setScene(tableViewScene);
         window.show();
+    }
+
+    
+    
+    /**
+     * Metodos.
+     */
+    
+    public void inicializarTabla(){
+        nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Bibliotecario, String>("nombre"));
+        nombreUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Bibliotecario, String>("nombreUsuario"));
+        contraseñaTableColumn.setCellValueFactory(new PropertyValueFactory<Bibliotecario, String>("contraseña"));
+        iDTableColumn.setCellValueFactory(new PropertyValueFactory<Bibliotecario, String>("identificacion"));
+        tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Bibliotecario, String>("tipoDeIdentificacion"));
+        tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Bibliotecario, String>("tipoDeUsuario"));
+        
+        bibliotecarioTableView.setItems(super.listaBibliotecarios);
+    }
+    
+    /**
+     * Listener de la tabla personas
+     */
+    private final ListChangeListener<Bibliotecario> selectorTablaLibros =
+            new ListChangeListener<Bibliotecario>() {
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Bibliotecario> c) {
+                    ponerLibroSeleccionado();
+                }
+            };
+
+    /**
+     * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
+     */
+    public Bibliotecario getTablaLibrosSeleccionado() {
+        if (bibliotecarioTableView != null) {
+            List<Bibliotecario> tabla = bibliotecarioTableView.getSelectionModel().getSelectedItems();
+            if (tabla.size() == 1) {
+                final Bibliotecario competicionSeleccionada = tabla.get(0);
+                return competicionSeleccionada;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Método para poner en los textFields la tupla que selccionemos
+     */
+    private void ponerLibroSeleccionado() {
+        final Bibliotecario bibliotecario = getTablaLibrosSeleccionado();
+        posicionEnTabla = listaBibliotecarios.indexOf(bibliotecario);
+
+        if (bibliotecario != null) {
+
+            // Pongo los textFields con los datos correspondientes
+            nombreTextField.setText(bibliotecario.getNombre());
+            nombreUsuarioTextField.setText(bibliotecario.getNombreUsuario());
+            contraseñaTextField.setText(bibliotecario.getContraseña());
+            iDTextField.setText(bibliotecario.getIdentificacion());
+            tipoIDComboBox.setValue(bibliotecario.getTipoDeIdentificacion());
+            tipoUsuarioTextField.setText(bibliotecario.getTipoDeUsuario());
+
+            // Pongo los botones en su estado correspondiente
+//            libroButtonModificar.setDisable(false);
+//            libroButtonEliminar.setDisable(false);
+
+        }
     }
     
 }

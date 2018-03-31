@@ -19,17 +19,19 @@ public class Usuarios {
     private SimpleStringProperty identificacion;
     private SimpleStringProperty tipoDeIdentificacion;
     private SimpleStringProperty tipoDeUsuario;
+    private String estado;
 
     public Usuarios() {
     }
 
-    public Usuarios(String nombreUsuario, String contraseña, String nombre, String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
+    public Usuarios(String nombre, String nombreUsuario, String contraseña, String identificacion, String tipoDeIdentificacion, String tipoDeUsuario) {
         this.nombreUsuario = new SimpleStringProperty(nombreUsuario);
         this.contraseña = new SimpleStringProperty(contraseña);
         this.nombre = new SimpleStringProperty(nombre);
         this.tipoDeIdentificacion = new SimpleStringProperty(tipoDeIdentificacion);
         this.identificacion = new SimpleStringProperty(identificacion);
         this.tipoDeUsuario = new SimpleStringProperty(tipoDeUsuario);
+        this.estado = "inactivo";
     }
 
     public String getNombreUsuario() {
@@ -78,6 +80,14 @@ public class Usuarios {
 
     public void setTipoDeUsuario(String tipoDeUsuario) {
         this.tipoDeUsuario = new SimpleStringProperty(tipoDeUsuario);
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @Override

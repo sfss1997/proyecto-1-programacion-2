@@ -40,13 +40,13 @@
               </rowConstraints>
                <children>
                   <Label text="Nombre:" />
-                  <Label text="Label" GridPane.columnIndex="1" />
                   <Label text="Nombre de usuairo:" GridPane.rowIndex="1" />
-                  <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="nombreUsuarioLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Tipo de ID:" GridPane.rowIndex="2" />
                   <Label text="ID:" GridPane.rowIndex="3" />
-                  <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="tipoIDLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="iDLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="nombreLabel" prefHeight="17.0" prefWidth="152.0" text="Label" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Editar" textFill="WHITE">

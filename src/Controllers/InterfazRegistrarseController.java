@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -38,6 +39,8 @@ public class InterfazRegistrarseController extends Listas implements Initializab
     @FXML ComboBox tipoIDComboBox;
     @FXML ComboBox tipoUsuarioComboBox;
     
+    @FXML Label avisoLabel;
+    
     /**
      * Initializes the controller class.
      */
@@ -45,7 +48,6 @@ public class InterfazRegistrarseController extends Listas implements Initializab
     public void initialize(URL url, ResourceBundle rb) {
         
         llenarComboBox();
-        
     }  
     
     /**
@@ -104,9 +106,24 @@ public class InterfazRegistrarseController extends Listas implements Initializab
            contraseñaTextField.getText().equals("") ||
            tipoIDComboBox.getValue().toString().equals("Seleccione una opción") ||
            iDTextField.getText().equals("") ||
-           tipoUsuarioComboBox.getValue().toString().equals("Seleccione una opción"))
+           tipoUsuarioComboBox.getValue().toString().equals("Seleccione una opción")){
+            
+            avisoLabel.setText("Rellene todas las\nopciones");
             return false;
+        }
+        if(verificaUsuarioExistente() == true){
+            avisoLabel.setText("Nombre de usuario\nya existe\nIngrese otro");
+            return false;
+        }
         return true;
+    }
+    
+    private boolean verificaUsuarioExistente(){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(nombreUsuarioTextField.getText().equals(listaUsuarios.get(i).getNombreUsuario()))
+                return true;
+        }
+        return false;
     }
     
     private void verificaTipoUsuario(){

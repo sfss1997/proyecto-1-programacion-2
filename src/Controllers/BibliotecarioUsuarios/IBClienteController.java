@@ -5,15 +5,18 @@
  */
 package Controllers.BibliotecarioUsuarios;
 
+import Datos.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -21,15 +24,19 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBClienteController implements Initializable {
+public class IBClienteController extends Listas implements Initializable {
 
+    
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
+    
+    
     
     //Cambiar a la ventada de bibliotecario
     public void volverButton(ActionEvent event) throws IOException{

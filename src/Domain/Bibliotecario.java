@@ -16,8 +16,7 @@ public class Bibliotecario extends Usuarios{
     public Bibliotecario(){
     }
     
-    public Bibliotecario(String nombreUnico, String contraseña, String nombreCompleto, String tipoDeIdentificacion, 
-            String identificacion, String tipoDeUsuario){
-        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
+    public Bibliotecario(String nombre, String nombreUsuario, String contraseña, String identificacion, String tipoDeIdentificacion, String tipoDeUsuario){
+        super(nombre, nombreUsuario, contraseña, identificacion, tipoDeIdentificacion, tipoDeUsuario);
     }
 }

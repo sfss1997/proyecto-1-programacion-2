@@ -41,6 +41,8 @@ public class PrincipalController extends Listas implements Initializable {
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuarioTextField.getText()) &&
                listaUsuarios.get(i).getContraseña().equals(contraseñaPasswordField.getText())){
+                listaUsuarios.get(i).setEstado("activo");
+                System.out.println(listaUsuarios.get(i).getNombreUsuario()+ "  " + listaUsuarios.get(i).getEstado());
                 if(listaUsuarios.get(i).getTipoDeUsuario().equals("Bibliotecario"))
                     cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
                 if(listaUsuarios.get(i).getTipoDeUsuario().equals("Autor"))
@@ -49,6 +51,7 @@ public class PrincipalController extends Listas implements Initializable {
                     cambioScene(event, "/GUI/InterfazCliente.fxml");
             }
         }
+        
     }
     
     public void bibliotecario(ActionEvent event) throws IOException{

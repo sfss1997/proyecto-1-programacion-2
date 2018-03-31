@@ -162,9 +162,9 @@ public class IBTesisController extends Listas implements Initializable {
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Tesis, String>("titulo"));
         resumenTableColumn.setCellValueFactory(new PropertyValueFactory<Tesis, String>("resumen"));
-        abstractTableColumn.setCellValueFactory(new PropertyValueFactory<Tesis, String>("abstract"));
+        abstractTableColumn.setCellValueFactory(new PropertyValueFactory<Tesis, String>("abstracto"));
         fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Tesis, LocalDate>("fecha"));
-        autoresTableColumn.setCellValueFactory(new PropertyValueFactory<Tesis, String>("autores"));
+        autoresTableColumn.setCellValueFactory(new PropertyValueFactory<Tesis, String>("listaAutores"));
         
         tesisTableView.setItems(super.listaTesis);
     }

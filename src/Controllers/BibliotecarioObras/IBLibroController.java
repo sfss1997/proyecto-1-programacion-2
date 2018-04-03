@@ -14,9 +14,12 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -54,6 +58,7 @@ public class IBLibroController extends Listas implements Initializable{
     @FXML TextField temaTextField;
     @FXML TextField subTemaTextField;
     @FXML TextField codigoTextField;
+    @FXML TextField buscarTextField;
     
     //DatePicker
     @FXML DatePicker fechaDatePicker;
@@ -64,9 +69,11 @@ public class IBLibroController extends Listas implements Initializable{
     //Esto es para reconocer el numero de la fila que se selecicona en la tabla
     private int posicionEnTabla;
     
+    FilteredList filter = new FilteredList(listaLibros, e -> true);
+    
     
     /**
-     * Este metodo es el que se ejecuta apenas entra a la interfaz.
+     * Este metodo es el que se ejcuta apenas entra a la interfaz.
      * Es como un constructor
      */
     @Override
@@ -95,11 +102,13 @@ public class IBLibroController extends Listas implements Initializable{
      */
     
     //Cambiar a la ventada de bibliotecario
+    @FXML
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
     
     //Agrega un nuevo libro
+    @FXML
     public void agregarButton(){
         Libro libro = new Libro(codigoTextField.getText(), 
                                   temaTextField.getText(), 
@@ -116,6 +125,7 @@ public class IBLibroController extends Listas implements Initializable{
     }
     
     //Modifica un elemento seleccionado en la tabla
+    @FXML
     public void modificarButton(){
         Libro libro = new Libro(codigoTextField.getText(), 
                                   temaTextField.getText(), 
@@ -130,6 +140,7 @@ public class IBLibroController extends Listas implements Initializable{
     }
     
     //Elimina el elemento seleccionado en la tabla
+    @FXML
     public void eliminarButton(){
         listaLibros.remove(posicionEnTabla);
     }
@@ -137,6 +148,7 @@ public class IBLibroController extends Listas implements Initializable{
     //Limpia lo que hay en los TextFields
     //Asigna al ChoiceBox el elemento de "Autor"
     //Asigna al DatePicker la fecha actual
+    @FXML
     public void limpiarButton(){
         codigoTextField.setText("");
         temaTextField.setText("");
@@ -147,6 +159,7 @@ public class IBLibroController extends Listas implements Initializable{
     }
     
     //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
+    @FXML
     public void llenarComboBox(){
         //El addAll es para agregar más de un elemento a la ves
         autorComboBox.getItems().add("Autor");
@@ -155,6 +168,7 @@ public class IBLibroController extends Listas implements Initializable{
         }
     }
     
+    @FXML
     public void agregarAutorButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
     }
@@ -261,6 +275,34 @@ public class IBLibroController extends Listas implements Initializable{
 //            libroButtonEliminar.setDisable(false);
 
         }
+    }
+
+    @FXML
+    private void buscar(KeyEvent event) {
+        
+        buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+           
+            filter.setPredicate((Predicate<? super Libro>) (Libro libro)->{
+            
+            
+                if(newValue.isEmpty() || newValue==null){
+                    return true;
+                }
+                else if(libro.getTitulo().contains(newValue)){
+                    return true;
+                }
+                
+                
+                return false;
+            });
+            
+            
+        });
+        
+        SortedList sort = new SortedList(filter);
+        sort.comparatorProperty().bind(libroTableView.comparatorProperty());
+        libroTableView.setItems(sort);
+        
     }
     
 }

@@ -17,11 +17,16 @@
    <children>
       <VBox prefHeight="374.0" prefWidth="600.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Libros" textFill="#a2a2a2">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <HBox prefHeight="21.0" prefWidth="690.0" spacing="30.0">
+               <children>
+                  <Label text="Libros" textFill="#a2a2a2">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="buscarTextField" onKeyReleased="#buscar" prefHeight="25.0" prefWidth="163.0" promptText="Buscar" />
+               </children>
+            </HBox>
             <TableView fx:id="libroTableView" prefHeight="188.0" prefWidth="694.0">
               <columns>
                 <TableColumn fx:id="tituloTableColumn" minWidth="115.0" prefWidth="75.0" text="Título" />

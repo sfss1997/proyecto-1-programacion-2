@@ -99,7 +99,7 @@ public class IBMemoriaController extends Listas implements Initializable {
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
     
-    //Agrega un nuevo libro
+    //Agrega una nueva memoria
     public void agregarButton(){
         Memoria memoria = new Memoria(resumenTextField.getText(), 
                                   abstractoTextField.getText(), 
@@ -108,7 +108,7 @@ public class IBMemoriaController extends Listas implements Initializable {
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
         if(validarInformacion() == true){
-            //Se utiliza la listaLibros de la clase Listas
+            //Se utiliza la listaMemorias de la clase Listas
             super.listaMemorias.add(memoria);
             limpiarButton();  
         }

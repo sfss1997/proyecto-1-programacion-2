@@ -95,14 +95,14 @@ public class IBOtroController extends Listas implements Initializable {
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
     
-    //Agrega un nuevo libro
+    //Agrega un nuevo otro
     public void agregarButton(){
         Otro otro = new Otro(tipoTextField.getText(), 
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
         if(validarInformacion() == true){
-            //Se utiliza la listaLibros de la clase Listas
+            //Se utiliza la listaOtros de la clase Listas
             super.listaOtros.add(otro);
             limpiarButton();  
         }

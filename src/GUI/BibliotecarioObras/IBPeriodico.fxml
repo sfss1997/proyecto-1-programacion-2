@@ -44,7 +44,7 @@
                   </VBox>
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
-                        <TextField fx:id="edicionTextField" promptText="Edicion" style="-fx-border-color: #ff0808;" />
+                        <TextField fx:id="edicionTextField" promptText="Edicion" />
                         <ComboBox fx:id="autorComboBox" prefHeight="25.0" prefWidth="188.0" />
                         <AnchorPane prefHeight="32.0" prefWidth="165.0">
                            <children>

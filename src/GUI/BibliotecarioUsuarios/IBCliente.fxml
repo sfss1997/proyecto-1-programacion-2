@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controllers.BibliotecarioUsuarios.IBClienteController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BibliotecarioUsuarios.IBClienteController">
    <children>
       <VBox prefHeight="357.0" prefWidth="600.0">
          <children>
@@ -42,7 +41,7 @@
                   </VBox>
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
-                        <TextField promptText="Contraseña" style="-fx-border-color: #ff0808;" />
+                        <TextField promptText="Contraseña" />
                         <TextField editable="false" text="Cliente" />
                         <ChoiceBox prefHeight="25.0" prefWidth="194.0" />
                         <AnchorPane prefHeight="32.0" prefWidth="165.0" />

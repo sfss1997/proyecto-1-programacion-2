@@ -45,7 +45,7 @@
                   </VBox>
                   <VBox prefHeight="201.0" prefWidth="182.0" spacing="20.0">
                      <children>
-                        <TextField fx:id="contraseñaTextField" promptText="Contraseña" style="-fx-border-color: #ff0808;" />
+                        <TextField fx:id="contraseñaTextField" promptText="Contraseña" />
                         <TextField fx:id="tipoUsuarioTextField" editable="false" text="Bibliotecario" />
                         <ComboBox fx:id="tipoIDComboBox" prefHeight="25.0" prefWidth="329.0" />
                         <AnchorPane prefHeight="32.0" prefWidth="165.0" />

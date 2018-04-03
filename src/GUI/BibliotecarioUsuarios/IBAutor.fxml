@@ -46,7 +46,7 @@
                   </VBox>
                   <VBox prefHeight="135.0" prefWidth="187.0" spacing="20.0">
                      <children>
-                        <TextField fx:id="contraseñaTextField" promptText="Contraseña" style="-fx-border-color: #ff0808;" />
+                        <TextField fx:id="contraseñaTextField" promptText="Contraseña" />
                         <TextField fx:id="tipoUsuarioTextField" editable="false" text="Autor" />
                         <TextField fx:id="tipoIDTextField" promptText="Tipo de ID" />
                      </children>

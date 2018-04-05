@@ -22,7 +22,7 @@ import javafx.collections.ObservableList;
  */
 public class Listas {
     
-    public static ObservableList<Object> listaRelacion = FXCollections.observableArrayList();
+    public static ObservableList<Relacion> listaRelacion = FXCollections.observableArrayList();
     public static ObservableList<Usuarios> listaUsuarios = FXCollections.observableArrayList();
     public static ObservableList<Autor> listaAutores = FXCollections.observableArrayList();
     public static ObservableList<Object> listaBibliotecarios = FXCollections.observableArrayList();
@@ -37,11 +37,11 @@ public class Listas {
     public Listas() {
     }
 
-    public static ObservableList<Object> getListaRelacion() {
+    public static ObservableList<Relacion> getListaRelacion() {
         return listaRelacion;
     }
 
-    public static void setListaRelacion(ObservableList<Object> listaRelacion) {
+    public static void setListaRelacion(ObservableList<Relacion> listaRelacion) {
         Listas.listaRelacion = listaRelacion;
     }
 

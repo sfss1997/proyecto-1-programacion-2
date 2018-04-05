@@ -6,6 +6,7 @@
 package Controllers.BibliotecarioObras;
 
 import Domain.Libro;
+import Domain.Relacion;
 import Datos.Listas;
 import java.io.IOException;
 import java.io.Serializable;
@@ -119,12 +120,14 @@ public class IBLibroController extends Listas implements Initializable{
         
         
         Relacion relacion = new Relacion(tituloTextField.getText(),
-                                        autorComboBox.getValue().toString());
+                                        autorComboBox.getValue().toString(),
+                                        "Libro");
            
         if(validarInformacion() == true){
             //Se utiliza la listaLibros de la clase Listas
             super.listaLibros.add(libro);
             super.listaRelacion.add(relacion);
+            acualizaAutor();
             limpiarButton();  
         }
         
@@ -182,6 +185,15 @@ public class IBLibroController extends Listas implements Initializable{
     /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
+    
+    private void acualizaAutor(){
+        for (int i = 0; i < listaAutores.size(); i++) {
+            for (int j = 0; j < listaRelacion.size(); j++) {
+                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico()))
+                    listaAutores.get(i).setListaObras(listaRelacion.get(j).getTituloObra());
+            }
+        }
+    }
     
     //Inicializa la tabla
     private void inicializarTablaLibro(){

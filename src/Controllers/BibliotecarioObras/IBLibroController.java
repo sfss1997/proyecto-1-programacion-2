@@ -116,9 +116,15 @@ public class IBLibroController extends Listas implements Initializable{
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
+        
+        
+        Relacion relacion = new Relacion(tituloTextField.getText(),
+                                        autorComboBox.getValue().toString());
+           
         if(validarInformacion() == true){
             //Se utiliza la listaLibros de la clase Listas
             super.listaLibros.add(libro);
+            super.listaRelacion.add(relacion);
             limpiarButton();  
         }
         

@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="393.0" prefWidth="726.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controllers.InterfazAutorController">
+<AnchorPane id="AnchorPane" prefHeight="393.0" prefWidth="726.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.InterfazAutorController">
    <children>
       <Button layoutX="665.0" layoutY="349.0" mnemonicParsing="false" onAction="#salirButton" style="-fx-background-color: #ff0808;" text="Salir" textFill="WHITE">
          <font>
@@ -41,13 +40,13 @@
               </rowConstraints>
                <children>
                   <Label text="Nombre:" />
-                  <Label text="Label" GridPane.columnIndex="1" />
+                  <Label fx:id="nombreLabel" text="Label" GridPane.columnIndex="1" />
                   <Label text="Nombre de usuairo:" GridPane.rowIndex="1" />
-                  <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="nombreUsuarioLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Tipo de ID:" GridPane.rowIndex="2" />
                   <Label text="ID:" GridPane.rowIndex="3" />
-                  <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="tipoIDLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="iDLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Editar" textFill="WHITE">
@@ -67,10 +66,10 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView prefHeight="139.0" prefWidth="205.0">
+            <TableView fx:id="obrasDeAutorTableView" prefHeight="139.0" prefWidth="205.0">
               <columns>
-                <TableColumn prefWidth="180.0" text="Nombre" />
-                <TableColumn minWidth="1.0" prefWidth="150.0" text="Categoría" />
+                <TableColumn fx:id="nombreTableColumn" prefWidth="180.0" text="Nombre" />
+                <TableColumn fx:id="categoriaTableColumn" minWidth="1.0" prefWidth="150.0" text="Categoría" />
               </columns>
             </TableView>
          </children>

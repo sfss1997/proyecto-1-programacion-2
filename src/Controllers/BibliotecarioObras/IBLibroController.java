@@ -85,6 +85,7 @@ public class IBLibroController extends Listas implements Initializable{
         //Llena el choiceBox 
         llenarComboBox();
         
+        
         //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
         //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
         //se hubiera seleccionado
@@ -187,10 +188,12 @@ public class IBLibroController extends Listas implements Initializable{
      */
     
     private void acualizaAutor(){
+        String salida = "";
         for (int i = 0; i < listaAutores.size(); i++) {
             for (int j = 0; j < listaRelacion.size(); j++) {
                 if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico()))
-                    listaAutores.get(i).setListaObras(listaRelacion.get(j).getTituloObra());
+                    salida += listaRelacion.get(j).getTituloObra() + " - ";
+                    listaAutores.get(i).setListaObras(salida);
             }
         }
     }

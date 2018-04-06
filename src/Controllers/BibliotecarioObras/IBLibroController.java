@@ -207,11 +207,15 @@ public class IBLibroController extends Listas implements Initializable{
     private void acualizaAutor(){
         String salida = "";
         for (int i = 0; i < listaAutores.size(); i++) {
+            salida = "";
             for (int j = 0; j < listaRelacion.size(); j++) {
-                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico()))
+                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico())){                   
                     salida += listaRelacion.get(j).getTituloObra() + " - ";
                     listaAutores.get(i).setListaObras(salida);
+                }
+                salida = "";
             }
+            salida = "";
         }
     }
     

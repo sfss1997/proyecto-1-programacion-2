@@ -26,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -58,6 +59,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML ComboBox tipoObraComboBox;
     @FXML ComboBox obrasComboBox;
     
+    @FXML Label avisoLabel;
+    
     private int cont;
     private int posicionEnTabla;
     
@@ -68,10 +71,11 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     public void initialize(URL url, ResourceBundle rb) {
         
         inicializarTablaLibro();
-
+        llenarComboBox();    
         tipoObraComboBox.getItems().addAll("Ninguno", "Libro", "Revista", "Tesis", "Periódico", "Memoria", "Otro");
+        obrasComboBox.setValue("Selecione una opción");
         
-        llenarComboBox();
+        
         
         final ObservableList<Autor> tablaLibroSel = autorTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaAutores);
@@ -92,8 +96,12 @@ public class IBAutorController extends Listas implements Initializable, OnAction
                                 tipoIDTextField.getText(), 
                                 iDTextField.getText(), 
                                 tipoUsuarioTextField.getText());
-        super.listaAutores.add(autor);
-        super.listaUsuarios.add(autor);
+        if(verificaInformacion() == true)
+            if(verificaUsuarioExistente() == false){
+            super.listaAutores.add(autor);
+            super.listaUsuarios.add(autor);
+            limpiarButton();
+            }
         
     }
 
@@ -117,7 +125,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
                 if(autor.getNombreUsuario().equals(listaUsuarios.get(i).getNombreUsuario()))
                     listaUsuarios.remove(i);
             }
-            listaBibliotecarios.remove(posicionEnTabla);
+            listaAutores.remove(posicionEnTabla);
             limpiarButton();
             
         }        
@@ -138,15 +146,38 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     }
     
     public void llenarComboBox(){
-        obrasComboBox.getItems().add("Ninguno");
-        for (int i = 0; i < listaLibros.size(); i++) {
-            obrasComboBox.getItems().add(listaLibros.get(i).getTitulo());
-        }
+        obrasComboBox.getItems().addAll("Selecione una opción", "Ninguno");
+//        for (int i = 0; i < listaLibros.size(); i++) {
+//            obrasComboBox.getItems().add(listaLibros.get(i).getTitulo());
+//        }
     }
     
     /**
      * Metodos ---------------------------------------- 
      */
+    
+    private boolean verificaInformacion(){
+        if(nombreTextField.getText().equals("") ||
+           nombreUsuarioTextField.getText().equals("") ||
+           contraseñaTextField.getText().equals("") ||
+           iDTextField.getText().equals("") ||
+           tipoIDTextField.equals("") ||
+           obrasComboBox.getValue().toString().equals("Selecione una opción")){
+            avisoLabel.setText("Complete todos los espacios");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean verificaUsuarioExistente(){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(nombreUsuarioTextField.getText().equals(listaUsuarios.get(i).getNombreUsuario())){
+                avisoLabel.setText("El usuario ya existe\nIngrese otro");
+                return true;
+            }
+        }
+        return false;
+    }
     
     private boolean verificaUsuarioActivo(){
         final Autor autor = getTablaLibrosSeleccionado();

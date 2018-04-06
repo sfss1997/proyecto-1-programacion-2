@@ -65,6 +65,11 @@
                         <ComboBox fx:id="obrasComboBox" onAction="#llenarComboBox" prefHeight="25.0" prefWidth="193.0" />
                      </children>
                   </VBox>
+                  <VBox alignment="CENTER" prefHeight="135.0" prefWidth="220.0">
+                     <children>
+                        <Label fx:id="avisoLabel" alignment="CENTER" prefHeight="137.0" prefWidth="223.0" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>

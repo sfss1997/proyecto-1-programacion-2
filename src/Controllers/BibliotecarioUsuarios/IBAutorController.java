@@ -67,8 +67,6 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        veridicaAutores();
-        
         inicializarTablaLibro();
 
         tipoObraComboBox.getItems().addAll("Ninguno", "Libro", "Revista", "Tesis", "Periódico", "Memoria", "Otro");
@@ -101,18 +99,37 @@ public class IBAutorController extends Listas implements Initializable, OnAction
 
     @Override
     public void modificarButton() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Autor autor = new Autor(obrasComboBox.getValue().toString(), 
+                                nombreUsuarioTextField.getText(), 
+                                contraseñaTextField.getText(), 
+                                nombreTextField.getText(), 
+                                tipoIDTextField.getText(), 
+                                iDTextField.getText(), 
+                                tipoUsuarioTextField.getText());
+        listaAutores.set(posicionEnTabla, autor);
     }
 
     @Override
     public void eliminarButton() {
-        super.listaAutores.remove(posicionEnTabla);
-        
+        if(verificaUsuarioActivo() == false){
+            final Autor autor = getTablaLibrosSeleccionado();
+            for (int i = 0; i < listaUsuarios.size(); i++) {
+                if(autor.getNombreUsuario().equals(listaUsuarios.get(i).getNombreUsuario()))
+                    listaUsuarios.remove(i);
+            }
+            listaBibliotecarios.remove(posicionEnTabla);
+            limpiarButton();
+            
+        }        
     }
 
     @Override
     public void limpiarButton() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        nombreTextField.setText("");
+        nombreUsuarioTextField.setText("");
+        iDTextField.setText("");
+        tipoIDTextField.setText("");
+        contraseñaTextField.setText("");
     }
 
     @Override
@@ -131,8 +148,13 @@ public class IBAutorController extends Listas implements Initializable, OnAction
      * Metodos ---------------------------------------- 
      */
     
-    private void veridicaAutores(){
-        
+    private boolean verificaUsuarioActivo(){
+        final Autor autor = getTablaLibrosSeleccionado();
+        if(autor.getEstado().equals("activo")){
+//            avisoLabel.setText("Este usuario está activo\nNo puede ser eliminado");
+            return true;
+        }
+        return false;
     }
     
     //Inicializa la tabla

@@ -6,6 +6,7 @@
 package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
+import Domain.Relacion;
 import Domain.Tesis;
 import java.io.IOException;
 import java.net.URL;
@@ -102,9 +103,14 @@ public class IBTesisController extends Listas implements Initializable {
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
+        Relacion relacion = new Relacion(tituloTextField.getText(),
+                                        autorComboBox.getValue().toString(),
+                                        "Tesis");
         if(validarInformacion() == true){
             //Se utiliza la listaLibros de la clase Listas
             super.listaTesis.add(tesis);
+            super.listaRelacion.add(relacion);
+            acualizaAutor();
             limpiarButton();  
         }
         
@@ -126,6 +132,8 @@ public class IBTesisController extends Listas implements Initializable {
     //Elimina el elemento seleccionado en la tabla
     public void eliminarButton(){
         listaTesis.remove(posicionEnTabla);
+        listaRelacion.remove(posicionRelacion());
+        acualizaAutor();
     }
     
     //Limpia lo que hay en los TextFields
@@ -153,6 +161,27 @@ public class IBTesisController extends Listas implements Initializable {
     /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
+    
+    private int posicionRelacion(){
+        int salida = 0;
+        Tesis tesis = getTablaTesisSeleccionado();
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(tesis.getTitulo()))
+                salida = i;
+        }
+        return salida+1;
+    }
+    
+    private void acualizaAutor(){
+        String salida = "";
+        for (int i = 0; i < listaAutores.size(); i++) {
+            for (int j = 0; j < listaRelacion.size(); j++) {
+                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico()))
+                    salida += listaRelacion.get(j).getTituloObra() + " - ";
+                    listaAutores.get(i).setListaObras(salida);
+            }
+        }
+    }
     
     //Inicializa la tabla
     private void inicializarTablaTesis(){

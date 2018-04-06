@@ -95,7 +95,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
                                                              tipoIDComboBox.getValue().toString(), 
                                                              tipoUsuarioTextField.getText());
         listaBibliotecarios.set(posicionEnTabla, nuevoBibliotecario);
-        modificarUsuarioBibliotecario(nuevoBibliotecario);
+//        modificarUsuarioBibliotecario(nuevoBibliotecario);
         limpiarButton();
     }
 

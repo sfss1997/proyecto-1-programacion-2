@@ -7,6 +7,7 @@ package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
 import Domain.Periodico;
+import Domain.Relacion;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -102,9 +103,15 @@ public class IBPeriodicoController extends Listas implements Initializable {
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
+        Relacion relacion = new Relacion(tituloTextField.getText(),
+                                        autorComboBox.getValue().toString(),
+                                        "Periódico");
+        
         if(validarInformacion() == true){
             //Se utiliza la listaLibros de la clase Listas
             super.listaPeriodicos.add(periodico);
+            super.listaRelacion.add(relacion);
+            acualizaAutor();
             limpiarButton();  
         }
         
@@ -126,6 +133,8 @@ public class IBPeriodicoController extends Listas implements Initializable {
     //Elimina el elemento seleccionado en la tabla
     public void eliminarButton(){
         listaPeriodicos.remove(posicionEnTabla);
+        listaRelacion.remove(posicionRelacion());
+        acualizaAutor();
     }
     
     //Limpia lo que hay en los TextFields
@@ -142,6 +151,27 @@ public class IBPeriodicoController extends Listas implements Initializable {
     /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
+    
+    private int posicionRelacion(){
+        int salida = 0;
+        Periodico periodico = getTablaPeriodicoSeleccionado();
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(periodico.getTitulo()))
+                salida = i;
+        }
+        return salida+1;
+    }
+    
+    private void acualizaAutor(){
+        String salida = "";
+        for (int i = 0; i < listaAutores.size(); i++) {
+            for (int j = 0; j < listaRelacion.size(); j++) {
+                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico()))
+                    salida += listaRelacion.get(j).getTituloObra() + " - ";
+                    listaAutores.get(i).setListaObras(salida);
+            }
+        }
+    }
     
     //Inicializa la tabla
     private void inicializarTablaPeriodico(){

@@ -9,6 +9,7 @@ package Controllers.BibliotecarioObras;
 import Datos.Listas;
 import static Datos.Listas.listaAutores;
 import Domain.Memoria;
+import Domain.Relacion;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -107,9 +108,15 @@ public class IBMemoriaController extends Listas implements Initializable {
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
+        Relacion relacion = new Relacion(tituloTextField.getText(),
+                                        autorComboBox.getValue().toString(),
+                                        "Memoria");
+        
         if(validarInformacion() == true){
             //Se utiliza la listaMemorias de la clase Listas
             super.listaMemorias.add(memoria);
+            super.listaRelacion.add(relacion);
+            acualizaAutor();
             limpiarButton();  
         }
         
@@ -132,6 +139,8 @@ public class IBMemoriaController extends Listas implements Initializable {
     //Elimina el elemento seleccionado en la tabla
     public void eliminarButton(){
         listaMemorias.remove(posicionEnTabla);
+        listaRelacion.remove(posicionRelacion());
+        acualizaAutor();
     }
     
     //Limpia lo que hay en los TextFields
@@ -162,6 +171,27 @@ public class IBMemoriaController extends Listas implements Initializable {
     /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
+    
+    private int posicionRelacion(){
+        int salida = 0;
+        Memoria memoria = getTablaMemoriaSeleccionado();
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(memoria.getTitulo()))
+                salida = i;
+        }
+        return salida+1;
+    }
+    
+    private void acualizaAutor(){
+        String salida = "";
+        for (int i = 0; i < listaAutores.size(); i++) {
+            for (int j = 0; j < listaRelacion.size(); j++) {
+                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico()))
+                    salida += listaRelacion.get(j).getTituloObra() + " - ";
+                    listaAutores.get(i).setListaObras(salida);
+            }
+        }
+    }
     
     //Inicializa la tabla
     private void inicializarTablaMemoria(){

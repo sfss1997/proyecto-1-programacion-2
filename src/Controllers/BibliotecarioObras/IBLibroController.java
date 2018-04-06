@@ -143,8 +143,13 @@ public class IBLibroController extends Listas implements Initializable{
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
+        Relacion relacion = new Relacion(tituloTextField.getText(),
+                                        autorComboBox.getValue().toString(),
+                                        "Libro");
         if(validarInformacion() == true){
             super.listaLibros.set(posicionEnTabla, libro);
+//            super.listaRelacion.set(posicionRelacion(), relacion);
+            acualizaAutor();
             limpiarButton();  
         }
     }
@@ -153,6 +158,8 @@ public class IBLibroController extends Listas implements Initializable{
     @FXML
     public void eliminarButton(){
         listaLibros.remove(posicionEnTabla);
+        listaRelacion.remove(posicionRelacion());
+        acualizaAutor();
     }
     
     //Limpia lo que hay en los TextFields
@@ -186,6 +193,16 @@ public class IBLibroController extends Listas implements Initializable{
     /**
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
+    
+    private int posicionRelacion(){
+        int salida = 0;
+        Libro libro = getTablaLibrosSeleccionado();
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(libro.getTitulo()))
+                salida = i;
+        }
+        return salida+1;
+    }
     
     private void acualizaAutor(){
         String salida = "";

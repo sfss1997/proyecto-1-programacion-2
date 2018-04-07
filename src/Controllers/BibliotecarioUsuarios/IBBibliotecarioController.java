@@ -94,8 +94,9 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
                                                              iDTextField.getText(), 
                                                              tipoIDComboBox.getValue().toString(), 
                                                              tipoUsuarioTextField.getText());
+        modificarUsuarioBibliotecario(nuevoBibliotecario);
         listaBibliotecarios.set(posicionEnTabla, nuevoBibliotecario);
-//        modificarUsuarioBibliotecario(nuevoBibliotecario);
+        
         limpiarButton();
     }
 
@@ -139,7 +140,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     private void modificarUsuarioBibliotecario(Bibliotecario bibliotecario){
         final Bibliotecario b = getTablaLibrosSeleccionado();
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuarioTextField.getText())){
+            if(listaUsuarios.get(i).getNombreUsuario().equals(b.getNombreUsuario())){
                 listaUsuarios.get(i).setNombre(bibliotecario.getNombre());
                 listaUsuarios.get(i).setNombreUsuario(bibliotecario.getNombreUsuario());
                 listaUsuarios.get(i).setContraseña(bibliotecario.getContraseña());

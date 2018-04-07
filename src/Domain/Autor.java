@@ -13,21 +13,16 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author fabian
  */
-public class Autor extends Usuarios{
-    
-    private ArrayList<Object> listaObrasEscritas;
+public class Autor extends Usuarios {
+
     private SimpleStringProperty listaObras;
 
     public Autor() {
     }
 
-    public Autor(ArrayList<Object> listaObrasEscritas) {
-        this.listaObrasEscritas = listaObrasEscritas;
-    }
-
-    public Autor(String listaObras, String nombreUnico, String contraseña, String nombreCompleto, 
-            String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
-        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
+    public Autor(String nombreCompleto, String nombreUnico, String contraseña,
+            String identificacion, String tipoDeIdentificacion, String tipoDeUsuario, String listaObras) {
+        super(nombreCompleto, nombreUnico, contraseña, identificacion, tipoDeIdentificacion, tipoDeUsuario);
         this.listaObras = new SimpleStringProperty(listaObras);
     }
 
@@ -38,25 +33,10 @@ public class Autor extends Usuarios{
     public void setListaObras(String listaObras) {
         this.listaObras = new SimpleStringProperty(listaObras);
     }
-    
-    
-    public ArrayList<Object> getListaObrasEscritas(){
-        return listaObrasEscritas;
-    }
-
-    public void setListaObrasEscritas(ArrayList<Object> listaObrasEscritas) {
-        this.listaObrasEscritas = listaObrasEscritas;
-    }
 
     @Override
     public String toString() {
         return "Autor{" + "listaObras=" + listaObras + '}';
     }
-    
-    
 
-
-  
-    
-    
 }

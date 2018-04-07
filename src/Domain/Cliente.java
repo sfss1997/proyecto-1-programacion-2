@@ -23,10 +23,8 @@ public class Cliente extends Usuarios {
         this.listaLibrosPrestados = listaLibrosPrestados;
     }
 
-    public Cliente(List<Object> listaLibrosPrestados, String nombreUnico, String contraseña, String nombreCompleto, 
-            String tipoDeIdentificacion, String identificacion, String tipoDeUsuario) {
-        super(nombreUnico, contraseña, nombreCompleto, tipoDeIdentificacion, identificacion, tipoDeUsuario);
-        this.listaLibrosPrestados = listaLibrosPrestados;
+    public Cliente(String nombre, String nombreUsuario, String contraseña, String identificacion, String tipoDeIdentificacion, String tipoDeUsuario){
+        super(nombre, nombreUsuario, contraseña, identificacion, tipoDeIdentificacion, tipoDeUsuario);
     }
     
     

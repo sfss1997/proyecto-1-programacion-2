@@ -6,9 +6,16 @@
 package Controllers.BibliotecarioUsuarios;
 
 import Datos.Listas;
+import static Datos.Listas.listaBibliotecarios;
+import static Datos.Listas.listaUsuarios;
+import Domain.Cliente;
+import Domain.OnAction;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +23,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -24,23 +36,151 @@ import javafx.stage.Stage;
  *
  * @author hvill
  */
-public class IBClienteController extends Listas implements Initializable {
-
+public class IBClienteController extends Listas implements Initializable, OnAction {
     
+    @FXML TableView clienteTableView;
+    @FXML TableColumn nombreTableColumn;
+    @FXML TableColumn nombreUsuarioTableColumn;
+    @FXML TableColumn contraseñaTableColumn;
+    @FXML TableColumn iDTableColumn;
+    @FXML TableColumn tipoIDTableColumn;
+    @FXML TableColumn tipoUsuarioTableColumn;
+    
+    @FXML TextField nombreTextField;
+    @FXML TextField nombreUsuarioTextField;
+    @FXML TextField contraseñaTextField;
+    @FXML TextField iDTextField;
+    @FXML TextField tipoUsuarioTextField;
+    
+    @FXML ComboBox tipoIDComboBox;
+    
+    @FXML Label avisoLabel;
+    
+    private int posicionEnTabla;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        inicializarTabla();
+        tipoIDComboBox.getItems().addAll("Seleccione una opción", "Cedula");
+        tipoIDComboBox.setValue("Seleccione una opción");
         
-    }    
+        final ObservableList<Cliente> tablaLibroSel = clienteTableView.getSelectionModel().getSelectedItems();
+        tablaLibroSel.addListener(selectorTablaLibros);
+    }
     
-    
+    @Override
+    public void agregarButton() {
+        Cliente nuevoCliente = new Cliente(nombreTextField.getText(), 
+                                                 nombreUsuarioTextField.getText(), 
+                                                 contraseñaTextField.getText(), 
+                                                 iDTextField.getText(), 
+                                                 tipoIDComboBox.getValue().toString(), 
+                                                 tipoUsuarioTextField.getText());
+        if(verificaInformacion() == true)
+            if(verificaUsuarioExistente() == false){
+                listaClientes.add(nuevoCliente);
+                listaUsuarios.add(nuevoCliente);
+                limpiarButton();
+            }
+    }
+
+    @Override
+    public void modificarButton() {
+        Cliente nuevoCliente = new Cliente(nombreTextField.getText(), 
+                                                 nombreUsuarioTextField.getText(), 
+                                                 contraseñaTextField.getText(), 
+                                                 iDTextField.getText(), 
+                                                 tipoIDComboBox.getValue().toString(), 
+                                                 tipoUsuarioTextField.getText());
+        modificarUsuarioBibliotecario(nuevoCliente);
+        listaClientes.set(posicionEnTabla, nuevoCliente);
+        
+        limpiarButton();
+    }
+
+    @Override
+    public void eliminarButton() {
+        if(verificaUsuarioActivo() == false){
+            final Cliente cliente = getTablaLibrosSeleccionado();
+            for (int i = 0; i < listaUsuarios.size(); i++) {
+                if(cliente.getNombreUsuario().equals(listaUsuarios.get(i).getNombreUsuario()))
+                    listaUsuarios.remove(i);
+            }
+            listaClientes.remove(posicionEnTabla);
+            limpiarButton();
+            
+        }
+    }
+
+    @Override
+    public void limpiarButton() {
+        nombreTextField.setText("");
+        nombreUsuarioTextField.setText("");
+        contraseñaTextField.setText("");
+        iDTextField.setText("");
+        tipoIDComboBox.setValue("Seleccione una opción");
+        avisoLabel.setText("");
+    }
     
     //Cambiar a la ventada de bibliotecario
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
+    }
+    
+    
+
+    
+    
+    /**
+     * Metodos.
+     */
+    
+    private void modificarUsuarioBibliotecario(Cliente cliente){
+        final Cliente c = getTablaLibrosSeleccionado();
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getNombreUsuario().equals(c.getNombreUsuario())){
+                listaUsuarios.get(i).setNombre(cliente.getNombre());
+                listaUsuarios.get(i).setNombreUsuario(cliente.getNombreUsuario());
+                listaUsuarios.get(i).setContraseña(cliente.getContraseña());
+                listaUsuarios.get(i).setIdentificacion(cliente.getIdentificacion());
+                listaUsuarios.get(i).setTipoDeIdentificacion(cliente.getTipoDeIdentificacion());
+                listaUsuarios.get(i).setTipoDeUsuario(cliente.getTipoDeUsuario());
+            }
+        }
+    }
+    
+    private boolean verificaUsuarioActivo(){
+        final Cliente cliente = getTablaLibrosSeleccionado();
+        if(cliente.getEstado().equals("activo")){
+            avisoLabel.setText("Este usuario está activo\nNo puede ser eliminado");
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean verificaInformacion(){
+        if(nombreTextField.getText().equals("") ||
+           nombreUsuarioTextField.getText().equals("") ||
+           contraseñaTextField.getText().equals("") ||
+           iDTextField.getText().equals("") ||
+           tipoIDComboBox.getValue().equals("Seleccione una opción")){
+            avisoLabel.setText("Complete todos los espacios");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean verificaUsuarioExistente(){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(nombreUsuarioTextField.getText().equals(listaUsuarios.get(i).getNombreUsuario())){
+                avisoLabel.setText("El usuario ya existe\nIngrese otro");
+                return true;
+            }
+        }
+        return false;
     }
     
     //Codigo para cambiar de ventana
@@ -53,6 +193,66 @@ public class IBClienteController extends Listas implements Initializable {
         
         window.setScene(tableViewScene);
         window.show();
+    }
+    
+    public void inicializarTabla(){
+        nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre"));
+        nombreUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombreUsuario"));
+        contraseñaTableColumn.setCellValueFactory(new PropertyValueFactory<Cliente, String>("contraseña"));
+        iDTableColumn.setCellValueFactory(new PropertyValueFactory<Cliente, String>("identificacion"));
+        tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Cliente, String>("tipoDeIdentificacion"));
+        tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Cliente, String>("tipoDeUsuario"));
+        
+        clienteTableView.setItems(super.listaClientes);
+    }
+    
+    /**
+     * Listener de la tabla personas
+     */
+    private final ListChangeListener<Cliente> selectorTablaLibros =
+            new ListChangeListener<Cliente>() {
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Cliente> c) {
+                    ponerLibroSeleccionado();
+                }
+            };
+
+    /**
+     * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
+     */
+    public Cliente getTablaLibrosSeleccionado() {
+        if (clienteTableView != null) {
+            List<Cliente> tabla = clienteTableView.getSelectionModel().getSelectedItems();
+            if (tabla.size() == 1) {
+                final Cliente competicionSeleccionada = tabla.get(0);
+                return competicionSeleccionada;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Método para poner en los textFields la tupla que selccionemos
+     */
+    private void ponerLibroSeleccionado() {
+        final Cliente cliente = getTablaLibrosSeleccionado();
+        posicionEnTabla = listaClientes.indexOf(cliente);
+
+        if (cliente != null) {
+
+            // Pongo los textFields con los datos correspondientes
+            nombreTextField.setText(cliente.getNombre());
+            nombreUsuarioTextField.setText(cliente.getNombreUsuario());
+            contraseñaTextField.setText(cliente.getContraseña());
+            iDTextField.setText(cliente.getIdentificacion());
+            tipoIDComboBox.setValue(cliente.getTipoDeIdentificacion());
+            tipoUsuarioTextField.setText(cliente.getTipoDeUsuario());
+
+            // Pongo los botones en su estado correspondiente
+//            libroButtonModificar.setDisable(false);
+//            libroButtonEliminar.setDisable(false);
+
+        }
     }
     
 }

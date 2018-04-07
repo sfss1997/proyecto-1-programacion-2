@@ -56,10 +56,14 @@ public class InterfazAutorController extends Listas implements Initializable {
     } 
     
     private void modificaLabel(){
-        nombreLabel.setText(buscaUsuarioActivo().getNombre());
-        nombreUsuarioLabel.setText(buscaUsuarioActivo().getNombreUsuario());
-        tipoIDLabel.setText(buscaUsuarioActivo().getTipoDeIdentificacion());
-        iDLabel.setText(buscaUsuarioActivo().getIdentificacion());
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getEstado().equals("activo")){
+                nombreLabel.setText(listaUsuarios.get(i).getNombre());
+                nombreUsuarioLabel.setText(listaUsuarios.get(i).getNombreUsuario());
+                tipoIDLabel.setText(listaUsuarios.get(i).getTipoDeIdentificacion());
+                iDLabel.setText(listaUsuarios.get(i).getIdentificacion());
+            }
+        }
     }
     
     //Volver a la ventana principal

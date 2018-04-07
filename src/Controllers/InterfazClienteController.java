@@ -38,12 +38,12 @@ public class InterfazClienteController extends Listas implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        asignaLabel();
+        modificaLabel();
                 
         
     }    
     
-    private void asignaLabel(){
+    private void modificaLabel(){
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if(listaUsuarios.get(i).getEstado().equals("activo")){
                 nombreLabel.setText(listaUsuarios.get(i).getNombre());
@@ -55,7 +55,7 @@ public class InterfazClienteController extends Listas implements Initializable {
     }
     
     //Cambiar a la ventada de bibliotecario
-    public void volverButton(ActionEvent event) throws IOException{
+    public void salirButton(ActionEvent event) throws IOException{
         buscaUsuarioActivo();
         cambioScene(event, "/GUI/Principal.fxml");
     }

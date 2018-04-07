@@ -9,6 +9,7 @@ import Domain.Autor;
 import Domain.Cliente;
 import Domain.Libro;
 import Domain.Otro;
+import Domain.Prestamo;
 import Domain.Relacion;
 import Domain.Usuarios;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ import javafx.collections.ObservableList;
  */
 public class Listas {
     
+    public static ObservableList<Prestamo> listaPrestamo = FXCollections.observableArrayList();
     public static ObservableList<Relacion> listaRelacion = FXCollections.observableArrayList();
     public static ObservableList<Usuarios> listaUsuarios = FXCollections.observableArrayList();
     public static ObservableList<Autor> listaAutores = FXCollections.observableArrayList();
@@ -37,6 +39,14 @@ public class Listas {
     public Listas() {
     }
 
+    public static ObservableList<Prestamo> getListaPrestamo() {
+        return listaPrestamo;
+    }
+
+    public static void setListaPrestamo(ObservableList<Prestamo> listaPrestamo) {
+        Listas.listaPrestamo = listaPrestamo;
+    }
+    
     public static ObservableList<Relacion> getListaRelacion() {
         return listaRelacion;
     }

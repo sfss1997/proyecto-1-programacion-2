@@ -59,6 +59,8 @@ public class Listas {
                     salida += listaRelacion.get(j).getTituloObra() + " - ";
                     listaAutores.get(i).setListaObras(salida);
                 }
+                if(j == listaRelacion.size()-1 && salida == "")
+                    listaAutores.get(i).setListaObras("Ninguna");
             }
             salida = "";
         }

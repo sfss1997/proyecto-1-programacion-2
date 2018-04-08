@@ -140,8 +140,12 @@ public class IBLibroController extends Listas implements Initializable{
 
     @FXML
     public void eliminarButton(){
-        listaLibros.remove(posicionEnTabla);
+        listaLibros.remove(posicionEnTabla); 
         listaRelacion.remove(posicionRelacion());
+        System.out.println(posicionEnTabla + " - " + posicionRelacion());
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            System.out.println(listaRelacion.get(i).toString());
+        }
         acualizaAutor();
     }
 
@@ -172,13 +176,18 @@ public class IBLibroController extends Listas implements Initializable{
      */
     
     private int posicionRelacion(){
-        int salida = 0;
+        int salida = 0, x = 0;
         Libro libro = getTablaLibrosSeleccionado();
         for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra().equals(libro.getTitulo()))
-                salida = i;
+            if(listaRelacion.get(i).getTituloObra().equals(libro.getTitulo())){
+                x++;
+                if(i == 0)
+                    salida = i;
+                else salida = i+1;
+            }
         }
-        return salida+1;
+        System.out.println(x);
+        return salida;
     }
 
     private void inicializarTablaLibro(){

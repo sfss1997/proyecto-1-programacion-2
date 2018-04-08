@@ -49,5 +49,10 @@ public class Relacion {
     public void setTipoObra(String tipoObra) {
         this.tipoObra = new SimpleStringProperty(tipoObra);
     }
+
+    @Override
+    public String toString() {
+        return "Relacion{" + "tituloObra=" + tituloObra + ", nombreUnico=" + nombreUnico + ", tipoObra=" + tipoObra + '}';
+    }
     
 }

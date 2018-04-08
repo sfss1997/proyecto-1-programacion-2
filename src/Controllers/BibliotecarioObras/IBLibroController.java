@@ -140,7 +140,15 @@ public class IBLibroController extends Listas implements Initializable{
 
     @FXML
     public void eliminarButton(){
-        listaRelacion.remove(posicionRelacion());
+//        listaRelacion.remove(posicionRelacion());
+        String titulo= listaLibros.get(posicionEnTabla).getTitulo();
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra()==titulo){
+                listaRelacion.remove(i);
+            }
+        }
+        
         listaLibros.remove(posicionEnTabla); 
         
         System.out.println(posicionEnTabla + " - " + posicionRelacion());

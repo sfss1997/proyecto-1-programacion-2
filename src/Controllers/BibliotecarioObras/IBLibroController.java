@@ -28,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -67,9 +68,16 @@ public class IBLibroController extends Listas implements Initializable{
     
     //ChoiceBox
     @FXML ComboBox autorComboBox;
+    @FXML ComboBox busquedaComboBox;
     
     //Label
     @FXML Label avisoLabel;
+    
+    //Buttons
+    @FXML Button agregarButton;
+    @FXML Button modificarButton;
+    @FXML Button eliminarButton;
+    
     
     //Reconoce posicion en tabla
     private int posicionEnTabla;
@@ -79,11 +87,15 @@ public class IBLibroController extends Listas implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+
+        
         inicializarTablaLibro();
 
         llenarAutorComboBox();
+        llenarBusquedaComboBox();
 
-        autorComboBox.setValue("Seleccione una opción");
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
         
         final ObservableList<Libro> tablaLibroSel = libroTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaLibros);
@@ -128,10 +140,9 @@ public class IBLibroController extends Listas implements Initializable{
                                   tituloTextField.getText(), 
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
-        Relacion relacion = new Relacion(tituloTextField.getText(),
-                                        autorComboBox.getValue().toString(),
-                                        "Libro");
+
         if(validarInformacion() == true){
+            modificarRelacion(libro);
             super.listaLibros.set(posicionEnTabla, libro);
             acualizaAutor();
             limpiarButton();  
@@ -140,22 +151,12 @@ public class IBLibroController extends Listas implements Initializable{
 
     @FXML
     public void eliminarButton(){
-//        listaRelacion.remove(posicionRelacion());
-        String titulo= listaLibros.get(posicionEnTabla).getTitulo();
         
-        for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra()==titulo){
-                listaRelacion.remove(i);
-            }
-        }
-        
+        eliminaRelacion();
         listaLibros.remove(posicionEnTabla); 
-        
-        System.out.println(posicionEnTabla + " - " + posicionRelacion());
-        for (int i = 0; i < listaRelacion.size(); i++) {
-            System.out.println(listaRelacion.get(i).toString());
-        }
+
         acualizaAutor();
+        limpiarButton();
     }
 
     @FXML
@@ -166,13 +167,11 @@ public class IBLibroController extends Listas implements Initializable{
         tituloTextField.setText("");
         fechaDatePicker.setValue(LocalDate.now());
         autorComboBox.setValue("Seleccione una opción");
-    }
-
-    @FXML
-    public void llenarAutorComboBox(){
-        for (int i = 0; i < listaAutores.size(); i++) {
-            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
-        }
+        busquedaComboBox.setValue("Seleccione una opción");
+        
+        agregarButton.setDisable(false);
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
     }
     
     @FXML
@@ -184,19 +183,37 @@ public class IBLibroController extends Listas implements Initializable{
      * Metodos ----------------------------- 
      */
     
-    private int posicionRelacion(){
-        int salida = 0, x = 0;
-        Libro libro = getTablaLibrosSeleccionado();
+    public void llenarBusquedaComboBox(){
+        busquedaComboBox.getItems().addAll("Título", "Autor", "Código");
+        busquedaComboBox.setValue("Seleccione una opción");
+    }
+    
+    public void llenarAutorComboBox(){
+        autorComboBox.setValue("Seleccione una opción");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
+    }
+    
+    private void modificarRelacion(Libro nuevoLibro){
+        Libro libro= listaLibros.get(posicionEnTabla);
+        
         for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra().equals(libro.getTitulo()) && x>=1){
-                x++;
-                if(i == 0)
-                    salida = i;
-                else salida = i+1;
+            if(listaRelacion.get(i).getTituloObra()==libro.getTitulo()){
+                listaRelacion.get(i).setTituloObra(nuevoLibro.getTitulo());
+                listaRelacion.get(i).setNombreUnico(nuevoLibro.getListaAutores());
             }
         }
-        System.out.println(x +"  caca");
-        return salida;
+    }
+    
+    private void eliminaRelacion(){
+        String titulo= listaLibros.get(posicionEnTabla).getTitulo();
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra()==titulo){
+                listaRelacion.remove(i);
+            }
+        }
     }
 
     private void inicializarTablaLibro(){
@@ -271,26 +288,40 @@ public class IBLibroController extends Listas implements Initializable{
             autorComboBox.setValue(libro.getListaAutores());
             fechaDatePicker.setValue(libro.getFecha());
             codigoTextField.setText(libro.getIsbn());
+            
+            agregarButton.setDisable(true);
+            modificarButton.setDisable(false);
+            eliminarButton.setDisable(false);
 
         }
     }
 
     @FXML
     private void buscar(KeyEvent event) {
-        buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filter.setPredicate((Predicate<? super Libro>) (Libro libro)->{
-                if(newValue.isEmpty() || newValue==null){
-                    return true;
-                }
-                else if(libro.getTitulo().contains(newValue)){
-                    return true;
-                }
-                return false;
+            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filter.setPredicate((Predicate<? super Libro>) (Libro libro)->{
+                    if(busquedaComboBox.getValue().toString().equals("Seleccione una opción")){
+                        return false;
+                    }
+                    else if(newValue.isEmpty() || newValue==null){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Título") && libro.getTitulo().contains(newValue)){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Autor") && libro.getListaAutores().contains(newValue)){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Código") && libro.getIsbn().contains(newValue)){
+                        return true;
+                    }
+                    return false;
+                });
             });
-        });
-        SortedList sort = new SortedList(filter);
-        sort.comparatorProperty().bind(libroTableView.comparatorProperty());
-        libroTableView.setItems(sort);
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(libroTableView.comparatorProperty());
+            libroTableView.setItems(sort);
+     
     }
     
 }

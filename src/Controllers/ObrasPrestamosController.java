@@ -158,7 +158,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     @FXML
     public void eliminarButton(){
         listaLibros.remove(posicionEnTabla);
-        listaRelacion.remove(posicionRelacion());
+    
 //        acualizaAutor();
     }
     
@@ -199,15 +199,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
     
-    private int posicionRelacion(){
-        int salida = 0;
-        Prestamo prestamo = getTablaPrestamoSeleccionado();
-        for (int i = 0; i < listaPrestamo.size(); i++) {
-            if(listaPrestamo.get(i).getTituloObra().equals(prestamo.getTituloObra()))
-                salida = i;
-        }
-        return salida+1;
-    }
+    
     
 //    private void acualizaAutor(){
 //        String salida = "";

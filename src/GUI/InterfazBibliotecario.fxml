@@ -106,12 +106,7 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Prestar Libro" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Libros Prestados" textFill="#eeeeee">
+            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Prestamo de obras" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

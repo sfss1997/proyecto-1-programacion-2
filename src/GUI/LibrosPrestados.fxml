@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="606.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controllers.LibrosPrestadosController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LibrosPrestadosController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" prefHeight="374.0" prefWidth="695.0">
          <children>
@@ -47,7 +46,7 @@
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                      </padding>
                      <children>
-                        <ComboBox fx:id="autorComboBox" onAction="#llenarComboBox" prefHeight="25.0" prefWidth="205.0" promptText="Libros" />
+                        <ComboBox fx:id="autorComboBox" onAction="#llenarComboBox" prefHeight="25.0" prefWidth="205.0" promptText="Obras" />
                         <ComboBox prefHeight="25.0" prefWidth="172.0" promptText="Clientes" />
                      </children>
                   </VBox>

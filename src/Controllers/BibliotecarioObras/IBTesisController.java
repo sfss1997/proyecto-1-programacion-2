@@ -172,17 +172,6 @@ public class IBTesisController extends Listas implements Initializable {
         return salida+1;
     }
     
-    private void acualizaAutor(){
-        String salida = "";
-        for (int i = 0; i < listaAutores.size(); i++) {
-            for (int j = 0; j < listaRelacion.size(); j++) {
-                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico()))
-                    salida += listaRelacion.get(j).getTituloObra() + " - ";
-                    listaAutores.get(i).setListaObras(salida);
-            }
-        }
-    }
-    
     //Inicializa la tabla
     private void inicializarTablaTesis(){
         //Solo hay que hacerlo con las columnas

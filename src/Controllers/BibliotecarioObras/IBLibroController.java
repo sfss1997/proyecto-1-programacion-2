@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -67,49 +68,36 @@ public class IBLibroController extends Listas implements Initializable{
     //ChoiceBox
     @FXML ComboBox autorComboBox;
     
-    //Esto es para reconocer el numero de la fila que se selecicona en la tabla
+    //Label
+    @FXML Label avisoLabel;
+    
+    //Reconoce posicion en tabla
     private int posicionEnTabla;
     
     FilteredList filter = new FilteredList(listaLibros, e -> true);
     
-    
-    /**
-     * Este metodo es el que se ejcuta apenas entra a la interfaz.
-     * Es como un constructor
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Inicializa la tabla y las columnas para que funcione
+
         inicializarTablaLibro();
+
+        llenarAutorComboBox();
+
+        autorComboBox.setValue("Seleccione una opción");
         
-        //Llena el choiceBox 
-        llenarComboBox();
-        
-        
-        //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
-        //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
-        //se hubiera seleccionado
-        //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-        autorComboBox.setValue("Autor");
-        
-        //Esto ni lo vea jaja solo se agrega y ya
-        //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
-        //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
         final ObservableList<Libro> tablaLibroSel = libroTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaLibros);
     }
     
     /**
-     * On Antion ----------------------------- Metodos que se van a utilizar como On Action
+     * On Antion -----------------------------
      */
-    
-    //Cambiar a la ventada de bibliotecario
+
     @FXML
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
-    
-    //Agrega un nuevo libro
+
     @FXML
     public void agregarButton(){
         Libro libro = new Libro(codigoTextField.getText(), 
@@ -119,13 +107,11 @@ public class IBLibroController extends Listas implements Initializable{
                                   fechaDatePicker.getValue(), 
                                   autorComboBox.getValue().toString());
         
-        
         Relacion relacion = new Relacion(tituloTextField.getText(),
                                         autorComboBox.getValue().toString(),
                                         "Libro");
            
         if(validarInformacion() == true){
-            //Se utiliza la listaLibros de la clase Listas
             super.listaLibros.add(libro);
             super.listaRelacion.add(relacion);
             acualizaAutor();
@@ -133,8 +119,7 @@ public class IBLibroController extends Listas implements Initializable{
         }
         
     }
-    
-    //Modifica un elemento seleccionado en la tabla
+
     @FXML
     public void modificarButton(){
         Libro libro = new Libro(codigoTextField.getText(), 
@@ -148,23 +133,18 @@ public class IBLibroController extends Listas implements Initializable{
                                         "Libro");
         if(validarInformacion() == true){
             super.listaLibros.set(posicionEnTabla, libro);
-//            super.listaRelacion.set(posicionRelacion(), relacion);
             acualizaAutor();
             limpiarButton();  
         }
     }
-    
-    //Elimina el elemento seleccionado en la tabla
+
     @FXML
     public void eliminarButton(){
         listaLibros.remove(posicionEnTabla);
         listaRelacion.remove(posicionRelacion());
         acualizaAutor();
     }
-    
-    //Limpia lo que hay en los TextFields
-    //Asigna al ChoiceBox el elemento de "Autor"
-    //Asigna al DatePicker la fecha actual
+
     @FXML
     public void limpiarButton(){
         codigoTextField.setText("");
@@ -172,14 +152,11 @@ public class IBLibroController extends Listas implements Initializable{
         subTemaTextField.setText("");
         tituloTextField.setText("");
         fechaDatePicker.setValue(LocalDate.now());
-        autorComboBox.setValue("Autor");
+        autorComboBox.setValue("Seleccione una opción");
     }
-    
-    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
+
     @FXML
-    public void llenarComboBox(){
-        //El addAll es para agregar más de un elemento a la ves
-        autorComboBox.getItems().add("Autor");
+    public void llenarAutorComboBox(){
         for (int i = 0; i < listaAutores.size(); i++) {
             autorComboBox.getItems().add(listaAutores.get(i).getNombre());
         }
@@ -191,7 +168,7 @@ public class IBLibroController extends Listas implements Initializable{
     }
     
     /**
-     * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
+     * Metodos ----------------------------- 
      */
     
     private int posicionRelacion(){
@@ -203,26 +180,9 @@ public class IBLibroController extends Listas implements Initializable{
         }
         return salida+1;
     }
-    
-    private void acualizaAutor(){
-        String salida = "";
-        for (int i = 0; i < listaAutores.size(); i++) {
-            for (int j = 0; j < listaRelacion.size(); j++) {
-                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico())){                   
-                    salida += listaRelacion.get(j).getTituloObra() + " - ";
-                    listaAutores.get(i).setListaObras(salida);
-                }
-            }
-            salida = "";
-        }
-    }
-    
-    //Inicializa la tabla
+
     private void inicializarTablaLibro(){
-        //Solo hay que hacerlo con las columnas
-        //Ejemplo:
-//  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
-//  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
+
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("titulo"));
         temaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("tema"));
         subTemaTableColumn.setCellValueFactory(new PropertyValueFactory<Libro, String>("subtema"));
@@ -232,22 +192,17 @@ public class IBLibroController extends Listas implements Initializable{
         
         libroTableView.setItems(super.listaLibros);
     }
-    
-    //Codigo para cambiar de ventana
+
     private void cambioScene(ActionEvent event, String destino) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
         Scene tableViewScene = new Scene(tableViewParent);
         
-        //Esta linea obtiene la informacion del Stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
         window.setScene(tableViewScene);
         window.show();
     }
-    
-    
-    
-    //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
+
     private boolean validarInformacion(){
         if(tituloTextField.getText().equals("") ||
            temaTextField.getText().equals("") ||
@@ -256,17 +211,6 @@ public class IBLibroController extends Listas implements Initializable{
             return false;
         return true;
     }
-    
-    //********* IMPORTANTE *********
-    
-    /**
-     * Estos metodos de aquí abajo no sé muy bien como funcionan, pero se necesitan para que sirva lo de eliminar
-     * y modificar.
-     * Estos metodos sirven para reconocer la fila que se seleccionó y los elementos de la fila.
-     * Estos metodos van junto al tablaLibroSel, que es la línea de codigo que está en el metodo initialize (la que
-     * empieza con final)
-     * Nada más tenga mucho cuidado a la hora de copiar y pegar, mucho ojo a lo que hay que cambiarle
-     */
     
     /**
      * Listener de la tabla personas
@@ -310,39 +254,25 @@ public class IBLibroController extends Listas implements Initializable{
             fechaDatePicker.setValue(libro.getFecha());
             codigoTextField.setText(libro.getIsbn());
 
-            // Pongo los botones en su estado correspondiente
-//            libroButtonModificar.setDisable(false);
-//            libroButtonEliminar.setDisable(false);
-
         }
     }
 
     @FXML
     private void buscar(KeyEvent event) {
-        
         buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-           
             filter.setPredicate((Predicate<? super Libro>) (Libro libro)->{
-            
-            
                 if(newValue.isEmpty() || newValue==null){
                     return true;
                 }
                 else if(libro.getTitulo().contains(newValue)){
                     return true;
                 }
-                
-                
                 return false;
             });
-            
-            
         });
-        
         SortedList sort = new SortedList(filter);
         sort.comparatorProperty().bind(libroTableView.comparatorProperty());
         libroTableView.setItems(sort);
-        
     }
     
 }

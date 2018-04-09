@@ -28,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -57,6 +58,12 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     //DatePicker
     @FXML DatePicker fechaPrestamoDatePicker;
     @FXML DatePicker fechaVencimientoDatePicker;
+    
+    //TextField
+    @FXML TextField buscarTextField;
+    
+    //Button
+    @FXML Button agregarClienteButton;
     
     //ChoiceBox
     @FXML ComboBox obrasComboBox;
@@ -167,7 +174,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     //Elimina el elemento seleccionado en la tabla
     @FXML
     public void eliminarButton(){
-        listaLibros.remove(posicionEnTabla);
+        listaPrestamo.remove(posicionEnTabla);
     
 //        acualizaAutor();
     }

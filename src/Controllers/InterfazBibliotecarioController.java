@@ -103,7 +103,7 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
     
     //Cambiar a la ventada de memorias
     public void prestamoButton(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/BibliotecarioUsuarios/ObrasPrestamos.fxml");
+        cambioScene(event, "/GUI/ObrasPrestamos.fxml");
     }
     
     //Cambiar a la ventada de memorias

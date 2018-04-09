@@ -101,6 +101,23 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
         cambioScene(event, "/GUI/BibliotecarioUsuarios/IBCliente.fxml");
     }
     
+    //Cambiar a la ventada de memorias
+    public void prestamoButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/ObrasPrestamos.fxml");
+    }
+    
+    //Cambiar a la ventada de memorias
+    public void morososButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBCliente.fxml");
+    }
+    
+    //Cambiar a la ventada de memorias
+    public void listaObrasButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/MuestraObras.fxml");
+    }
+    
+    
+    
     //Codigo para cambiar de ventana
     private void cambioScene(ActionEvent event, String destino) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -19,14 +20,15 @@
             </Label>
             <TableView fx:id="obrasTableView" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="tituloTableColumn" prefWidth="75.0" text="Título" />
-                <TableColumn fx:id="tipoTableColumn" prefWidth="75.0" text="Tipo" />
-                  <TableColumn fx:id="autorTableColumn" prefWidth="75.0" text="Autor" />
+                <TableColumn fx:id="tituloTableColumn" prefWidth="124.0" text="Título" />
+                <TableColumn fx:id="tipoTableColumn" prefWidth="148.0" text="Tipo" />
+                  <TableColumn fx:id="autorTableColumn" minWidth="0.0" prefWidth="144.0" text="Autor" />
               </columns>
             </TableView>
          </children>
       </VBox>
       <Button fx:id="volverButton" layoutX="524.0" layoutY="351.0" mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
-      <Button layoutX="27.0" layoutY="351.0" mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Administrar obras" textFill="WHITE" />
+      <Button layoutX="27.0" layoutY="351.0" mnemonicParsing="false" onAction="#adminObrasButton" style="-fx-background-color: #ff0808;" text="Administrar obras" textFill="WHITE" />
+      <ComboBox fx:id="tiposComboBox" layoutX="27.0" layoutY="303.0" prefHeight="25.0" prefWidth="187.0" promptText="Seleccione un tipo de obra" />
    </children>
 </AnchorPane>

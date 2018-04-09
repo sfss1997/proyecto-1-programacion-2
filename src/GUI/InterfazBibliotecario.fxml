@@ -82,11 +82,6 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#clienteButton" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: #ff0808;" text="Clientes" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
          </children>
          <opaqueInsets>
             <Insets />
@@ -106,17 +101,17 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Prestamo de obras" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#prestamoButton" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Prestamo de obras" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Usuarios Morosos" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#morososButton" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Usuarios Morosos" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Lista de Obras" textFill="#fcfcfc">
+            <Button mnemonicParsing="false" onAction="#listaObrasButton" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #ff0808;" text="Lista de Obras" textFill="#fcfcfc">
                <font>
                   <Font size="14.0" />
                </font>
@@ -127,6 +122,11 @@
          </opaqueInsets>
       </VBox>
       <Button layoutX="522.0" layoutY="426.0" mnemonicParsing="false" onAction="#salirButton" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #ff0808;" text="Salir" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="263.0" layoutY="225.0" mnemonicParsing="false" onAction="#clienteButton" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: #ff0808;" text="Clientes" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

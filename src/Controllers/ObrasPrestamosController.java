@@ -109,6 +109,11 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     public void agregarButton(){
         
         String tipo="";
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(obrasComboBox.getValue().equals(listaRelacion.get(i).getTituloObra())){
+                tipo=listaRelacion.get(i).getTipoObra();
+            }
+        }
         String estado="vigente";
         Prestamo prestamo = new Prestamo(obrasComboBox.getValue().toString(), 
                                   clientesComboBox.getValue().toString(), 
@@ -136,6 +141,11 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     public void modificarButton(){
         
         String tipo="";
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(obrasComboBox.getValue().equals(listaRelacion.get(i).getTituloObra())){
+                tipo=listaRelacion.get(i).getTipoObra();
+            }
+        }
         String estado="vigente";
         Prestamo prestamo = new Prestamo(obrasComboBox.getValue().toString(), 
                                   clientesComboBox.getValue().toString(), 

@@ -72,8 +72,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         inicializarTabla();
         tipoIDComboBox.getItems().addAll("Seleccione una opción", "Cedula");
         tipoIDComboBox.setValue("Seleccione una opción");
-        obrasComboBox.getItems().addAll("Seleccione una opción", "Ningona");
-        obrasComboBox.setValue("Seleccione una opción");
+        
+        reestablecerObrasComboBox();
         
         final ObservableList<Autor> tablaLibroSel = autorTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaLibros);
@@ -108,12 +108,14 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         modificarUsuarioBibliotecario(nuevoAutor);
         listaAutores.set(posicionEnTabla, nuevoAutor);
         
+        
         limpiarButton();
     }
 
     @Override
     public void eliminarButton() {
         if(verificaUsuarioActivo() == false){
+            
             final Autor autor = getTablaLibrosSeleccionado();
             for (int i = 0; i < listaUsuarios.size(); i++) {
                 if(autor.getNombreUsuario().equals(listaUsuarios.get(i).getNombreUsuario()))
@@ -127,6 +129,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
 
     @Override
     public void limpiarButton() {
+        reestablecerObrasComboBox();
         nombreTextField.setText("");
         nombreUsuarioTextField.setText("");
         contraseñaTextField.setText("");
@@ -134,6 +137,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         tipoIDComboBox.setValue("Seleccione una opción");
         obrasComboBox.setValue("Seleccione una opción");
         avisoLabel.setText("");
+        
+        
     }
     
     //Cambiar a la ventada de bibliotecario
@@ -149,10 +154,20 @@ public class IBAutorController extends Listas implements Initializable, OnAction
      * Metodos.
      */
     
-    
+    private void reestablecerObrasComboBox(){
+        obrasComboBox.getItems().clear();
+        obrasComboBox.getItems().add("Ningona");
+        obrasComboBox.setValue("Seleccione una opción");
+    }
     
     private void llenarObrasComboBox(){
-        
+        obrasComboBox.getItems().clear();
+        String nombre= listaAutores.get(posicionEnTabla).getNombre();
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getNombreUnico().equals(nombre))
+                obrasComboBox.getItems().add(listaRelacion.get(i).getTituloObra());
+        }
+        obrasComboBox.setValue("Seleccione una opción");
     }
     
     private void modificarUsuarioBibliotecario(Autor autor){
@@ -266,6 +281,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
             iDTextField.setText(autor.getIdentificacion());
             tipoIDComboBox.setValue(autor.getTipoDeIdentificacion());
             tipoUsuarioTextField.setText(autor.getTipoDeUsuario());
+            llenarObrasComboBox();
 
             // Pongo los botones en su estado correspondiente
 //            libroButtonModificar.setDisable(false);

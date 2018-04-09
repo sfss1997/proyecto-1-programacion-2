@@ -32,11 +32,11 @@ public class Revistas extends Catalogo {
         this.edicion = new SimpleStringProperty(edicion);
     }
 
-    public String getIssn() {
+    public String getIsbn() {
         return isbn.get();
     }
 
-    public void setIssn(String isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = new SimpleStringProperty(isbn);
     }
 
@@ -46,6 +46,11 @@ public class Revistas extends Catalogo {
 
     public void setEdicion(String edicion) {
         this.edicion = new SimpleStringProperty(edicion);
+    }
+
+    @Override
+    public String toString() {
+        return "Revistas{" + "titulo=" + super.getTitulo() + "isbn=" + isbn + ", edicion=" + edicion + '}';
     }
 
     

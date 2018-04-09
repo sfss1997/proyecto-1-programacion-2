@@ -96,8 +96,7 @@
                            <children>
                               <ComboBox fx:id="autorComboBox" prefHeight="25.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label text="Autor(es):" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#agregarAutorButton" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: #ff0808;" text="Nuevo Autor" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Agregar" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#agregarAutorButton" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: #ff0808;" text="Nuevo Autor" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <DatePicker fx:id="fechaDatePicker" editable="false" promptText="Fecha" GridPane.columnIndex="1" />
                               <Label text="Fecha:" />
                            </children>
@@ -109,7 +108,10 @@
                   </VBox>
                   <AnchorPane prefHeight="227.0" prefWidth="213.0">
                      <children>
-                        <Label fx:id="avisoLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="188.0" prefWidth="183.0" />
+                        <Label fx:id="avisoLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="188.0" prefWidth="183.0" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
                      </children>
                   </AnchorPane>
                </children>

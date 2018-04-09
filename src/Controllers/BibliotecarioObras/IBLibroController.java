@@ -9,14 +9,11 @@ import Domain.Libro;
 import Domain.Relacion;
 import Datos.Listas;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -29,7 +26,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -39,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -168,6 +165,7 @@ public class IBLibroController extends Listas implements Initializable{
         fechaDatePicker.setValue(LocalDate.now());
         autorComboBox.setValue("Seleccione una opción");
         busquedaComboBox.setValue("Seleccione una opción");
+        avisoLabel.setText("");
         
         agregarButton.setDisable(false);
         modificarButton.setDisable(true);
@@ -199,7 +197,7 @@ public class IBLibroController extends Listas implements Initializable{
         Libro libro= listaLibros.get(posicionEnTabla);
         
         for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra()==libro.getTitulo()){
+            if(listaRelacion.get(i).getTituloObra().equals(libro.getTitulo())){
                 listaRelacion.get(i).setTituloObra(nuevoLibro.getTitulo());
                 listaRelacion.get(i).setNombreUnico(nuevoLibro.getListaAutores());
             }
@@ -210,7 +208,7 @@ public class IBLibroController extends Listas implements Initializable{
         String titulo= listaLibros.get(posicionEnTabla).getTitulo();
         
         for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra()==titulo){
+            if(listaRelacion.get(i).getTituloObra().equals(titulo)){
                 listaRelacion.remove(i);
             }
         }
@@ -237,13 +235,30 @@ public class IBLibroController extends Listas implements Initializable{
         window.setScene(tableViewScene);
         window.show();
     }
+    
+    private boolean verificaTituloExistente(){
+        for (int i = 0; i < listaLibros.size(); i++) {
+            if(tituloTextField.getText().equals(listaLibros.get(i).getTitulo()))
+                return true;
+        }
+        return false;
+    }
 
     private boolean validarInformacion(){
         if(tituloTextField.getText().equals("") ||
            temaTextField.getText().equals("") ||
            subTemaTextField.getText().equals("") ||
-           autorComboBox.getValue().equals("Autor"))
+           codigoTextField.getText().equals("") ||
+           autorComboBox.getValue().equals("Selecione una opción") ||
+           fechaDatePicker.getValue() == null){
+//            avisoLabel.setText("Complete todos los\nespacios.");
+            JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
             return false;
+        } else if(verificaTituloExistente() == true){
+//            avisoLabel.setText("Ya existe un libro con el\ntítulo sugerido.\nIngrese otro.");
+            JOptionPane.showMessageDialog(null, "Ya existe un libro con el título sugerido.\nIngrese otro.");
+            return false;
+        }
         return true;
     }
     

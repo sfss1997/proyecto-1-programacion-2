@@ -9,9 +9,13 @@ import Domain.Autor;
 import Domain.Bibliotecario;
 import Domain.Cliente;
 import Domain.Libro;
+import Domain.Memoria;
 import Domain.Otro;
+import Domain.Periodico;
 import Domain.Prestamo;
 import Domain.Relacion;
+import Domain.Revistas;
+import Domain.Tesis;
 import Domain.Usuarios;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -29,12 +33,12 @@ public class Listas {
     public static ObservableList<Relacion> listaRelacion = FXCollections.observableArrayList();
     public static ObservableList<Usuarios> listaUsuarios = FXCollections.observableArrayList();
     public static ObservableList<Autor> listaAutores = FXCollections.observableArrayList();
-    public static ObservableList<Object> listaBibliotecarios = FXCollections.observableArrayList();
-    public static ObservableList<Object> listaRevistas = FXCollections.observableArrayList();
-    public static ObservableList<Object> listaTesis = FXCollections.observableArrayList();
+    public static ObservableList<Bibliotecario> listaBibliotecarios = FXCollections.observableArrayList();
+    public static ObservableList<Revistas> listaRevistas = FXCollections.observableArrayList();
+    public static ObservableList<Tesis> listaTesis = FXCollections.observableArrayList();
     public static ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
-    public static ObservableList<Object> listaPeriodicos = FXCollections.observableArrayList();
-    public static ObservableList<Object> listaMemorias = FXCollections.observableArrayList();
+    public static ObservableList<Periodico> listaPeriodicos = FXCollections.observableArrayList();
+    public static ObservableList<Memoria> listaMemorias = FXCollections.observableArrayList();
     public static ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
     public static ObservableList<Otro> listaOtros = FXCollections.observableArrayList();
     
@@ -45,6 +49,7 @@ public class Listas {
             autoresPorDefecto();
             bibliotecariosPorDefecto();
             libroPorDefecto();
+            revistaPorDefecto();
             
             acualizaAutor();
             x++;
@@ -95,6 +100,20 @@ public class Listas {
         Relacion eR = new Relacion("Animales Fantasticos", "Autor 2", "Libro");
         listaRelacion.addAll(aR,bR,cR,dR,eR);
     }
+    
+    private void revistaPorDefecto(){
+        Revistas a = new Revistas("1", "Primera", "National Geographic", LocalDate.now(), "Autor 1");
+        Revistas b = new Revistas("2", "Especial", "Rolling Stone", LocalDate.now(), "Autor 3");
+        Revistas c = new Revistas("3", "Segunda", "Time", LocalDate.now(), "Autor 2");
+        Revistas d = new Revistas("4", "Segunda", "Vogué", LocalDate.now(), "Autor 3");
+        listaRevistas.addAll(a,b,c,d);
+        
+        Relacion aR = new Relacion("National Geographic", "Autor 1", "Revista");
+        Relacion bR = new Relacion("Rolling Stone", "Autor 3", "Revista");
+        Relacion cR = new Relacion("Time", "Autor 2", "Revista");
+        Relacion dR = new Relacion("Vogué", "Autor 3", "Revista");
+        listaRelacion.addAll(aR,bR,cR,dR);
+    }
 
     public static ObservableList<Prestamo> getListaPrestamo() {
         return listaPrestamo;
@@ -128,27 +147,27 @@ public class Listas {
         Listas.listaAutores = listaAutores;
     }
 
-    public static ObservableList<Object> getListaBibliotecarios() {
+    public static ObservableList<Bibliotecario> getListaBibliotecarios() {
         return listaBibliotecarios;
     }
 
-    public static void setListaBibliotecarios(ObservableList<Object> listaBibliotecarios) {
+    public static void setListaBibliotecarios(ObservableList<Bibliotecario> listaBibliotecarios) {
         Listas.listaBibliotecarios = listaBibliotecarios;
     }
 
-    public static ObservableList<Object> getListaRevistas() {
+    public static ObservableList<Revistas> getListaRevistas() {
         return listaRevistas;
     }
 
-    public static void setListaRevistas(ObservableList<Object> listaRevistas) {
+    public static void setListaRevistas(ObservableList<Revistas> listaRevistas) {
         Listas.listaRevistas = listaRevistas;
     }
 
-    public static ObservableList<Object> getListaTesis() {
+    public static ObservableList<Tesis> getListaTesis() {
         return listaTesis;
     }
 
-    public static void setListaTesis(ObservableList<Object> listaTesis) {
+    public static void setListaTesis(ObservableList<Tesis> listaTesis) {
         Listas.listaTesis = listaTesis;
     }
 
@@ -160,19 +179,19 @@ public class Listas {
         Listas.listaLibros = listaLibros;
     }
 
-    public static ObservableList<Object> getListaPeriodicos() {
+    public static ObservableList<Periodico> getListaPeriodicos() {
         return listaPeriodicos;
     }
 
-    public static void setListaPeriodicos(ObservableList<Object> listaPeriodicos) {
+    public static void setListaPeriodicos(ObservableList<Periodico> listaPeriodicos) {
         Listas.listaPeriodicos = listaPeriodicos;
     }
 
-    public static ObservableList<Object> getListaMemorias() {
+    public static ObservableList<Memoria> getListaMemorias() {
         return listaMemorias;
     }
 
-    public static void setListaMemorias(ObservableList<Object> listaMemorias) {
+    public static void setListaMemorias(ObservableList<Memoria> listaMemorias) {
         Listas.listaMemorias = listaMemorias;
     }
 

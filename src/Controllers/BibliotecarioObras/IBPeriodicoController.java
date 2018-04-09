@@ -6,6 +6,9 @@
 package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
+import static Datos.Listas.listaAutores;
+import static Datos.Listas.listaRelacion;
+import static Datos.Listas.listaRevistas;
 import Domain.Periodico;
 import Domain.Relacion;
 import java.io.IOException;
@@ -13,8 +16,11 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,14 +28,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -39,76 +49,80 @@ import javafx.stage.Stage;
  */
 public class IBPeriodicoController extends Listas implements Initializable {
     
-    //Tabla
-    @FXML TableView periodicoTableView;
-    @FXML TableColumn isbnTableColumn;
+    ///Tabla
+    @FXML TableView   periodicoTableView;
+    @FXML TableColumn issnTableColumn;
     @FXML TableColumn tituloTableColumn;
     @FXML TableColumn edicionTableColumn;
+    @FXML TableColumn autorTableColumn;
     @FXML TableColumn fechaTableColumn;
-    @FXML TableColumn autoresTableColumn;
+    
     
     //TextFields
     @FXML TextField tituloTextField;
+    @FXML TextField issnTextField;
     @FXML TextField edicionTextField;
-    @FXML TextField isbnTextField;
+    @FXML TextField buscarTextField;
     
     //DatePicker
     @FXML DatePicker fechaDatePicker;
     
     //ChoiceBox
     @FXML ComboBox autorComboBox;
+    @FXML ComboBox busquedaComboBox;
     
+    //Label
+    @FXML Label avisoLabel;
+    
+    //Buttons
+    @FXML Button agregarButton;
+    @FXML Button modificarButton;
+    @FXML Button eliminarButton;
+        
     //Esto es para reconocer el numero de la fila que se selecicona en la tabla
     private int posicionEnTabla;
+
+    FilteredList filter = new FilteredList(listaPeriodicos, e -> true);
     
-    
-    /**
-     * Este metodo es el que se ejecuta apenas entra a la interfaz.
-     * Es como un constructor
-     */
-    @Override
+   @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Inicializa la tabla y las columnas para que funcione
-        inicializarTablaPeriodico();
+
+
         
-        //Llena el choiceBox 
-        llenarComboBox();
+        inicializarTablaLibro();
+
+        llenarAutorComboBox();
+        llenarBusquedaComboBox();
+
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
         
-        //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
-        //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
-        //se hubiera seleccionado
-        //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-        autorComboBox.setValue("Autor");
-        
-        //Esto ni lo vea jaja solo se agrega y ya
-        //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
-        //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
-        final ObservableList<Periodico> tablaPeriodicoSel = periodicoTableView.getSelectionModel().getSelectedItems();
-        tablaPeriodicoSel.addListener(selectorTablaPeriodico);
-    }    
+        final ObservableList<Periodico> tablaLibroSel = periodicoTableView.getSelectionModel().getSelectedItems();
+        tablaLibroSel.addListener(selectorTablaLibros);
+    }
     
     /**
-     * On Antion ----------------------------- Metodos que se van a utilizar como On Action
+     * On Antion -----------------------------
      */
-    
-    //Cambiar a la ventada de bibliotecario
+
+    @FXML
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
-    
-    //Agrega un nuevo libro
+
+    @FXML
     public void agregarButton(){
-        Periodico periodico = new Periodico(isbnTextField.getText(), 
-                                  edicionTextField.getText(), 
-                                  tituloTextField.getText(), 
-                                  fechaDatePicker.getValue(), 
-                                  autorComboBox.getValue().toString());
+        Periodico periodico = new Periodico(issnTextField.getText(), 
+                                            edicionTextField.getText(), 
+                                            tituloTextField.getText(), 
+                                            fechaDatePicker.getValue(), 
+                                            autorComboBox.getValue().toString());
+        
         Relacion relacion = new Relacion(tituloTextField.getText(),
                                         autorComboBox.getValue().toString(),
                                         "Periódico");
-        
+           
         if(validarInformacion() == true){
-            //Se utiliza la listaLibros de la clase Listas
             super.listaPeriodicos.add(periodico);
             super.listaRelacion.add(relacion);
             acualizaAutor();
@@ -116,126 +130,149 @@ public class IBPeriodicoController extends Listas implements Initializable {
         }
         
     }
-    
-    //Modifica un elemento seleccionado en la tabla
+
+    @FXML
     public void modificarButton(){
-        Periodico periodico = new Periodico(isbnTextField.getText(), 
-                                  edicionTextField.getText(), 
-                                  tituloTextField.getText(), 
-                                  fechaDatePicker.getValue(), 
-                                  autorComboBox.getValue().toString());
+        Periodico periodico = new Periodico(issnTextField.getText(), 
+                                            edicionTextField.getText(), 
+                                            tituloTextField.getText(), 
+                                            fechaDatePicker.getValue(), 
+                                            autorComboBox.getValue().toString());
+
         if(validarInformacion() == true){
+            modificarRelacion(periodico);
             super.listaPeriodicos.set(posicionEnTabla, periodico);
+            acualizaAutor();
             limpiarButton();  
         }
     }
-    
-    //Elimina el elemento seleccionado en la tabla
+
+    @FXML
     public void eliminarButton(){
-        listaPeriodicos.remove(posicionEnTabla);
-        listaRelacion.remove(posicionRelacion());
+        eliminaRelacion();
+        listaPeriodicos.remove(posicionEnTabla); 
+
         acualizaAutor();
+        limpiarButton();
+    }
+
+    @FXML
+    public void limpiarButton(){
+        issnTextField.setText("");
+        tituloTextField.setText("");
+        edicionTextField.setText("");
+        fechaDatePicker.setValue(LocalDate.now());
+        autorComboBox.setValue("Seleccione una opción");
+        busquedaComboBox.setValue("Seleccione una opción");
+        avisoLabel.setText("");
+        
+        agregarButton.setDisable(false);
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
     }
     
-    //Limpia lo que hay en los TextFields
-    //Asigna al ChoiceBox el elemento de "Autor"
-    //Asigna al DatePicker la fecha actual
-    public void limpiarButton(){
-        isbnTextField.setText("");
-        edicionTextField.setText("");
-        tituloTextField.setText("");
-        fechaDatePicker.setValue(LocalDate.now());
-        autorComboBox.setValue("Autor");
+    @FXML
+    public void agregarAutorButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
     }
     
     /**
-     * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
+     * Metodos ----------------------------- 
      */
     
-    private int posicionRelacion(){
-        int salida = 0;
-        Periodico periodico = getTablaPeriodicoSeleccionado();
-        for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra().equals(periodico.getTitulo()))
-                salida = i;
-        }
-        return salida+1;
+    public void llenarBusquedaComboBox(){
+        busquedaComboBox.getItems().addAll("Título", "Autor", "Código");
+        busquedaComboBox.setValue("Seleccione una opción");
     }
     
-    //Inicializa la tabla
-    private void inicializarTablaPeriodico(){
-        //Solo hay que hacerlo con las columnas
-        //Ejemplo:
-//  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
-//  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
+    public void llenarAutorComboBox(){
+        autorComboBox.setValue("Seleccione una opción");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
+    }
+    
+    private void modificarRelacion(Periodico nuevoPeriodico){
+        Periodico periodico= listaPeriodicos.get(posicionEnTabla);
         
-        isbnTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("isbn"));
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(periodico.getTitulo())){
+                listaRelacion.get(i).setTituloObra(nuevoPeriodico.getTitulo());
+                listaRelacion.get(i).setNombreUnico(nuevoPeriodico.getListaAutores());
+            }
+        }
+    }
+    
+    private void eliminaRelacion(){
+        String titulo= listaPeriodicos.get(posicionEnTabla).getTitulo();
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(titulo)){
+                listaRelacion.remove(i);
+            }
+        }
+    }
+
+    private void inicializarTablaLibro(){
+
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("titulo"));
         edicionTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("edicion"));
+        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("listaAutores"));
         fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, LocalDate>("fecha"));
-        autoresTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("listaAutores"));
-        
+        issnTableColumn.setCellValueFactory(new PropertyValueFactory<Periodico, String>("isbn"));
         
         periodicoTableView.setItems(super.listaPeriodicos);
     }
-    
-    //Codigo para cambiar de ventana
+
     private void cambioScene(ActionEvent event, String destino) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
         Scene tableViewScene = new Scene(tableViewParent);
         
-        //Esta linea obtiene la informacion del Stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
         window.setScene(tableViewScene);
         window.show();
     }
     
-    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
-    private void llenarComboBox(){
-        //El addAll es para agregar más de un elemento a la ves
-        autorComboBox.getItems().addAll("Autor","aaaa");
-        for (int i = 0; i < listaAutores.size(); i++) {
-            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+    private boolean verificaTituloExistente(){
+        for (int i = 0; i < listaPeriodicos.size(); i++) {
+            if(tituloTextField.getText().equals(listaPeriodicos.get(i).getTitulo()))
+                return true;
         }
+        return false;
     }
-    
-     //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
+
     private boolean validarInformacion(){
         if(tituloTextField.getText().equals("") ||
            edicionTextField.getText().equals("") ||
-           isbnTextField.getText().equals("") ||
-           autorComboBox.getValue().equals("Autor"))
+           issnTextField.getText().equals("") ||
+           autorComboBox.getValue().equals("Seleccione una opción") ||
+           fechaDatePicker.getValue() == null){
+//            avisoLabel.setText("Complete todos los\nespacios.");
+            JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
             return false;
+        } else if(verificaTituloExistente() == true){
+//            avisoLabel.setText("Ya existe un libro con el\ntítulo sugerido.\nIngrese otro.");
+            JOptionPane.showMessageDialog(null, "Ya existe un libro con el título sugerido.\nIngrese otro.");
+            return false;
+        }
         return true;
     }
-    
-    //********* IMPORTANTE *********
-    
-    /**
-     * Estos metodos de aquí abajo no sé muy bien como funcionan, pero se necesitan para que sirva lo de eliminar
-     * y modificar.
-     * Estos metodos sirven para reconocer la fila que se seleccionó y los elementos de la fila.
-     * Estos metodos van junto al tablaLibroSel, que es la línea de codigo que está en el metodo initialize (la que
-     * empieza con final)
-     * Nada más tenga mucho cuidado a la hora de copiar y pegar, mucho ojo a lo que hay que cambiarle
-     */
     
     /**
      * Listener de la tabla personas
      */
-    private final ListChangeListener<Periodico> selectorTablaPeriodico =
+    private final ListChangeListener<Periodico> selectorTablaLibros =
             new ListChangeListener<Periodico>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Periodico> c) {
-                    ponerPeriodicoSeleccionado();
+                    ponerLibroSeleccionado();
                 }
             };
 
     /**
      * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
      */
-    public Periodico getTablaPeriodicoSeleccionado() {
+    public Periodico getTablaLibrosSeleccionado() {
         if (periodicoTableView != null) {
             List<Periodico> tabla = periodicoTableView.getSelectionModel().getSelectedItems();
             if (tabla.size() == 1) {
@@ -249,8 +286,8 @@ public class IBPeriodicoController extends Listas implements Initializable {
     /**
      * Método para poner en los textFields la tupla que selccionemos
      */
-    private void ponerPeriodicoSeleccionado() {
-        final Periodico periodico = getTablaPeriodicoSeleccionado();
+    private void ponerLibroSeleccionado() {
+        final Periodico periodico = getTablaLibrosSeleccionado();
         posicionEnTabla = listaPeriodicos.indexOf(periodico);
 
         if (periodico != null) {
@@ -260,12 +297,40 @@ public class IBPeriodicoController extends Listas implements Initializable {
             edicionTextField.setText(periodico.getEdicion());
             autorComboBox.setValue(periodico.getListaAutores());
             fechaDatePicker.setValue(periodico.getFecha());
-            isbnTextField.setText(periodico.getIsbn());
-
-            // Pongo los botones en su estado correspondiente
-//            libroButtonModificar.setDisable(false);
-//            libroButtonEliminar.setDisable(false);
+            issnTextField.setText(periodico.getIsbn());
+            
+            agregarButton.setDisable(true);
+            modificarButton.setDisable(false);
+            eliminarButton.setDisable(false);
 
         }
+    }
+
+    @FXML
+    private void buscar(KeyEvent event) {
+            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filter.setPredicate((Predicate<? super Periodico>) (Periodico revista)->{
+                    if(busquedaComboBox.getValue().toString().equals("Seleccione una opción")){
+                        return false;
+                    }
+                    else if(newValue.isEmpty() || newValue==null){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Título") && revista.getTitulo().contains(newValue)){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Autor") && revista.getListaAutores().contains(newValue)){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Código") && revista.getIsbn().contains(newValue)){
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(periodicoTableView.comparatorProperty());
+            periodicoTableView.setItems(sort);
+     
     }
 }

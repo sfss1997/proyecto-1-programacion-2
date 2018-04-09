@@ -147,15 +147,10 @@ public class IBRevistaController extends Listas implements Initializable {
 
     @FXML
     public void eliminarButton(){
-        for (int i = 0; i < listaRelacion.size(); i++) {
-//            System.out.println(listaRelacion.get(i).toString());
-        }
         eliminaRelacion();
         listaRevistas.remove(posicionEnTabla); 
         System.out.println("\n\n");
-for (int i = 0; i < listaRelacion.size(); i++) {
-//            System.out.println(listaRelacion.get(i).toString());
-        }
+        
         acualizaAutor();
         limpiarButton();
     }
@@ -209,11 +204,8 @@ for (int i = 0; i < listaRelacion.size(); i++) {
     
     private void eliminaRelacion(){
         String titulo= listaRevistas.get(posicionEnTabla).getTitulo();
-        System.out.println(titulo);
         for (int i = 0; i < listaRelacion.size(); i++) {
-            System.out.println("---" + listaRelacion.get(i).getTituloObra());
             if(listaRelacion.get(i).getTituloObra().equals(titulo)){
-                System.out.println(listaRelacion.get(i).getTituloObra());
                 listaRelacion.remove(i);
             }
         }

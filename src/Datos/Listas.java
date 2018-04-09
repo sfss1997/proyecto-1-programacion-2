@@ -51,6 +51,7 @@ public class Listas {
             llenarListaLibros();
             llenarListaRevistas();
             llenarListaTesis();
+            llenarListaPeriodicos();
             
             acualizaAutor();
             x++;
@@ -127,6 +128,20 @@ public class Listas {
         Relacion bR = new Relacion("Tesis 2", "Autor 1", "Tesis");
         Relacion cR = new Relacion("Tesis 3", "Autor 2", "Tesis");
         Relacion dR = new Relacion("Tesis 4", "Autor 2", "Tesis");
+        listaRelacion.addAll(aR,bR,cR,dR);
+    }
+    
+    private void llenarListaPeriodicos(){
+        Periodico a = new Periodico("1", "Primera", "La Nación", LocalDate.now(), "Autor 2");
+        Periodico b = new Periodico("2", "Segunda", "La Teja", LocalDate.now(), "Autor 2");
+        Periodico c = new Periodico("3", "Tercera", "CRHoy", LocalDate.now(), "Autor 2");
+        Periodico d = new Periodico("4", "Cuarta", "Diario Extra", LocalDate.now(), "Autor 2");
+        listaPeriodicos.addAll(a,b,c,d);
+        
+        Relacion aR = new Relacion("La Nación", "Autor 2", "Periódico");
+        Relacion bR = new Relacion("La Teja", "Autor 2", "Periódico");
+        Relacion cR = new Relacion("CRHoy", "Autor 2", "Periódico");
+        Relacion dR = new Relacion("Diario Extra", "Autor 2", "Periódico");
         listaRelacion.addAll(aR,bR,cR,dR);
     }
 

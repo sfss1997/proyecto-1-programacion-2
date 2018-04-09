@@ -46,10 +46,11 @@ public class Listas {
     
     public Listas() {
         if(x==0){
-            autoresPorDefecto();
-            bibliotecariosPorDefecto();
-            libroPorDefecto();
-            revistaPorDefecto();
+            llenarListaAutores();
+            llenarListaBibliotecarios();
+            llenarListaLibros();
+            llenarListaRevistas();
+            llenarListaTesis();
             
             acualizaAutor();
             x++;
@@ -71,7 +72,7 @@ public class Listas {
         }
     }
     
-    private void autoresPorDefecto(){
+    private void llenarListaAutores(){
         Autor a = new Autor("Autor 1", "a1", "a1", "1234", "Cedula", "Autor", "Ninguna");
         Autor b = new Autor("Autor 2", "a2", "a2", "4567", "Cedula", "Autor", "Ninguna");
         Autor c = new Autor("Autor 3", "a3", "a3", "6789", "Cedula", "Autor", "Ninguna");
@@ -79,13 +80,13 @@ public class Listas {
         listaUsuarios.addAll(a,b,c);
     }
     
-    private void bibliotecariosPorDefecto(){
+    private void llenarListaBibliotecarios(){
         Bibliotecario a = new Bibliotecario("Hans", "hansinho", "hans21", "3-0512-0587", "Cedula", "Bibliotecario");
         listaBibliotecarios.add(a);
         listaUsuarios.add(a);
     }
     
-    private void libroPorDefecto(){
+    private void llenarListaLibros(){
         Libro a = new Libro("1", "Ciencia Ficción", ":v", "El Señor de los Anillos", LocalDate.now(), "Autor 1");
         Libro b = new Libro("2", "Ciencia Ficción", ":v", "Harry Potter", LocalDate.now(), "Autor 2");
         Libro c = new Libro("3", "Terror", ":v", "It", LocalDate.now(), "Autor 3");
@@ -101,7 +102,7 @@ public class Listas {
         listaRelacion.addAll(aR,bR,cR,dR,eR);
     }
     
-    private void revistaPorDefecto(){
+    private void llenarListaRevistas(){
         Revistas a = new Revistas("1", "Primera", "National Geographic", LocalDate.now(), "Autor 1");
         Revistas b = new Revistas("2", "Especial", "Rolling Stone", LocalDate.now(), "Autor 3");
         Revistas c = new Revistas("3", "Segunda", "Time", LocalDate.now(), "Autor 2");
@@ -112,6 +113,20 @@ public class Listas {
         Relacion bR = new Relacion("Rolling Stone", "Autor 3", "Revista");
         Relacion cR = new Relacion("Time", "Autor 2", "Revista");
         Relacion dR = new Relacion("Vogué", "Autor 3", "Revista");
+        listaRelacion.addAll(aR,bR,cR,dR);
+    }
+    
+    private void llenarListaTesis(){
+        Tesis a = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 1", LocalDate.now(), "Autor 3");
+        Tesis b = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 2", LocalDate.now(), "Autor 1");
+        Tesis c = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 3", LocalDate.now(), "Autor 2");
+        Tesis d = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 4", LocalDate.now(), "Autor 2");
+        listaTesis.addAll(a,b,c,d);
+        
+        Relacion aR = new Relacion("Tesis 1", "Autor 3", "Tesis");
+        Relacion bR = new Relacion("Tesis 2", "Autor 1", "Tesis");
+        Relacion cR = new Relacion("Tesis 3", "Autor 2", "Tesis");
+        Relacion dR = new Relacion("Tesis 4", "Autor 2", "Tesis");
         listaRelacion.addAll(aR,bR,cR,dR);
     }
 

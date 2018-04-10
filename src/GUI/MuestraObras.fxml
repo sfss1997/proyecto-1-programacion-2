@@ -27,7 +27,7 @@
             </TableView>
          </children>
       </VBox>
-      <Button fx:id="volverButton" layoutX="524.0" layoutY="351.0" mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
+      <Button fx:id="volverButton" layoutX="524.0" layoutY="351.0" mnemonicParsing="false" onAction="#volverButton" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
       <Button layoutX="27.0" layoutY="351.0" mnemonicParsing="false" onAction="#adminObrasButton" style="-fx-background-color: #ff0808;" text="Administrar obras" textFill="WHITE" />
       <ComboBox fx:id="tiposComboBox" layoutX="27.0" layoutY="303.0" prefHeight="25.0" prefWidth="187.0" promptText="Seleccione un tipo de obra" />
    </children>

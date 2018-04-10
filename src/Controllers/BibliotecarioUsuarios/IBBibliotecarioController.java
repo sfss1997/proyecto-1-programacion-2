@@ -90,7 +90,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
         
         inicializarTablaLibro();
 
-        llenarAutorComboBox();
+        llenaTipoIDComboBox();
         llenarBusquedaComboBox();
 
         modificarButton.setDisable(true);
@@ -145,10 +145,12 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     @FXML
     public void eliminarButton(){
         
-        eliminaUsuario();
-        listaBibliotecarios.remove(posicionEnTabla); 
+        if(verificaUsuarioActivo() == false){
+            eliminaUsuario();
+            listaBibliotecarios.remove(posicionEnTabla); 
 
-        limpiarButton();
+            limpiarButton();
+        }
     }
 
     @FXML
@@ -180,7 +182,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
         busquedaComboBox.setValue("Seleccione una opción");
     }
     
-    public void llenarAutorComboBox(){
+    public void llenaTipoIDComboBox(){
         tipoIDComboBox.setValue("Seleccione una opción");
         tipoIDComboBox.getItems().add("Cédula");
     }
@@ -232,6 +234,16 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
         window.show();
     }
     
+    private boolean verificaUsuarioActivo(){
+        Bibliotecario bibliotecario= listaBibliotecarios.get(posicionEnTabla);
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(bibliotecario.getEstado().equals("activo"))
+                JOptionPane.showMessageDialog(null, "El usuario que desea eliminar está activo.\nNo puede ser eliminado.");
+                return true;
+        }
+        return false;
+    }
+    
     private boolean verificaUsuarioExistente(){
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if(nombreUsuarioTextField.getText().equals(listaUsuarios.get(i).getNombreUsuario()))
@@ -245,7 +257,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
            nombreUsuarioTextField.getText().equals("") ||
            contraseñaTextField.getText().equals("") ||
            iDTextField.getText().equals("") ||
-           tipoIDComboBox.getValue().equals("Selecione una opción")){
+           tipoIDComboBox.getValue().equals("Seleccione una opción")){
 //            avisoLabel.setText("Complete todos los\nespacios.");
             JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
             return false;

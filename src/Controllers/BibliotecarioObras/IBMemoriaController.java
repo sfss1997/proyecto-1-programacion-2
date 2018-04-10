@@ -8,6 +8,8 @@ package Controllers.BibliotecarioObras;
 
 import Datos.Listas;
 import static Datos.Listas.listaAutores;
+import static Datos.Listas.listaLibros;
+import static Datos.Listas.listaRelacion;
 import Domain.Memoria;
 import Domain.Relacion;
 import java.io.IOException;
@@ -15,8 +17,11 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,13 +29,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -39,81 +48,84 @@ import javafx.stage.Stage;
  */
 public class IBMemoriaController extends Listas implements Initializable {
 
-    
-
     //Tabla
     @FXML TableView memoriaTableView;
-    @FXML TableColumn resumenTableColumn;
-    @FXML TableColumn abstractoTableColumn;
-    @FXML TableColumn conferenciaTableColumn;
     @FXML TableColumn tituloTableColumn;
+    @FXML TableColumn resumenTableColumn;
+    @FXML TableColumn abstractTableColumn;
+    @FXML TableColumn conferenciaTableColumn;
+    @FXML TableColumn autorTableColumn;
     @FXML TableColumn fechaTableColumn;
-    @FXML TableColumn autoresTableColumn;
+    
     
     //TextFields
     @FXML TextField tituloTextField;
     @FXML TextField resumenTextField;
+    @FXML TextField abstractTextField;
     @FXML TextField conferenciaTextField;
-    @FXML TextField abstractoTextField;
+    @FXML TextField buscarTextField;
     
     //DatePicker
     @FXML DatePicker fechaDatePicker;
     
     //ChoiceBox
     @FXML ComboBox autorComboBox;
+    @FXML ComboBox busquedaComboBox;
     
-    //Esto es para reconocer el numero de la fila que se selecicona en la tabla
+    //Label
+    @FXML Label avisoLabel;
+    
+    //Buttons
+    @FXML Button agregarButton;
+    @FXML Button modificarButton;
+    @FXML Button eliminarButton;
+    
+    
+    //Reconoce posicion en tabla
     private int posicionEnTabla;
     
+    FilteredList filter = new FilteredList(listaMemorias, e -> true);
     
-    /**
-     * Este metodo es el que se ejecuta apenas entra a la interfaz.
-     * Es como un constructor
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Inicializa la tabla y las columnas para que funcione
-        inicializarTablaMemoria();
+
+
         
-        //Llena el choiceBox 
-        llenarComboBox();
+        inicializarTablaLibro();
+
+        llenarAutorComboBox();
+        llenarBusquedaComboBox();
+
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
         
-        //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
-        //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
-        //se hubiera seleccionado
-        //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-        autorComboBox.setValue("Autor");
-        
-        //Esto ni lo vea jaja solo se agrega y ya
-        //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
-        //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
-        final ObservableList<Memoria> tablaMemoriaSel = memoriaTableView.getSelectionModel().getSelectedItems();
-        tablaMemoriaSel.addListener(selectorTablaMemoria);
+        final ObservableList<Memoria> tablaLibroSel = memoriaTableView.getSelectionModel().getSelectedItems();
+        tablaLibroSel.addListener(selectorTablaLibros);
     }
     
     /**
-     * On Antion ----------------------------- Metodos que se van a utilizar como On Action
+     * On Antion -----------------------------
      */
-    
-    //Cambiar a la ventada de bibliotecario
+
+    @FXML
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
-    
-    //Agrega una nueva memoria
+
+    @FXML
     public void agregarButton(){
         Memoria memoria = new Memoria(resumenTextField.getText(), 
-                                  abstractoTextField.getText(), 
-                                  conferenciaTextField.getText(), 
-                                  tituloTextField.getText(), 
-                                  fechaDatePicker.getValue(), 
-                                  autorComboBox.getValue().toString());
+                                      abstractTextField.getText(), 
+                                      conferenciaTextField.getText(), 
+                                      tituloTextField.getText(), 
+                                      fechaDatePicker.getValue(), 
+                                      autorComboBox.getValue().toString());
+        
         Relacion relacion = new Relacion(tituloTextField.getText(),
                                         autorComboBox.getValue().toString(),
                                         "Memoria");
-        
+           
         if(validarInformacion() == true){
-            //Se utiliza la listaMemorias de la clase Listas
             super.listaMemorias.add(memoria);
             super.listaRelacion.add(relacion);
             acualizaAutor();
@@ -121,134 +133,155 @@ public class IBMemoriaController extends Listas implements Initializable {
         }
         
     }
-    
-    //Modifica un elemento seleccionado en la tabla
+
+    @FXML
     public void modificarButton(){
         Memoria memoria = new Memoria(resumenTextField.getText(), 
-                                  abstractoTextField.getText(), 
-                                  conferenciaTextField.getText(), 
-                                  tituloTextField.getText(), 
-                                  fechaDatePicker.getValue(), 
-                                  autorComboBox.getValue().toString());
+                                      abstractTextField.getText(), 
+                                      conferenciaTextField.getText(), 
+                                      tituloTextField.getText(), 
+                                      fechaDatePicker.getValue(), 
+                                      autorComboBox.getValue().toString());
+
         if(validarInformacion() == true){
+            modificarRelacion(memoria);
             super.listaMemorias.set(posicionEnTabla, memoria);
+            acualizaAutor();
             limpiarButton();  
         }
     }
-    
-    //Elimina el elemento seleccionado en la tabla
+
+    @FXML
     public void eliminarButton(){
-        listaMemorias.remove(posicionEnTabla);
-        listaRelacion.remove(posicionRelacion());
+        
+        eliminaRelacion();
+        listaMemorias.remove(posicionEnTabla); 
+
         acualizaAutor();
+        limpiarButton();
     }
-    
-    //Limpia lo que hay en los TextFields
-    //Asigna al ChoiceBox el elemento de "Autor"
-    //Asigna al DatePicker la fecha actual
+
+    @FXML
     public void limpiarButton(){
-        resumenTextField.setText("");
-        abstractoTextField.setText("");
         conferenciaTextField.setText("");
+        resumenTextField.setText("");
+        abstractTextField.setText("");
         tituloTextField.setText("");
         fechaDatePicker.setValue(LocalDate.now());
-        autorComboBox.setValue("Autor");
+        autorComboBox.setValue("Seleccione una opción");
+        busquedaComboBox.setValue("Seleccione una opción");
+        avisoLabel.setText("");
+        
+        agregarButton.setDisable(false);
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
     }
     
-    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
-    public void llenarComboBox(){
-        //El addAll es para agregar más de un elemento a la ves
-        autorComboBox.getItems().add("Autor");
-        for (int i = 0; i < listaAutores.size(); i++) {
-            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
-        }
-    }
-    
+    @FXML
     public void agregarAutorButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
     }
     
     /**
-     * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
+     * Metodos ----------------------------- 
      */
     
-    private int posicionRelacion(){
-        int salida = 0;
-        Memoria memoria = getTablaMemoriaSeleccionado();
-        for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra().equals(memoria.getTitulo()))
-                salida = i;
-        }
-        return salida+1;
+    public void llenarBusquedaComboBox(){
+        busquedaComboBox.getItems().addAll("Título", "Autor");
+        busquedaComboBox.setValue("Seleccione una opción");
     }
     
-    //Inicializa la tabla
-    private void inicializarTablaMemoria(){
-        //Solo hay que hacerlo con las columnas
-        //Ejemplo:
-//  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
-//  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
-        resumenTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("resumen"));
-        abstractoTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("abstracto"));
-        conferenciaTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("conferencia"));
+    public void llenarAutorComboBox(){
+        autorComboBox.setValue("Seleccione una opción");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
+    }
+    
+    private void modificarRelacion(Memoria nuevaMemoria){
+        Memoria meoria= listaMemorias.get(posicionEnTabla);
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(meoria.getTitulo())){
+                listaRelacion.get(i).setTituloObra(nuevaMemoria.getTitulo());
+                listaRelacion.get(i).setNombreUnico(nuevaMemoria.getListaAutores());
+            }
+        }
+    }
+    
+    private void eliminaRelacion(){
+        String titulo= listaMemorias.get(posicionEnTabla).getTitulo();
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(titulo)){
+                listaRelacion.remove(i);
+            }
+        }
+    }
+
+    private void inicializarTablaLibro(){
+
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("titulo"));
+        resumenTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("resumen"));
+        abstractTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("abstracto"));
+        autorTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("listaAutores"));
         fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, LocalDate>("fecha"));
-        autoresTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("listaAutores"));
+        conferenciaTableColumn.setCellValueFactory(new PropertyValueFactory<Memoria, String>("conferencia"));
         
         memoriaTableView.setItems(super.listaMemorias);
     }
-    
-    //Codigo para cambiar de ventana
+
     private void cambioScene(ActionEvent event, String destino) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
         Scene tableViewScene = new Scene(tableViewParent);
         
-        //Esta linea obtiene la informacion del Stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
         window.setScene(tableViewScene);
         window.show();
     }
     
-    
-    
-    //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
+    private boolean verificaTituloExistente(){
+        for (int i = 0; i < listaMemorias.size(); i++) {
+            if(tituloTextField.getText().equals(listaMemorias.get(i).getTitulo()))
+                return true;
+        }
+        return false;
+    }
+
     private boolean validarInformacion(){
         if(tituloTextField.getText().equals("") ||
            resumenTextField.getText().equals("") ||
-           abstractoTextField.getText().equals("") ||
+           abstractTextField.getText().equals("") ||
            conferenciaTextField.getText().equals("") ||
-           autorComboBox.getValue().equals("Autor"))
+           autorComboBox.getValue().equals("Selecione una opción") ||
+           fechaDatePicker.getValue() == null){
+//            avisoLabel.setText("Complete todos los\nespacios.");
+            JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
             return false;
+        } else if(agregarButton.isDisable() == false && verificaTituloExistente() == true){
+//            avisoLabel.setText("Ya existe un libro con el\ntítulo sugerido.\nIngrese otro.");
+            JOptionPane.showMessageDialog(null, "Ya existe un libro con el título sugerido.\nIngrese otro.");
+            return false;
+        }
         return true;
     }
-    
-    //********* IMPORTANTE *********
-    
-    /**
-     * Estos metodos de aquí abajo no sé muy bien como funcionan, pero se necesitan para que sirva lo de eliminar
-     * y modificar.
-     * Estos metodos sirven para reconocer la fila que se seleccionó y los elementos de la fila.
-     * Estos metodos van junto al tablaLibroSel, que es la línea de codigo que está en el metodo initialize (la que
-     * empieza con final)
-     * Nada más tenga mucho cuidado a la hora de copiar y pegar, mucho ojo a lo que hay que cambiarle
-     */
     
     /**
      * Listener de la tabla personas
      */
-    private final ListChangeListener<Memoria> selectorTablaMemoria =
+    private final ListChangeListener<Memoria> selectorTablaLibros =
             new ListChangeListener<Memoria>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Memoria> c) {
-                    ponerMemoriaSeleccionado();
+                    ponerLibroSeleccionado();
                 }
             };
 
     /**
      * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
      */
-    public Memoria getTablaMemoriaSeleccionado() {
+    public Memoria getTablaLibrosSeleccionado() {
         if (memoriaTableView != null) {
             List<Memoria> tabla = memoriaTableView.getSelectionModel().getSelectedItems();
             if (tabla.size() == 1) {
@@ -262,27 +295,50 @@ public class IBMemoriaController extends Listas implements Initializable {
     /**
      * Método para poner en los textFields la tupla que selccionemos
      */
-    private void ponerMemoriaSeleccionado() {
-        final Memoria memoria = getTablaMemoriaSeleccionado();
+    private void ponerLibroSeleccionado() {
+        final Memoria memoria = getTablaLibrosSeleccionado();
         posicionEnTabla = listaMemorias.indexOf(memoria);
 
         if (memoria != null) {
 
             // Pongo los textFields con los datos correspondientes
-            resumenTextField.setText(memoria.getResumen());
-            abstractoTextField.setText(memoria.getAbstracto());
-            conferenciaTextField.setText(memoria.getConferencia());
             tituloTextField.setText(memoria.getTitulo());
-            fechaDatePicker.setValue(memoria.getFecha());
+            resumenTextField.setText(memoria.getResumen());
+            abstractTextField.setText(memoria.getAbstracto());
             autorComboBox.setValue(memoria.getListaAutores());
+            fechaDatePicker.setValue(memoria.getFecha());
+            conferenciaTextField.setText(memoria.getConferencia());
             
-            
-
-            // Pongo los botones en su estado correspondiente
-//            libroButtonModificar.setDisable(false);
-//            libroButtonEliminar.setDisable(false);
+            agregarButton.setDisable(true);
+            modificarButton.setDisable(false);
+            eliminarButton.setDisable(false);
 
         }
+    }
+
+    @FXML
+    private void buscar(KeyEvent event) {
+            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filter.setPredicate((Predicate<? super Memoria>) (Memoria libro)->{
+                    if(busquedaComboBox.getValue().toString().equals("Seleccione una opción")){
+                        return false;
+                    }
+                    else if(newValue.isEmpty() || newValue==null){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Título") && libro.getTitulo().contains(newValue)){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Autor") && libro.getListaAutores().contains(newValue)){
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(memoriaTableView.comparatorProperty());
+            memoriaTableView.setItems(sort);
+     
     }
     
     

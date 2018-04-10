@@ -8,7 +8,7 @@ package Controllers.BibliotecarioObras;
 import Datos.Listas;
 import static Datos.Listas.listaAutores;
 import static Datos.Listas.listaLibros;
-
+import static Datos.Listas.listaRelacion;
 import Domain.Otro;
 import Domain.Relacion;
 import java.io.IOException;
@@ -16,8 +16,11 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,13 +28,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -40,73 +47,77 @@ import javafx.stage.Stage;
  */
 public class IBOtroController extends Listas implements Initializable {
 
-     //Tabla
+    //Tabla
     @FXML TableView otroTableView;
     @FXML TableColumn tituloTableColumn;
     @FXML TableColumn tipoTableColumn;
     @FXML TableColumn autorTableColumn;
     @FXML TableColumn fechaTableColumn;
-
     
     //TextFields
     @FXML TextField tituloTextField;
     @FXML TextField tipoTextField;
+    @FXML TextField buscarTextField;
     
     //DatePicker
     @FXML DatePicker fechaDatePicker;
     
     //ChoiceBox
     @FXML ComboBox autorComboBox;
+    @FXML ComboBox busquedaComboBox;
     
-    //Esto es para reconocer el numero de la fila que se selecicona en la tabla
+    //Label
+    @FXML Label avisoLabel;
+    
+    //Buttons
+    @FXML Button agregarButton;
+    @FXML Button modificarButton;
+    @FXML Button eliminarButton;
+    
+    
+    //Reconoce posicion en tabla
     private int posicionEnTabla;
     
+    FilteredList filter = new FilteredList(listaOtros, e -> true);
     
-    /**
-     * Este metodo es el que se ejecuta apenas entra a la interfaz.
-     * Es como un constructor
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Inicializa la tabla y las columnas para que funcione
+
+
+        
         inicializarTablaLibro();
+
+        llenarAutorComboBox();
+        llenarBusquedaComboBox();
+
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
         
-        //Llena el choiceBox 
-        llenarComboBox();
-        
-        //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
-        //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
-        //se hubiera seleccionado
-        //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-        autorComboBox.setValue("Autor");
-        
-        //Esto ni lo vea jaja solo se agrega y ya
-        //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
-        //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
-        final ObservableList<Otro> tablaOtroSel = otroTableView.getSelectionModel().getSelectedItems();
-        tablaOtroSel.addListener(selectorTablaOtros);
+        final ObservableList<Otro> tablaLibroSel = otroTableView.getSelectionModel().getSelectedItems();
+        tablaLibroSel.addListener(selectorTablaLibros);
     }
     
     /**
-     * On Antion ----------------------------- Metodos que se van a utilizar como On Action
+     * On Antion -----------------------------
      */
-    
-    //Cambiar a la ventada de bibliotecario
+
+    @FXML
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
-    
-    //Agrega un nuevo otro
+
+    @FXML
     public void agregarButton(){
         Otro otro = new Otro(tipoTextField.getText(), 
-                                  tituloTextField.getText(), 
-                                  fechaDatePicker.getValue(), 
-                                  autorComboBox.getValue().toString());
+                             tituloTextField.getText(), 
+                             fechaDatePicker.getValue(), 
+                             autorComboBox.getValue().toString());
+        
         Relacion relacion = new Relacion(tituloTextField.getText(),
                                         autorComboBox.getValue().toString(),
                                         "Otro");
+           
         if(validarInformacion() == true){
-            //Se utiliza la listaOtros de la clase Listas
             super.listaOtros.add(otro);
             super.listaRelacion.add(relacion);
             acualizaAutor();
@@ -114,127 +125,147 @@ public class IBOtroController extends Listas implements Initializable {
         }
         
     }
-    
-    //Modifica un elemento seleccionado en la tabla
+
+    @FXML
     public void modificarButton(){
-        Otro otro = new Otro(tipoTextField.getText(),
-                                  tituloTextField.getText(), 
-                                  fechaDatePicker.getValue(), 
-                                  autorComboBox.getValue().toString());
+        Otro otro = new Otro(tipoTextField.getText(), 
+                             tituloTextField.getText(), 
+                             fechaDatePicker.getValue(), 
+                             autorComboBox.getValue().toString());
+
         if(validarInformacion() == true){
+            modificarRelacion(otro);
             super.listaOtros.set(posicionEnTabla, otro);
+            acualizaAutor();
             limpiarButton();  
         }
     }
-    
-    //Elimina el elemento seleccionado en la tabla
+
+    @FXML
     public void eliminarButton(){
-        listaOtros.remove(posicionEnTabla);
-        listaRelacion.remove(posicionRelacion());
+        
+        eliminaRelacion();
+        listaOtros.remove(posicionEnTabla); 
+
         acualizaAutor();
+        limpiarButton();
     }
-    
-    //Limpia lo que hay en los TextFields
-    //Asigna al ChoiceBox el elemento de "Autor"
-    //Asigna al DatePicker la fecha actual
+
+    @FXML
     public void limpiarButton(){
         tipoTextField.setText("");
         tituloTextField.setText("");
         fechaDatePicker.setValue(LocalDate.now());
-        autorComboBox.setValue("Autor");
+        autorComboBox.setValue("Seleccione una opción");
+        busquedaComboBox.setValue("Seleccione una opción");
+        avisoLabel.setText("");
+        
+        agregarButton.setDisable(false);
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
     }
     
-    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
-    public void llenarComboBox(){
-        //El addAll es para agregar más de un elemento a la ves
-        autorComboBox.getItems().add("Autor");
-        for (int i = 0; i < listaAutores.size(); i++) {
-            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
-        }
-    }
-    
+    @FXML
     public void agregarAutorButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
     }
     
     /**
-     * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
+     * Metodos ----------------------------- 
      */
     
-    private int posicionRelacion(){
-        int salida = 0;
-        Otro otro = getTablaOtrosSeleccionado();
-        for (int i = 0; i < listaRelacion.size(); i++) {
-            if(listaRelacion.get(i).getTituloObra().equals(otro.getTitulo()))
-                salida = i;
-        }
-        return salida+1;
+    public void llenarBusquedaComboBox(){
+        busquedaComboBox.getItems().addAll("Título", "Autor");
+        busquedaComboBox.setValue("Seleccione una opción");
     }
     
-    //Inicializa la tabla
+    public void llenarAutorComboBox(){
+        autorComboBox.setValue("Seleccione una opción");
+        for (int i = 0; i < listaAutores.size(); i++) {
+            autorComboBox.getItems().add(listaAutores.get(i).getNombre());
+        }
+    }
+    
+    private void modificarRelacion(Otro nuevoOtro){
+        Otro otro= listaOtros.get(posicionEnTabla);
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(otro.getTitulo())){
+                listaRelacion.get(i).setTituloObra(nuevoOtro.getTitulo());
+                listaRelacion.get(i).setNombreUnico(nuevoOtro.getListaAutores());
+            }
+        }
+    }
+    
+    private void eliminaRelacion(){
+        String titulo= listaOtros.get(posicionEnTabla).getTitulo();
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            if(listaRelacion.get(i).getTituloObra().equals(titulo)){
+                listaRelacion.remove(i);
+            }
+        }
+    }
+
     private void inicializarTablaLibro(){
-        //Solo hay que hacerlo con las columnas
-        //Ejemplo:
-//  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
-//  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
-        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Otro, String>("titulo")); 
+
+        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Otro, String>("titulo"));
         tipoTableColumn.setCellValueFactory(new PropertyValueFactory<Otro, String>("tipo"));
         autorTableColumn.setCellValueFactory(new PropertyValueFactory<Otro, String>("listaAutores"));
         fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Otro, LocalDate>("fecha"));
         
-        
         otroTableView.setItems(super.listaOtros);
     }
-    
-    //Codigo para cambiar de ventana
+
     private void cambioScene(ActionEvent event, String destino) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
         Scene tableViewScene = new Scene(tableViewParent);
         
-        //Esta linea obtiene la informacion del Stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
         window.setScene(tableViewScene);
         window.show();
     }
     
-    
-    
-    //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
+    private boolean verificaTituloExistente(){
+        for (int i = 0; i < listaOtros.size(); i++) {
+            if(tituloTextField.getText().equals(listaOtros.get(i).getTitulo()))
+                return true;
+        }
+        return false;
+    }
+
     private boolean validarInformacion(){
         if(tituloTextField.getText().equals("") ||
            tipoTextField.getText().equals("") ||
-           autorComboBox.getValue().equals("Autor"))
+           autorComboBox.getValue().equals("Selecione una opción") ||
+           fechaDatePicker.getValue() == null){
+//            avisoLabel.setText("Complete todos los\nespacios.");
+            JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
             return false;
+        } else if(agregarButton.isDisable() == false && verificaTituloExistente() == true){
+//            avisoLabel.setText("Ya existe un libro con el\ntítulo sugerido.\nIngrese otro.");
+            JOptionPane.showMessageDialog(null, "Ya existe un libro con el título sugerido.\nIngrese otro.");
+            return false;
+        }
         return true;
     }
-    
-    //********* IMPORTANTE *********
-    
-    /**
-     * Estos metodos de aquí abajo no sé muy bien como funcionan, pero se necesitan para que sirva lo de eliminar
-     * y modificar.
-     * Estos metodos sirven para reconocer la fila que se seleccionó y los elementos de la fila.
-     * Estos metodos van junto al tablaLibroSel, que es la línea de codigo que está en el metodo initialize (la que
-     * empieza con final)
-     * Nada más tenga mucho cuidado a la hora de copiar y pegar, mucho ojo a lo que hay que cambiarle
-     */
     
     /**
      * Listener de la tabla personas
      */
-    private final ListChangeListener<Otro> selectorTablaOtros =
+    private final ListChangeListener<Otro> selectorTablaLibros =
             new ListChangeListener<Otro>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Otro> c) {
-                    ponerOtroSeleccionado();
+                    ponerLibroSeleccionado();
                 }
             };
 
     /**
      * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
      */
-    public Otro getTablaOtrosSeleccionado() {
+    public Otro getTablaLibrosSeleccionado() {
         if (otroTableView != null) {
             List<Otro> tabla = otroTableView.getSelectionModel().getSelectedItems();
             if (tabla.size() == 1) {
@@ -248,24 +279,48 @@ public class IBOtroController extends Listas implements Initializable {
     /**
      * Método para poner en los textFields la tupla que selccionemos
      */
-    private void ponerOtroSeleccionado() {
-        final Otro otro = getTablaOtrosSeleccionado();
+    private void ponerLibroSeleccionado() {
+        final Otro otro = getTablaLibrosSeleccionado();
         posicionEnTabla = listaOtros.indexOf(otro);
 
         if (otro != null) {
 
             // Pongo los textFields con los datos correspondientes
-            
-            tipoTextField.setText(otro.getTipo());
             tituloTextField.setText(otro.getTitulo());
+            tipoTextField.setText(otro.getTipo());
             autorComboBox.setValue(otro.getListaAutores());
             fechaDatePicker.setValue(otro.getFecha());
-
-            // Pongo los botones en su estado correspondiente
-//            libroButtonModificar.setDisable(false);
-//            libroButtonEliminar.setDisable(false);
+            
+            agregarButton.setDisable(true);
+            modificarButton.setDisable(false);
+            eliminarButton.setDisable(false);
 
         }
+    }
+
+    @FXML
+    private void buscar(KeyEvent event) {
+            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filter.setPredicate((Predicate<? super Otro>) (Otro libro)->{
+                    if(busquedaComboBox.getValue().toString().equals("Seleccione una opción")){
+                        return false;
+                    }
+                    else if(newValue.isEmpty() || newValue==null){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Título") && libro.getTitulo().contains(newValue)){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Autor") && libro.getListaAutores().contains(newValue)){
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(otroTableView.comparatorProperty());
+            otroTableView.setItems(sort);
+     
     }
     
     

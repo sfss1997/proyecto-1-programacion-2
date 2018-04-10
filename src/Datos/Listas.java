@@ -52,6 +52,8 @@ public class Listas {
             llenarListaRevistas();
             llenarListaTesis();
             llenarListaPeriodicos();
+            llenarListaMemorias();
+            llenarListaOtros();
             
             acualizaAutor();
             x++;
@@ -142,6 +144,34 @@ public class Listas {
         Relacion bR = new Relacion("La Teja", "Autor 2", "Periódico");
         Relacion cR = new Relacion("CRHoy", "Autor 2", "Periódico");
         Relacion dR = new Relacion("Diario Extra", "Autor 2", "Periódico");
+        listaRelacion.addAll(aR,bR,cR,dR);
+    }
+    
+    private void llenarListaMemorias(){
+        Memoria a = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 1", LocalDate.now(), "Autor 1");
+        Memoria b = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 2", LocalDate.now(), "Autor 2");
+        Memoria c = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 3", LocalDate.now(), "Autor 3");
+        Memoria d = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 4", LocalDate.now(), "Autor 1");
+        listaMemorias.addAll(a,b,c,d);
+        
+        Relacion aR = new Relacion("Memoria 1", "Autor 1", "Memoria");
+        Relacion bR = new Relacion("Memoria 2", "Autor 2", "Memoria");
+        Relacion cR = new Relacion("Memoria 3", "Autor 3", "Memoria");
+        Relacion dR = new Relacion("Memoria 4", "Autor 1", "Memoria");
+        listaRelacion.addAll(aR,bR,cR,dR);
+    }
+    
+    private void llenarListaOtros(){
+        Otro a = new Otro("*Inserte tipo :v*", "Otro 1", LocalDate.now(), "Autor 1");
+        Otro b = new Otro("*Inserte tipo :v*", "Otro 2", LocalDate.now(), "Autor 2");
+        Otro c = new Otro("*Inserte tipo :v*", "Otro 3", LocalDate.now(), "Autor 3");
+        Otro d = new Otro("*Inserte tipo :v*", "Otro 4", LocalDate.now(), "Autor 3");
+        listaOtros.addAll(a,b,c,d);
+        
+        Relacion aR = new Relacion("Otro 1", "Autor 1", "Otro");
+        Relacion bR = new Relacion("Otro 2", "Autor 2", "Otro");
+        Relacion cR = new Relacion("Otro 3", "Autor 3", "Otro");
+        Relacion dR = new Relacion("Otro 4", "Autor 3", "Otro");
         listaRelacion.addAll(aR,bR,cR,dR);
     }
 

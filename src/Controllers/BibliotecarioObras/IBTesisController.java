@@ -251,7 +251,7 @@ public class IBTesisController extends Listas implements Initializable {
 //            avisoLabel.setText("Complete todos los\nespacios.");
             JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
             return false;
-        } else if(verificaTituloExistente() == true){
+        } else if(agregarButton.isDisable() == false && verificaTituloExistente() == true){
 //            avisoLabel.setText("Ya existe un libro con el\ntítulo sugerido.\nIngrese otro.");
             JOptionPane.showMessageDialog(null, "Ya existe un libro con el título sugerido.\nIngrese otro.");
             return false;

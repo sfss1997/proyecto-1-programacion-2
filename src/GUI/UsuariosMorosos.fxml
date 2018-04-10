@@ -8,26 +8,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="Controllers.UsuariosMorososController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.UsuariosMorososController">
    <children>
-      <VBox layoutY="1.0" prefHeight="205.0" prefWidth="600.0">
+      <VBox layoutX="8.0" layoutY="8.0" prefHeight="308.0" prefWidth="583.0">
          <children>
-            <Label text=" Usuarios morosos" textFill="#a2a2a2">
+            <Label prefHeight="15.0" prefWidth="191.0" text=" Usuarios morosos" textFill="#a2a2a2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="obrasTableView" prefHeight="261.0" prefWidth="600.0">
+            <TableView fx:id="clientesTableView" prefHeight="283.0" prefWidth="583.0">
                <columns>
-                  <TableColumn fx:id="tituloTableColumn" prefWidth="75.0" text="Nombre" />
-                  <TableColumn fx:id="tipoTableColumn" prefWidth="123.0" text="Fecha de prestamo" />
-                  <TableColumn fx:id="autorTableColumn" prefWidth="135.0" text="Fecha de vencimiento" />
+                  <TableColumn fx:id="nombreTableColumn" prefWidth="194.0" text="Nombre" />
+                  <TableColumn fx:id="fechaPrestamoTableColumn" prefWidth="197.0" text="Fecha de prestamo" />
+                  <TableColumn fx:id="fechaVencimientoTableColumn" prefWidth="191.0" text="Fecha de vencimiento" />
                </columns>
             </TableView>
          </children>
       </VBox>
-      <Button fx:id="volverButton" layoutX="526.0" layoutY="351.0" mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
+      <Button layoutX="526.0" layoutY="351.0" mnemonicParsing="false" onAction="#volverButton" style="-fx-background-color: #ff0808;" text="Volver" textFill="WHITE" />
       <Button layoutX="25.0" layoutY="351.0" mnemonicParsing="false" style="-fx-background-color: #ff0808;" text="Administrar Usuarios" textFill="WHITE" />
    </children>
 </AnchorPane>

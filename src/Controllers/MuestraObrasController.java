@@ -48,7 +48,7 @@ public class MuestraObrasController implements Initializable {
 //    private int posicionEnTabla;
 
     
-    FilteredList filter = new FilteredList(listaRelacion, e -> true);
+//    FilteredList filter = new FilteredList(listaRelacion, e -> true);
    /**
      * Este metodo es el que se ejecuta apenas entra a la interfaz.
      * Es como un constructor

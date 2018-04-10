@@ -11,18 +11,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MuestraObrasController">
    <children>
-      <VBox layoutX="6.0" layoutY="6.0" prefHeight="200.0" prefWidth="592.0">
+      <VBox layoutX="6.0" layoutY="6.0" prefHeight="286.0" prefWidth="592.0">
          <children>
             <Label text="Todas las obras" textFill="#a2a2a2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="obrasTableView" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="obrasTableView" prefHeight="265.0" prefWidth="592.0">
               <columns>
-                <TableColumn fx:id="tituloTableColumn" prefWidth="124.0" text="Título" />
-                <TableColumn fx:id="tipoTableColumn" prefWidth="148.0" text="Tipo" />
-                  <TableColumn fx:id="autorTableColumn" minWidth="0.0" prefWidth="144.0" text="Autor" />
+                <TableColumn fx:id="tituloTableColumn" prefWidth="198.0" text="Título" />
+                <TableColumn fx:id="tipoTableColumn" prefWidth="195.0" text="Tipo" />
+                  <TableColumn fx:id="autorTableColumn" minWidth="0.0" prefWidth="198.0" text="Autor" />
               </columns>
             </TableView>
          </children>

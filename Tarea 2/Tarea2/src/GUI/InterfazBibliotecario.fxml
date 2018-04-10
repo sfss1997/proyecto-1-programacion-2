@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="361.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InterfazBibliotecarioController">
+   <children>
+      <TabPane prefHeight="516.0" prefWidth="761.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Libros">
+            <content>
+              <AnchorPane prefHeight="334.0" prefWidth="501.0">
+                     <children>
+                        <VBox prefHeight="333.0" prefWidth="711.0" spacing="10.0">
+                           <children>
+                              <TableView fx:id="libroTableView" onMouseClicked="#clicEnTablaLibro" prefHeight="156.0" prefWidth="705.0">
+                                <columns>
+                                  <TableColumn fx:id="libroTableColumnNombre" minWidth="235.0" prefWidth="75.0" text="Nombre" />
+                                  <TableColumn fx:id="libroTableColumnAutor" minWidth="235.0" prefWidth="75.0" text="Autor" />
+                                    <TableColumn fx:id="libroTableColumnCategoria" minWidth="235.0" prefWidth="129.0" text="Categoría" />
+                                </columns>
+                              </TableView>
+                              <HBox prefHeight="201.0" prefWidth="600.0" spacing="20.0">
+                                 <children>
+                                    <VBox prefHeight="201.0" prefWidth="158.0" spacing="20.0">
+                                       <children>
+                                          <TextField fx:id="libroTextFieldNombre" prefHeight="25.0" prefWidth="134.0" promptText="Nombre" />
+                                          <TextField fx:id="libroTextFieldAutor" promptText="Autor" />
+                                          <TextField fx:id="libroTextFieldCategoria" promptText="Categoría" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="201.0" prefWidth="181.0" spacing="10.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#agregarButtonLibro" text="Agregar" />
+                                          <Button fx:id="libroButtonEliminar" mnemonicParsing="false" onAction="#eliminarButtonLibro" text="Eliminar" />
+                                          <Button fx:id="libroButtonModificar" mnemonicParsing="false" onAction="#modificarButtonLibro" text="Modificar" />
+                                          <Button mnemonicParsing="false" onAction="#limpiarTextFieldLibro" text="Limpiar" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                        <Button layoutX="726.0" layoutY="294.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Autores">
+               <content>
+                  <AnchorPane prefHeight="334.0" prefWidth="501.0">
+                     <children>
+                        <VBox prefHeight="333.0" prefWidth="712.0" spacing="10.0">
+                           <children>
+                              <TableView fx:id="autorTableView" onMouseClicked="#clicEnTablaAutor" prefHeight="200.0" prefWidth="410.0">
+                                 <columns>
+                                    <TableColumn fx:id="autorTableColumnNombre" minWidth="235.0" prefWidth="75.0" text="Nombre" />
+                                    <TableColumn fx:id="autorTableColumnApellido" minWidth="235.0" prefWidth="75.0" text="Apellido" />
+                                    <TableColumn fx:id="autorTableColumnLibro" minWidth="235.0" prefWidth="129.0" text="Libro" />
+                                 </columns>
+                              </TableView>
+                              <HBox prefHeight="201.0" prefWidth="600.0" spacing="20.0">
+                                 <children>
+                                    <VBox prefHeight="201.0" prefWidth="158.0" spacing="20.0">
+                                       <children>
+                                          <TextField fx:id="autorTextFieldNombre" prefHeight="25.0" prefWidth="134.0" promptText="Nombre" />
+                                          <TextField fx:id="autorTextFieldApellido" promptText="Apellido" />
+                                          <TextField fx:id="autorTextFieldLibro" promptText="Libro" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="201.0" prefWidth="181.0" spacing="10.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#agregarButtonAutor" text="Agregar" />
+                                          <Button fx:id="autorButtonEliminar" mnemonicParsing="false" onAction="#eliminarButtonAutor" text="Eliminar" />
+                                          <Button fx:id="autorButtonModificar" mnemonicParsing="false" onAction="#modificarButtonAutor" text="Modificar" />
+                                          <Button mnemonicParsing="false" onAction="#limpiarTextFieldAutor" text="Limpiar" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                        <Button layoutX="726.0" layoutY="294.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Usuario">
+               <content>
+                  <AnchorPane prefHeight="334.0" prefWidth="501.0">
+                     <children>
+                        <VBox prefHeight="292.0" prefWidth="779.0" spacing="10.0">
+                           <children>
+                              <TableView fx:id="usuarioTableView" onMouseClicked="#clicEnTablaUsuario" prefHeight="134.0" prefWidth="765.0">
+                                 <columns>
+                                    <TableColumn fx:id="usuarioTableColumnNombre" minWidth="153.0" prefWidth="75.0" text="Nombre de usuario" />
+                                    <TableColumn fx:id="usuarioTableColumnContraseña" minWidth="153.0" prefWidth="75.0" text="Contraeña" />
+                                    <TableColumn fx:id="usuarioTableColumnNombreCompleto" minWidth="153.0" prefWidth="129.0" text="Nombre completo" />
+                                    <TableColumn fx:id="usuarioTableColumnID" minWidth="153.0" prefWidth="75.0" text="ID" />
+                                    <TableColumn fx:id="usuarioTableColumnTipo" minWidth="153.0" prefWidth="75.0" text="Tipo de usuario" />
+                                 </columns>
+                              </TableView>
+                              <HBox prefHeight="133.0" prefWidth="769.0" spacing="5.0">
+                                 <children>
+                                    <VBox prefHeight="190.0" prefWidth="153.0" spacing="20.0">
+                                       <children>
+                                          <TextField fx:id="usuarioTextFieldNombre" prefHeight="25.0" prefWidth="134.0" promptText="Nombre de usuario" />
+                                          <Button mnemonicParsing="false" onAction="#agregarButtonUsuario" text="Agregar" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="201.0" prefWidth="153.0" spacing="20.0">
+                                       <children>
+                                          <TextField fx:id="usuarioTextFieldContraseña" promptText="Contraseña" />
+                                          <Button fx:id="usuarioButtonEliminar" mnemonicParsing="false" onAction="#eliminarButtonUsuario" text="Eliminar" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="153.0" spacing="20.0">
+                                       <children>
+                                          <TextField fx:id="usuarioTextFieldNombreCompleto" promptText="Nombre completo" />
+                                          <Button fx:id="usuarioButtonModificar" mnemonicParsing="false" onAction="#modificarButtonUsuario" text="Modificar" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="153.0" spacing="20.0">
+                                       <children>
+                                          <TextField fx:id="usuarioTextFieldID" promptText="ID" />
+                                          <Button mnemonicParsing="false" onAction="#limpiarTextFieldUsuario" text="Limpiar" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="192.0" prefWidth="144.0" spacing="20.0">
+                                       <children>
+                                          <ChoiceBox fx:id="usuarioChoiceBoxTipo" prefWidth="150.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                        <Button layoutX="726.0" layoutY="293.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

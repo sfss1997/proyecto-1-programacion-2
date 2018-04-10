@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="265.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InterfazAutorController">
+   <children>
+      <Button layoutX="524.0" layoutY="226.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+      <TableView fx:id="autorTableView" prefHeight="200.0" prefWidth="577.0">
+        <columns>
+          <TableColumn fx:id="autorTableColumnNombre" minWidth="122.0" prefWidth="183.0" text="Nombre" />
+            <TableColumn fx:id="autorTableColumnApellido" prefWidth="208.0" text="Apellido" />
+            <TableColumn fx:id="autorTableColumnLibro" minWidth="63.0" prefWidth="185.0" text="Libro" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

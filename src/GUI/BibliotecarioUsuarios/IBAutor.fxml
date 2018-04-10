@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BibliotecarioUsuarios.IBAutorController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="517.0" prefWidth="909.0" style="-fx-background-color: #ffffff;">
          <children>
@@ -38,7 +38,7 @@
                         <Label layoutX="5.0" layoutY="6.0" text="Buscar:" />
                      </children>
                   </AnchorPane>
-                  <TableView fx:id="bibliotecarioTableView" prefHeight="237.0" prefWidth="889.0">
+                  <TableView fx:id="autorTableView" prefHeight="237.0" prefWidth="889.0">
                      <columns>
                         <TableColumn fx:id="nombreTableColumn" minWidth="99.0" prefWidth="99.0" sortType="DESCENDING" text="Nombre" />
                         <TableColumn fx:id="nombreUsuarioTableColumn" minWidth="99.0" prefWidth="99.0" text="Nombre de usuario" />

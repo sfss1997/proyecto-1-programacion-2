@@ -9,6 +9,7 @@ import Datos.Listas;
 import static Datos.Listas.listaBibliotecarios;
 import static Datos.Listas.listaUsuarios;
 import Domain.Autor;
+import Domain.Libro;
 import Domain.OnAction;
 import java.io.IOException;
 import java.net.URL;
@@ -149,6 +150,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML
     public void eliminarButton(){
         
+            eliminaObras();
             eliminaUsuario();
             listaAutores.remove(posicionEnTabla); 
 
@@ -179,6 +181,53 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     /**
      * Metodos ----------------------------- 
      */
+    
+    private void eliminaObras(){
+        String nombre= listaAutores.get(posicionEnTabla).getNombre();
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            switch(listaRelacion.get(i).getTipoObra()){
+                case "Libro":
+                    for (int j = 0; j < listaLibros.size(); j++) {
+                        if(listaLibros.get(j).getListaAutores().equals(nombre))
+                            listaLibros.remove(j);
+                    }
+                    break;
+                case "Revista":
+                    for (int k = 0; k < listaRevistas.size(); k++) {
+                        if(listaRevistas.get(k).getListaAutores().equals(nombre))
+                            listaRevistas.remove(k);
+                    }
+                    break;
+                case "Tesis":
+                    for (int l = 0; l < listaTesis.size(); l++) {
+                        if(listaTesis.get(l).getListaAutores().equals(nombre))
+                            listaTesis.remove(l);
+                    }
+                    break;
+                case "Periódico":
+                    for (int m = 0; m < listaPeriodicos.size(); m++) {
+                        if(listaPeriodicos.get(m).getListaAutores().equals(nombre))
+                            listaPeriodicos.remove(m);
+                    }
+                    break;
+                case "Memoria":
+                    for (int n = 0; n < listaMemorias.size(); n++) {
+                        if(listaMemorias.get(n).getListaAutores().equals(nombre))
+                            listaMemorias.remove(n);
+                    }
+                    break;
+                case "Otro":
+                    for (int p = 0; p < listaOtros.size(); p++) {
+                        if(listaOtros.get(p).getListaAutores().equals(nombre))
+                            listaOtros.remove(p);
+                    }
+                    break;
+            }
+            if(listaRelacion.get(i).getNombreUnico().equals(nombre))
+                listaRelacion.remove(i);
+        }
+    }
     
     private void reestablecerObrasComboBox(){
         obrasComboBox.getItems().clear();

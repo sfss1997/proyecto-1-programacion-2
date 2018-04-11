@@ -55,11 +55,11 @@ public class InterfazRegistrarseController extends Listas implements Initializab
      */
     
     public void registrarseButton(ActionEvent event) throws IOException{
-        Usuarios nuevoUsuario = new Usuarios(nombreUsuarioTextField.getText(), 
+        Usuarios nuevoUsuario = new Usuarios(nombreTextField.getText(),
+                                             nombreUsuarioTextField.getText(), 
                                              contraseñaTextField.getText(), 
-                                             nombreTextField.getText(), 
+                                             iDTextField.getText(),
                                              tipoIDComboBox.getValue().toString(), 
-                                             iDTextField.getText(), 
                                              tipoUsuarioComboBox.getValue().toString());
         
         if(verificaInformacion() == true){

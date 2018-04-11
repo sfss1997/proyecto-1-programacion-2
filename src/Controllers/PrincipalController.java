@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,8 +50,12 @@ public class PrincipalController extends Listas implements Initializable {
                     cambioScene(event, "/GUI/InterfazAutor.fxml");
                 if(listaUsuarios.get(i).getTipoDeUsuario().equals("Cliente"))
                     cambioScene(event, "/GUI/InterfazCliente.fxml");
-            }
+                
+            } else if(i == listaUsuarios.size()-1)
+                JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrecto.\nIntente de nuevo.");
         }
+        
+        
         
     }
     

@@ -5,18 +5,22 @@
  */
 package Controllers.BibliotecarioUsuarios;
 
-import Domain.Autor;
 import Datos.Listas;
+import static Datos.Listas.listaBibliotecarios;
+import static Datos.Listas.listaUsuarios;
+import Domain.Autor;
 import Domain.Libro;
 import Domain.OnAction;
-import Domain.Usuarios;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,14 +28,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -40,6 +46,7 @@ import javafx.stage.Stage;
  */
 public class IBAutorController extends Listas implements Initializable, OnAction{
 
+    //Tabla
     @FXML TableView autorTableView;
     @FXML TableColumn nombreTableColumn;
     @FXML TableColumn nombreUsuarioTableColumn;
@@ -49,110 +56,178 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML TableColumn tipoUsuarioTableColumn;
     @FXML TableColumn obrasTableColumn;
     
+    //TextFields
     @FXML TextField nombreTextField;
     @FXML TextField nombreUsuarioTextField;
     @FXML TextField contraseñaTextField;
     @FXML TextField iDTextField;
-    @FXML TextField tipoUsuarioTextField;
+    @FXML TextField buscarTextField;
     
-    @FXML ComboBox tipoObraComboBox;
-    @FXML ComboBox obrasComboBox;
+    //ChoiceBox
     @FXML ComboBox tipoIDComboBox;
+    @FXML ComboBox busquedaComboBox;
+    @FXML ComboBox obrasComboBox;
     
+    //Label
     @FXML Label avisoLabel;
+    @FXML Label tipoUsuarioLabel;
     
-    private int cont;
+    //Buttons
+    @FXML Button agregarButton;
+    @FXML Button modificarButton;
+    @FXML Button eliminarButton;
+    
+    
+    //Reconoce posicion en tabla
     private int posicionEnTabla;
     
-    /**
-     * Initializes the controller class.
-     */
+    FilteredList filter = new FilteredList(listaAutores, e -> true);
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        inicializarTabla();
-        tipoIDComboBox.getItems().addAll("Seleccione una opción", "Cedula");
-        tipoIDComboBox.setValue("Seleccione una opción");
+
+
+        
+        inicializarTablaLibro();
+
+        llenaTipoIDComboBox();
+        llenarBusquedaComboBox();
         
         reestablecerObrasComboBox();
+
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
         
         final ObservableList<Autor> tablaLibroSel = autorTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaLibros);
     }
     
-    @Override
-    public void agregarButton() {
-        Autor nuevoAutor = new Autor(nombreTextField.getText(), 
-                                     nombreUsuarioTextField.getText(), 
-                                     contraseñaTextField.getText(),
-                                     iDTextField.getText(), 
-                                     tipoIDComboBox.getValue().toString(), 
-                                     tipoUsuarioTextField.getText(),
-                                     obrasComboBox.getValue().toString());
-        if(verificaInformacion() == true)
-            if(verificaUsuarioExistente() == false){
-                listaAutores.add(nuevoAutor);
-                listaUsuarios.add(nuevoAutor);
-                limpiarButton();
-            }
-    }
+    /**
+     * On Antion -----------------------------
+     */
 
-    @Override
-    public void modificarButton() {
-        Autor nuevoAutor = new Autor(nombreTextField.getText(), 
-                                     nombreUsuarioTextField.getText(), 
-                                     contraseñaTextField.getText(),
-                                     iDTextField.getText(), 
-                                     tipoIDComboBox.getValue().toString(), 
-                                     tipoUsuarioTextField.getText(),
-                                     obrasComboBox.getValue().toString());
-        modificarUsuarioBibliotecario(nuevoAutor);
-        listaAutores.set(posicionEnTabla, nuevoAutor);
-        
-        
-        limpiarButton();
-    }
-
-    @Override
-    public void eliminarButton() {
-        if(verificaUsuarioActivo() == false){
-            
-            final Autor autor = getTablaLibrosSeleccionado();
-            for (int i = 0; i < listaUsuarios.size(); i++) {
-                if(autor.getNombreUsuario().equals(listaUsuarios.get(i).getNombreUsuario()))
-                    listaUsuarios.remove(i);
-            }
-            listaAutores.remove(posicionEnTabla);
-            limpiarButton();
-            
-        }
-    }
-
-    @Override
-    public void limpiarButton() {
-        reestablecerObrasComboBox();
-        nombreTextField.setText("");
-        nombreUsuarioTextField.setText("");
-        contraseñaTextField.setText("");
-        iDTextField.setText("");
-        tipoIDComboBox.setValue("Seleccione una opción");
-        obrasComboBox.setValue("Seleccione una opción");
-        avisoLabel.setText("");
-        
-        
-    }
-    
-    //Cambiar a la ventada de bibliotecario
+    @FXML
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
-    
-    
 
+    @FXML
+    public void agregarButton(){
+
+        Autor autor = new Autor(nombreTextField.getText(), 
+                                nombreUsuarioTextField.getText(), 
+                                contraseñaTextField.getText(), 
+                                iDTextField.getText(), 
+                                tipoIDComboBox.getValue().toString(), 
+                                tipoUsuarioLabel.getText(), 
+                                obrasComboBox.getValue().toString());
+        
+        if(validarInformacion() == true){
+            super.listaAutores.add(autor);
+            super.listaUsuarios.add(autor);
+            limpiarButton();  
+        }
+        
+    }
+
+    @FXML
+    public void modificarButton(){
+        Autor autor = new Autor(nombreTextField.getText(), 
+                                nombreUsuarioTextField.getText(), 
+                                contraseñaTextField.getText(), 
+                                iDTextField.getText(), 
+                                tipoIDComboBox.getValue().toString(), 
+                                tipoUsuarioLabel.getText(), 
+                                obrasComboBox.getValue().toString());
+
+        if(validarInformacion() == true){
+            modificaUsuario(autor);
+            super.listaAutores.set(posicionEnTabla, autor);
+            limpiarButton();  
+        }
+    }
+
+    @FXML
+    public void eliminarButton(){
+        
+            eliminaObras();
+            eliminaUsuario();
+            listaAutores.remove(posicionEnTabla); 
+
+            limpiarButton();
+    }
+
+    @FXML
+    public void limpiarButton(){
+        iDTextField.setText("");
+        nombreUsuarioTextField.setText("");
+        contraseñaTextField.setText("");
+        nombreTextField.setText("");
+        tipoIDComboBox.setValue("Seleccione una opción");
+        busquedaComboBox.setValue("Seleccione una opción");
+        avisoLabel.setText("");
+        obrasComboBox.setValue("Seleccione una opción");
+        
+        agregarButton.setDisable(false);
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
+    }
     
+    @FXML
+    public void agregarAutorButton(ActionEvent event) throws IOException{
+        cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
+    }
     
     /**
-     * Metodos.
+     * Metodos ----------------------------- 
      */
+    
+    private void eliminaObras(){
+        String nombre= listaAutores.get(posicionEnTabla).getNombre();
+        
+        for (int i = 0; i < listaRelacion.size(); i++) {
+            switch(listaRelacion.get(i).getTipoObra()){
+                case "Libro":
+                    for (int j = 0; j < listaLibros.size(); j++) {
+                        if(listaLibros.get(j).getListaAutores().equals(nombre))
+                            listaLibros.remove(j);
+                    }
+                    break;
+                case "Revista":
+                    for (int k = 0; k < listaRevistas.size(); k++) {
+                        if(listaRevistas.get(k).getListaAutores().equals(nombre))
+                            listaRevistas.remove(k);
+                    }
+                    break;
+                case "Tesis":
+                    for (int l = 0; l < listaTesis.size(); l++) {
+                        if(listaTesis.get(l).getListaAutores().equals(nombre))
+                            listaTesis.remove(l);
+                    }
+                    break;
+                case "Periódico":
+                    for (int m = 0; m < listaPeriodicos.size(); m++) {
+                        if(listaPeriodicos.get(m).getListaAutores().equals(nombre))
+                            listaPeriodicos.remove(m);
+                    }
+                    break;
+                case "Memoria":
+                    for (int n = 0; n < listaMemorias.size(); n++) {
+                        if(listaMemorias.get(n).getListaAutores().equals(nombre))
+                            listaMemorias.remove(n);
+                    }
+                    break;
+                case "Otro":
+                    for (int p = 0; p < listaOtros.size(); p++) {
+                        if(listaOtros.get(p).getListaAutores().equals(nombre))
+                            listaOtros.remove(p);
+                    }
+                    break;
+            }
+            if(listaRelacion.get(i).getNombreUnico().equals(nombre))
+                listaRelacion.remove(i);
+        }
+    }
     
     private void reestablecerObrasComboBox(){
         obrasComboBox.getItems().clear();
@@ -170,74 +245,88 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         obrasComboBox.setValue("Seleccione una opción");
     }
     
-    private void modificarUsuarioBibliotecario(Autor autor){
-        final Autor a = getTablaLibrosSeleccionado();
+    public void llenarBusquedaComboBox(){
+        busquedaComboBox.getItems().addAll("Nombre de usuario");
+        busquedaComboBox.setValue("Seleccione una opción");
+    }
+    
+    public void llenaTipoIDComboBox(){
+        tipoIDComboBox.setValue("Seleccione una opción");
+        tipoIDComboBox.getItems().add("Cédula");
+    }
+    
+    private void modificaUsuario(Autor nuevoAutor){
+        Autor autor= listaAutores.get(posicionEnTabla);
+        
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(listaUsuarios.get(i).getNombreUsuario().equals(a.getNombreUsuario())){
-                listaUsuarios.get(i).setNombre(autor.getNombre());
-                listaUsuarios.get(i).setNombreUsuario(autor.getNombreUsuario());
-                listaUsuarios.get(i).setContraseña(autor.getContraseña());
-                listaUsuarios.get(i).setIdentificacion(autor.getIdentificacion());
-                listaUsuarios.get(i).setTipoDeIdentificacion(autor.getTipoDeIdentificacion());
-                listaUsuarios.get(i).setTipoDeUsuario(autor.getTipoDeUsuario());
+            if(listaUsuarios.get(i).getNombreUsuario().equals(nuevoAutor.getNombreUsuario())){
+                listaUsuarios.get(i).setNombre(nuevoAutor.getNombre());
+                listaUsuarios.get(i).setNombreUsuario(nuevoAutor.getNombreUsuario());
+                listaUsuarios.get(i).setContraseña(nuevoAutor.getContraseña());
+                listaUsuarios.get(i).setIdentificacion(nuevoAutor.getIdentificacion());
+                listaUsuarios.get(i).setTipoDeIdentificacion(nuevoAutor.getTipoDeIdentificacion());
+                listaUsuarios.get(i).setTipoDeUsuario(nuevoAutor.getTipoDeUsuario());
             }
         }
     }
     
-    private boolean verificaUsuarioActivo(){
-        final Autor autor = getTablaLibrosSeleccionado();
-        if(autor.getEstado().equals("activo")){
-            avisoLabel.setText("Este usuario está activo\nNo puede ser eliminado");
-            return true;
-        }
-        return false;
-    }
-    
-    private boolean verificaInformacion(){
-        if(nombreTextField.getText().equals("") ||
-           nombreUsuarioTextField.getText().equals("") ||
-           contraseñaTextField.getText().equals("") ||
-           iDTextField.getText().equals("") ||
-           tipoIDComboBox.getValue().equals("Seleccione una opción") ||
-           obrasComboBox.getValue().equals("Seleccione una opción")){
-            avisoLabel.setText("Complete todos los espacios");
-            return false;
-        }
-        return true;
-    }
-    
-    private boolean verificaUsuarioExistente(){
+    private void eliminaUsuario(){
+        String nombreUsuario= listaAutores.get(posicionEnTabla).getNombreUsuario();
+        
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(nombreUsuarioTextField.getText().equals(listaUsuarios.get(i).getNombreUsuario())){
-                avisoLabel.setText("El usuario ya existe\nIngrese otro");
-                return true;
+            if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuario)){
+                listaUsuarios.remove(i);
             }
         }
-        return false;
     }
-    
-    //Codigo para cambiar de ventana
+
+    private void inicializarTablaLibro(){
+
+        nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombre"));
+        nombreUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombreUsuario"));
+        contraseñaTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("contraseña"));
+        iDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("identificacion"));
+        tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, LocalDate>("tipoDeIdentificacion"));
+        tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeUsuario"));
+        obrasTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObras"));
+        
+        autorTableView.setItems(super.listaAutores);
+    }
+
     private void cambioScene(ActionEvent event, String destino) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
         Scene tableViewScene = new Scene(tableViewParent);
         
-        //Esta linea obtiene la informacion del Stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
         window.setScene(tableViewScene);
         window.show();
     }
     
-    public void inicializarTabla(){
-        nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombre"));
-        nombreUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("nombreUsuario"));
-        contraseñaTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("contraseña"));
-        iDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("identificacion"));
-        tipoIDTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeIdentificacion"));
-        tipoUsuarioTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("tipoDeUsuario"));
-        obrasTableColumn.setCellValueFactory(new PropertyValueFactory<Autor, String>("listaObras"));
-        
-        autorTableView.setItems(super.listaAutores);
+    private boolean verificaUsuarioExistente(){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(nombreUsuarioTextField.getText().equals(listaUsuarios.get(i).getNombreUsuario()))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean validarInformacion(){
+        if(nombreTextField.getText().equals("") ||
+           nombreUsuarioTextField.getText().equals("") ||
+           contraseñaTextField.getText().equals("") ||
+           iDTextField.getText().equals("") ||
+           tipoIDComboBox.getValue().equals("Seleccione una opción") ||
+           obrasComboBox.getValue().equals("Seleccione una opción")){
+//            avisoLabel.setText("Complete todos los\nespacios.");
+            JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
+            return false;
+        } else if(agregarButton.isDisable() == false && verificaUsuarioExistente() == true){
+//            avisoLabel.setText("Ya existe un libro con el\ntítulo sugerido.\nIngrese otro.");
+            JOptionPane.showMessageDialog(null, "Ya existe un usuario con el título sugerido.\nIngrese otro.");
+            return false;
+        }
+        return true;
     }
     
     /**
@@ -278,16 +367,37 @@ public class IBAutorController extends Listas implements Initializable, OnAction
             nombreTextField.setText(autor.getNombre());
             nombreUsuarioTextField.setText(autor.getNombreUsuario());
             contraseñaTextField.setText(autor.getContraseña());
-            iDTextField.setText(autor.getIdentificacion());
             tipoIDComboBox.setValue(autor.getTipoDeIdentificacion());
-            tipoUsuarioTextField.setText(autor.getTipoDeUsuario());
+            iDTextField.setText(autor.getIdentificacion());
             llenarObrasComboBox();
-
-            // Pongo los botones en su estado correspondiente
-//            libroButtonModificar.setDisable(false);
-//            libroButtonEliminar.setDisable(false);
+            
+            agregarButton.setDisable(true);
+            modificarButton.setDisable(false);
+            eliminarButton.setDisable(false);
 
         }
+    }
+
+    @FXML
+    private void buscar(KeyEvent event) {
+            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filter.setPredicate((Predicate<? super Autor>) (Autor libro)->{
+                    if(busquedaComboBox.getValue().toString().equals("Seleccione una opción")){
+                        return false;
+                    }
+                    else if(newValue.isEmpty() || newValue==null){
+                        return true;
+                    }
+                    else if(busquedaComboBox.getValue().toString().equals("Título") && libro.getNombreUsuario().contains(newValue)){
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            SortedList sort = new SortedList(filter);
+            sort.comparatorProperty().bind(autorTableView.comparatorProperty());
+            autorTableView.setItems(sort);
+     
     }
     
 }

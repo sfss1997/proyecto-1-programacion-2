@@ -98,6 +98,7 @@ public class UsuariosMorososController implements Initializable {
     
     public void adminUsuariosButton(ActionEvent event) throws IOException {
         cambioScene(event, "/GUI/ObrasPrestamos.fxml");
+        
     }
     
     

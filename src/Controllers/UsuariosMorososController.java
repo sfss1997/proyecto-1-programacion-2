@@ -11,7 +11,11 @@ import Domain.Prestamo;
 import Domain.Relacion;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,11 +46,13 @@ public class UsuariosMorososController implements Initializable {
     @FXML TableColumn fechaPrestamoTableColumn;
     @FXML TableColumn fechaVencimientoTableColumn;
     
+    private LocalDate fecha;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         inicializarTablaClientes();
+        revisaMorosos();
     }   
     
         //Inicializa la tabla
@@ -60,14 +66,43 @@ public class UsuariosMorososController implements Initializable {
         fechaPrestamoTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fechaPrestamo"));
         fechaVencimientoTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fechaVencimiento"));
         
-        clientesTableView.setItems(listaPrestamo);
+        clientesTableView.setItems(llenarTabla());
     }
     
-    public void volverButton(ActionEvent event) throws IOException{
+    private ObservableList llenarTabla(){
+        ObservableList<Prestamo> lista = FXCollections.observableArrayList();
+        
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+           
+            if(listaPrestamo.get(i).getEstado().equals("Vencido")){
+                lista.add(listaPrestamo.get(i));
+            }
+        }
+        return lista;
+    }
+
+    public void revisaMorosos() {
+
+
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if (LocalDate.now().isAfter(listaPrestamo.get(i).getFechaVencimiento())) {
+                   listaPrestamo.get(i).setEstado("Vencido");
+            }
+        }
+
+    }
+
+    public void volverButton(ActionEvent event) throws IOException {
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
     
-    private void cambioScene(ActionEvent event, String destino) throws IOException{
+    public void adminUsuariosButton(ActionEvent event) throws IOException {
+        cambioScene(event, "/GUI/ObrasPrestamos.fxml");
+    }
+    
+    
+
+    private void cambioScene(ActionEvent event, String destino) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(destino));
         Scene tableViewScene = new Scene(tableViewParent);
         

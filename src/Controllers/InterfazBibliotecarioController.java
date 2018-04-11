@@ -6,8 +6,10 @@
 package Controllers;
 
 import Datos.Listas;
+import static Datos.Listas.listaPrestamo;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -108,6 +110,13 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
     
     //Cambiar a la ventada de memorias
     public void morososButton(ActionEvent event) throws IOException{
+        
+
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if (LocalDate.now().isAfter(listaPrestamo.get(i).getFechaVencimiento())) {
+                   listaPrestamo.get(i).setEstado("Vencido");
+            }
+        }
         cambioScene(event, "/GUI/UsuariosMorosos.fxml");
     }
     

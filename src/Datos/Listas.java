@@ -54,6 +54,7 @@ public class Listas {
             llenarListaPeriodicos();
             llenarListaMemorias();
             llenarListaOtros();
+//            llenarListaPrestamos();
             
             acualizaAutor();
             x++;
@@ -88,6 +89,12 @@ public class Listas {
         listaBibliotecarios.add(a);
         listaUsuarios.add(a);
     }
+    
+//    private void llenarListaPrestamos(){
+//        Prestamo a = new Prestamo("Harry Potter", "Sergay", "Libro", "Vencido", LocalDate.now(), LocalDate.MIN);
+//        Prestamo b = new Prestamo("Harry Potter", "Sergay", "Libro", "Vigente", LocalDate.MIN, LocalDate.now());
+//        listaPrestamo.addAll(a,b);
+//    }
     
     private void llenarListaLibros(){
         Libro a = new Libro("1", "Ciencia Ficción", ":v", "El Señor de los Anillos", LocalDate.now(), "Autor 1");

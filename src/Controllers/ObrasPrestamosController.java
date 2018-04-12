@@ -122,6 +122,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
                 tipo=listaRelacion.get(i).getTipoObra();
             }
         }
+        
         String estado="vigente";
         if(LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())){
             estado= "Vencido";

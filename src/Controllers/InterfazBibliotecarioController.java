@@ -8,11 +8,14 @@ package Controllers;
 import Datos.Listas;
 import static Datos.Listas.listaPrestamo;
 import static Datos.Listas.listaUsuarios;
+import Domain.Prestamo;
 import Domain.Usuarios;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -50,6 +54,7 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         modificaLabel();
+        inicializaTablaObrasPrestadas();
     }   
     
     //Volver a la ventana principal
@@ -76,6 +81,24 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
                 iDLabel.setText(listaUsuarios.get(i).getIdentificacion());
             }
         }
+    }
+    
+    private void inicializaTablaObrasPrestadas(){
+        nombreObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tituloObra"));
+        categoriaObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tipoObra"));
+        fechaDevolucionObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, LocalDate>("fechaVencimiento"));
+        
+        prestamoTableView.setItems(llenaTablaObrasPrestadas());
+    }
+    
+    private ObservableList llenaTablaObrasPrestadas(){
+        ObservableList lista = FXCollections.observableArrayList();
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if(buscaUsuarioActivo().getNombreUsuario().equals(listaPrestamo.get(i).getNombreUnico())){
+                lista.add(listaPrestamo.get(i));
+            }
+        }
+        return lista;
     }
     
     /**

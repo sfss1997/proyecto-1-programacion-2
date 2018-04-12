@@ -119,7 +119,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
                 tipo=listaRelacion.get(i).getTipoObra();
             }
         }
-        String estado="vigente";
+        String estado="Vigente";
         
        if (LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())) {
                    estado = "Vencido";
@@ -210,7 +210,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         }
         
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            usuariosComboBox.getItems().add(listaUsuarios.get(i).getNombre());
+            usuariosComboBox.getItems().add(listaUsuarios.get(i).getNombreUsuario());
         }
         obrasComboBox.setValue("Seleccione una opción");
         usuariosComboBox.setValue("Seleccione una opción");

@@ -59,11 +59,9 @@ public class IBClienteController extends Listas implements Initializable, OnActi
     @FXML TextField nombreUsuarioTextField;
     @FXML TextField contraseñaTextField;
     @FXML TextField iDTextField;
-    @FXML TextField buscarTextField;
     
     //ChoiceBox
     @FXML ComboBox tipoIDComboBox;
-    @FXML ComboBox busquedaComboBox;
     
     //Label
     @FXML Label avisoLabel;
@@ -88,7 +86,6 @@ public class IBClienteController extends Listas implements Initializable, OnActi
         inicializarTablaLibro();
 
         llenaTipoIDComboBox();
-        llenarBusquedaComboBox();
 
         modificarButton.setDisable(true);
         eliminarButton.setDisable(true);
@@ -156,12 +153,12 @@ public class IBClienteController extends Listas implements Initializable, OnActi
         contraseñaTextField.setText("");
         nombreTextField.setText("");
         tipoIDComboBox.setValue("Seleccione una opción");
-        busquedaComboBox.setValue("Seleccione una opción");
         avisoLabel.setText("");
         
         agregarButton.setDisable(false);
         modificarButton.setDisable(true);
         eliminarButton.setDisable(true);
+        contraseñaTextField.setEditable(true);
     }
     
     @FXML
@@ -184,10 +181,6 @@ public class IBClienteController extends Listas implements Initializable, OnActi
         return false;
     }
     
-    public void llenarBusquedaComboBox(){
-        busquedaComboBox.getItems().addAll("Nombre de usuario");
-        busquedaComboBox.setValue("Seleccione una opción");
-    }
     
     public void llenaTipoIDComboBox(){
         tipoIDComboBox.setValue("Seleccione una opción");
@@ -320,30 +313,9 @@ public class IBClienteController extends Listas implements Initializable, OnActi
             agregarButton.setDisable(true);
             modificarButton.setDisable(false);
             eliminarButton.setDisable(false);
+            contraseñaTextField.setEditable(false);
 
         }
-    }
-
-    @FXML
-    private void buscar(KeyEvent event) {
-            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                filter.setPredicate((Predicate<? super Cliente>) (Cliente libro)->{
-                    if(busquedaComboBox.getValue().toString().equals("Seleccione una opción")){
-                        return false;
-                    }
-                    else if(newValue.isEmpty() || newValue==null){
-                        return true;
-                    }
-                    else if(busquedaComboBox.getValue().toString().equals("Título") && libro.getNombreUsuario().contains(newValue)){
-                        return true;
-                    }
-                    return false;
-                });
-            });
-            SortedList sort = new SortedList(filter);
-            sort.comparatorProperty().bind(clienteTableView.comparatorProperty());
-            clienteTableView.setItems(sort);
-     
     }
     
 }

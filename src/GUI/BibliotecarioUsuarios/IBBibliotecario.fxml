@@ -30,13 +30,6 @@
                         </Label>
                      </children>
                   </HBox>
-                  <AnchorPane prefHeight="61.0" prefWidth="785.0">
-                     <children>
-                        <TextField fx:id="buscarTextField" layoutX="51.0" layoutY="2.0" onKeyReleased="#buscar" prefHeight="25.0" prefWidth="122.0" promptText="Buscar" />
-                        <ComboBox fx:id="busquedaComboBox" layoutX="188.0" layoutY="2.0" prefHeight="25.0" prefWidth="183.0" />
-                        <Label layoutX="5.0" layoutY="6.0" text="Buscar:" />
-                     </children>
-                  </AnchorPane>
                   <TableView fx:id="bibliotecarioTableView" prefHeight="188.0" prefWidth="694.0">
                      <columns>
                         <TableColumn fx:id="nombreTableColumn" minWidth="115.0" prefWidth="75.0" sortType="DESCENDING" text="Nombre" />

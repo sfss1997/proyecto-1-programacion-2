@@ -63,11 +63,9 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML TextField nombreUsuarioTextField;
     @FXML TextField contraseñaTextField;
     @FXML TextField iDTextField;
-    @FXML TextField buscarTextField;
     
     //ChoiceBox
     @FXML ComboBox tipoIDComboBox;
-    @FXML ComboBox busquedaComboBox;
     @FXML ComboBox obrasComboBox;
     
     //Label
@@ -93,7 +91,6 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         inicializarTablaLibro();
 
         llenaTipoIDComboBox();
-        llenarBusquedaComboBox();
         
         reestablecerObrasComboBox();
 
@@ -167,13 +164,13 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         contraseñaTextField.setText("");
         nombreTextField.setText("");
         tipoIDComboBox.setValue("Seleccione una opción");
-        busquedaComboBox.setValue("Seleccione una opción");
         avisoLabel.setText("");
         obrasComboBox.setValue("Seleccione una opción");
         
         agregarButton.setDisable(false);
         modificarButton.setDisable(true);
         eliminarButton.setDisable(true);
+        contraseñaTextField.setEditable(true);
     }
     
     @FXML
@@ -259,10 +256,6 @@ public class IBAutorController extends Listas implements Initializable, OnAction
         obrasComboBox.setValue("Seleccione una opción");
     }
     
-    public void llenarBusquedaComboBox(){
-        busquedaComboBox.getItems().addAll("Nombre de usuario");
-        busquedaComboBox.setValue("Seleccione una opción");
-    }
     
     public void llenaTipoIDComboBox(){
         tipoIDComboBox.setValue("Seleccione una opción");
@@ -388,30 +381,9 @@ public class IBAutorController extends Listas implements Initializable, OnAction
             agregarButton.setDisable(true);
             modificarButton.setDisable(false);
             eliminarButton.setDisable(false);
+            contraseñaTextField.setEditable(false);
 
         }
-    }
-
-    @FXML
-    private void buscar(KeyEvent event) {
-            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                filter.setPredicate((Predicate<? super Autor>) (Autor libro)->{
-                    if(busquedaComboBox.getValue().toString().equals("Seleccione una opción")){
-                        return false;
-                    }
-                    else if(newValue.isEmpty() || newValue==null){
-                        return true;
-                    }
-                    else if(busquedaComboBox.getValue().toString().equals("Título") && libro.getNombreUsuario().contains(newValue)){
-                        return true;
-                    }
-                    return false;
-                });
-            });
-            SortedList sort = new SortedList(filter);
-            sort.comparatorProperty().bind(autorTableView.comparatorProperty());
-            autorTableView.setItems(sort);
-     
     }
     
 }

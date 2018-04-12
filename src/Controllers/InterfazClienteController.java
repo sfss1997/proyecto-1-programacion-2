@@ -7,9 +7,14 @@ package Controllers;
 
 import Datos.Listas;
 import static Datos.Listas.listaUsuarios;
+import Domain.Libro;
+import Domain.Prestamo;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +23,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -27,6 +35,13 @@ import javafx.stage.Stage;
  */
 public class InterfazClienteController extends Listas implements Initializable {
 
+    //Tabla
+    @FXML TableView prestamoTableView;
+    @FXML TableColumn tituloTableColumn;
+    @FXML TableColumn categoriaTableColumn;
+    @FXML TableColumn fechaTableColumn;
+    
+    //Label
     @FXML Label nombreLabel;
     @FXML Label nombreUsuarioLabel;
     @FXML Label tipoIDLabel;
@@ -38,6 +53,7 @@ public class InterfazClienteController extends Listas implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        inicializaTabla();
         modificaLabel();
                 
         
@@ -77,6 +93,23 @@ public class InterfazClienteController extends Listas implements Initializable {
             if(listaUsuarios.get(i).getEstado().equals("activo"))
                 listaUsuarios.get(i).setEstado("inactivo");
         }
+    }
+    
+    private void inicializaTabla(){
+        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("titulo"));
+        categoriaTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tema"));
+        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, LocalDate>("fecha"));
+        
+        prestamoTableView.setItems(llenaTabla());
+    }
+    
+    private ObservableList llenaTabla(){
+        ObservableList lista = FXCollections.observableArrayList();
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if(nombreUsuarioLabel.getText().equals(listaPrestamo.get(i).getNombreUnico()))
+                lista.add(listaPrestamo.get(i));
+        }
+        return lista;
     }
     
 }

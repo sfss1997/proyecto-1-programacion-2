@@ -56,6 +56,8 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     @FXML TableColumn tipoUsuarioTableColumn;
     @FXML TableColumn obrasTableColumn;
     
+    
+    
     //TextFields
     @FXML TextField nombreTextField;
     @FXML TextField nombreUsuarioTextField;
@@ -149,12 +151,13 @@ public class IBAutorController extends Listas implements Initializable, OnAction
 
     @FXML
     public void eliminarButton(){
-        
+        if(validarPrestamoObras() == false){
             eliminaObras();
             eliminaUsuario();
             listaAutores.remove(posicionEnTabla); 
 
             limpiarButton();
+        }
     }
 
     @FXML
@@ -181,6 +184,17 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     /**
      * Metodos ----------------------------- 
      */
+    
+    public boolean validarPrestamoObras(){
+        Autor autor= listaAutores.get(posicionEnTabla);
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if(listaPrestamo.get(i).getNombreUnico().equals(autor.getNombreUsuario())){
+                JOptionPane.showMessageDialog(null, "El usuario que desea eliminar tiene una obra prestada.\nNo puede ser eliminado");
+                return true;
+            }
+        }
+        return false;
+    }
     
     private void eliminaObras(){
         String nombre= listaAutores.get(posicionEnTabla).getNombre();

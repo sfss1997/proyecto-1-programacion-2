@@ -54,12 +54,15 @@ public class Listas {
             llenarListaPeriodicos();
             llenarListaMemorias();
             llenarListaOtros();
+            llenarListaClientes();
 //            llenarListaPrestamos();
             
             acualizaAutor();
             x++;
         }
     }
+    
+    
     
     public void acualizaAutor(){
         String salida = "";
@@ -74,6 +77,14 @@ public class Listas {
             }
             salida = "";
         }
+    }
+    
+    private void llenarListaClientes(){
+        Cliente a = new Cliente("Allan", "alambrito", "pass123", "3-0234-0756", "Cedula", "Cliente");
+        Cliente b = new Cliente("Jeison", "jeijei", "5467", "3-2344-1233", "Cedula", "Cliente");
+        Cliente c = new Cliente("David", "parajeles", "6789", "7-0234-0549", "Cedula", "Cliente");
+        listaClientes.addAll(a,b,c);
+        listaUsuarios.addAll(a,b,c);
     }
     
     private void llenarListaAutores(){

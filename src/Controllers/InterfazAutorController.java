@@ -6,8 +6,10 @@
 package Controllers;
 
 import Datos.Listas;
+import static Datos.Listas.listaPrestamo;
 import Domain.Autor;
 import Domain.Libro;
+import Domain.Prestamo;
 import Domain.Relacion;
 import Domain.Usuarios;
 import java.io.IOException;
@@ -45,6 +47,11 @@ public class InterfazAutorController extends Listas implements Initializable {
     @FXML TableView obrasDeAutorTableView;
     @FXML TableColumn nombreTableColumn;
     @FXML TableColumn categoriaTableColumn;
+    
+    @FXML TableView prestamoTableView;
+    @FXML TableColumn nombreObraTableColumn;
+    @FXML TableColumn categoriaObraTableColumn;
+    @FXML TableColumn fechaDevolucionObraTableColumn;
     /**
      * Initializes the controller class.
      */
@@ -52,7 +59,8 @@ public class InterfazAutorController extends Listas implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         modificaLabel();
-        inicializarTablaLibro();
+        inicializarTablaObrasEscritas();
+        inicializaTablaObrasPrestadas();
     } 
     
     private void modificaLabel(){
@@ -71,14 +79,30 @@ public class InterfazAutorController extends Listas implements Initializable {
         cambioScene(event, "/GUI/Principal.fxml");
     }
     
-    private void inicializarTablaLibro(){
+    private void inicializarTablaObrasEscritas(){
         nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Relacion, String>("tituloObra"));
         categoriaTableColumn.setCellValueFactory(new PropertyValueFactory<Relacion, String>("tipoObra"));
         
-        obrasDeAutorTableView.setItems(llenarTabla());
+        obrasDeAutorTableView.setItems(llenaTablaObrasEscritas());
+    }
+    private void inicializaTablaObrasPrestadas(){
+        nombreObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("titulo"));
+        categoriaObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tema"));
+        fechaDevolucionObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, LocalDate>("fecha"));
+        
+        prestamoTableView.setItems(llenaTablaObrasPrestadas());
     }
     
-    private ObservableList llenarTabla(){
+    private ObservableList llenaTablaObrasPrestadas(){
+        ObservableList lista = FXCollections.observableArrayList();
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if(nombreUsuarioLabel.getText().equals(listaPrestamo.get(i).getNombreUnico()))
+                lista.add(listaPrestamo.get(i));
+        }
+        return lista;
+    }
+    
+    private ObservableList llenaTablaObrasEscritas(){
         ObservableList<Relacion> lista = FXCollections.observableArrayList();
         for (int i = 0; i < listaRelacion.size(); i++) {
             if(listaRelacion.get(i).getNombreUnico().equals(buscaUsuarioActivo().getNombre())){

@@ -141,11 +141,12 @@ public class IBClienteController extends Listas implements Initializable, OnActi
 
     @FXML
     public void eliminarButton(){
-        
+        if(validarPrestamoObras() == false){
             eliminaUsuario();
             listaClientes.remove(posicionEnTabla); 
 
             limpiarButton();
+        }
     }
 
     @FXML
@@ -171,6 +172,17 @@ public class IBClienteController extends Listas implements Initializable, OnActi
     /**
      * Metodos ----------------------------- 
      */
+    
+    public boolean validarPrestamoObras(){
+        Cliente cliente= listaClientes.get(posicionEnTabla);
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if(listaPrestamo.get(i).getNombreUnico().equals(cliente.getNombreUsuario())){
+                JOptionPane.showMessageDialog(null, "El usuario que desea eliminar tiene una obra prestada.\nNo puede ser eliminado");
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void llenarBusquedaComboBox(){
         busquedaComboBox.getItems().addAll("Nombre de usuario");

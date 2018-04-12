@@ -190,7 +190,7 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     
     public void llenaTipoIDComboBox(){
         tipoIDComboBox.setValue("Seleccione una opción");
-        tipoIDComboBox.getItems().add("Cédula");
+        tipoIDComboBox.getItems().addAll("Nacional", "Internacional", "Otro");
     }
     
     private void modificaUsuario(Bibliotecario nuevobibliotecario){
@@ -243,9 +243,10 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     private boolean verificaUsuarioActivo(){
         Bibliotecario bibliotecario= listaBibliotecarios.get(posicionEnTabla);
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(bibliotecario.getEstado().equals("activo"))
+            if(bibliotecario.getEstado().equals("activo")){
                 JOptionPane.showMessageDialog(null, "El usuario que desea eliminar está activo.\nNo puede ser eliminado.");
                 return true;
+            }
         }
         return false;
     }

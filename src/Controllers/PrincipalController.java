@@ -67,18 +67,6 @@ public class PrincipalController extends Listas implements Initializable {
         
     }
     
-    public void bibliotecario(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
-    }
-    
-    public void autor(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/InterfazAutor.fxml");
-    }
-    
-    public void cliente(ActionEvent event) throws IOException{
-        cambioScene(event, "/GUI/InterfazCliente.fxml");
-    }
-    
     //Cambiar a la ventada de bibliotecario
     public void registrarseButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/InterfazRegistrarse.fxml");

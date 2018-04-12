@@ -48,12 +48,12 @@ public class Listas {
         if(x==0){
             llenarListaAutores();
             llenarListaBibliotecarios();
-            llenarListaLibros();
-            llenarListaRevistas();
-            llenarListaTesis();
-            llenarListaPeriodicos();
-            llenarListaMemorias();
-            llenarListaOtros();
+//            llenarListaLibros();
+//            llenarListaRevistas();
+//            llenarListaTesis();
+//            llenarListaPeriodicos();
+//            llenarListaMemorias();
+//            llenarListaOtros();
             llenarListaClientes();
 //            llenarListaPrestamos();
             
@@ -80,118 +80,113 @@ public class Listas {
     }
     
     private void llenarListaClientes(){
-        Cliente a = new Cliente("Allan", "alambrito", "pass123", "3-0234-0756", "Cedula", "Cliente");
-        Cliente b = new Cliente("Jeison", "jeijei", "5467", "3-2344-1233", "Cedula", "Cliente");
-        Cliente c = new Cliente("David", "parajeles", "6789", "7-0234-0549", "Cedula", "Cliente");
+        Cliente a = new Cliente("Allan", "alambrito", "pass123", "3-0234-0756", "Nacional", "Cliente");
+        Cliente b = new Cliente("Jeison", "jeijei", "5467", "3-2344-1233", "Nacional", "Cliente");
+        Cliente c = new Cliente("David", "parajeles", "6789", "7-0234-0549", "Nacional", "Cliente");
         listaClientes.addAll(a,b,c);
         listaUsuarios.addAll(a,b,c);
     }
     
     private void llenarListaAutores(){
-        Autor a = new Autor("Autor 1", "a1", "a1", "1234", "Cedula", "Autor", "Ninguna");
-        Autor b = new Autor("Autor 2", "a2", "a2", "4567", "Cedula", "Autor", "Ninguna");
-        Autor c = new Autor("Autor 3", "a3", "a3", "6789", "Cedula", "Autor", "Ninguna");
+        Autor a = new Autor("J.R.R. Tolkien", "tolkien", "tolkien", "1234", "Internacional", "Autor", "Ninguna");
+        Autor b = new Autor("J.K. Rowling", "rowling", "rowling", "4567", "Internacional", "Autor", "Ninguna");
+        Autor c = new Autor("Stephen King", "king", "king", "6789", "Internacional", "Autor", "Ninguna");
         listaAutores.addAll(a,b,c);
         listaUsuarios.addAll(a,b,c);
     }
     
     private void llenarListaBibliotecarios(){
-        Bibliotecario a = new Bibliotecario("Hans", "hansinho", "hans21", "3-0512-0587", "Cedula", "Bibliotecario");
+        Bibliotecario a = new Bibliotecario("Hans", "hansinho", "hans21", "3-0512-0587", "Nacional", "Bibliotecario");
+        Bibliotecario b = new Bibliotecario("Sergio", "sfss97", "sfss97", "3-0505-0176", "Nacional", "Bibliotecario");
         listaBibliotecarios.add(a);
         listaUsuarios.add(a);
     }
     
-//    private void llenarListaPrestamos(){
-//        Prestamo a = new Prestamo("Harry Potter", "Sergay", "Libro", "Vencido", LocalDate.now(), LocalDate.MIN);
-//        Prestamo b = new Prestamo("Harry Potter", "Sergay", "Libro", "Vigente", LocalDate.MIN, LocalDate.now());
-//        listaPrestamo.addAll(a,b);
+//    private void llenarListaLibros(){
+//        Libro a = new Libro("ISBN 912-423-27365-1-1", "Ciencia Ficción", ":v", "El Señor de los Anillos", LocalDate.now(), "Autor 1");
+//        Libro b = new Libro("2", "Ciencia Ficción", ":v", "Harry Potter", LocalDate.now(), "Autor 2");
+//        Libro c = new Libro("3", "Terror", ":v", "It", LocalDate.now(), "Autor 3");
+//        Libro d = new Libro("4", "Ciencia Ficción", ":v", "El Hobbit", LocalDate.now(), "Autor 1");
+//        Libro e = new Libro("5", "Ciencia Ficción", ":v", "Animales Fantasticos", LocalDate.now(), "Autor 2");
+//        listaLibros.addAll(a,b,c,d,e);
+//        
+//        Relacion aR = new Relacion("El Señor de los Anillos", "Autor 1", "Libro");
+//        Relacion bR = new Relacion("Harry Potter", "Autor 2", "Libro");
+//        Relacion cR = new Relacion("It", "Autor 3", "Libro");
+//        Relacion dR = new Relacion("El Hobbit", "Autor 1", "Libro");
+//        Relacion eR = new Relacion("Animales Fantasticos", "Autor 2", "Libro");
+//        listaRelacion.addAll(aR,bR,cR,dR,eR);
 //    }
-    
-    private void llenarListaLibros(){
-        Libro a = new Libro("1", "Ciencia Ficción", ":v", "El Señor de los Anillos", LocalDate.now(), "Autor 1");
-        Libro b = new Libro("2", "Ciencia Ficción", ":v", "Harry Potter", LocalDate.now(), "Autor 2");
-        Libro c = new Libro("3", "Terror", ":v", "It", LocalDate.now(), "Autor 3");
-        Libro d = new Libro("4", "Ciencia Ficción", ":v", "El Hobbit", LocalDate.now(), "Autor 1");
-        Libro e = new Libro("5", "Ciencia Ficción", ":v", "Animales Fantasticos", LocalDate.now(), "Autor 2");
-        listaLibros.addAll(a,b,c,d,e);
-        
-        Relacion aR = new Relacion("El Señor de los Anillos", "Autor 1", "Libro");
-        Relacion bR = new Relacion("Harry Potter", "Autor 2", "Libro");
-        Relacion cR = new Relacion("It", "Autor 3", "Libro");
-        Relacion dR = new Relacion("El Hobbit", "Autor 1", "Libro");
-        Relacion eR = new Relacion("Animales Fantasticos", "Autor 2", "Libro");
-        listaRelacion.addAll(aR,bR,cR,dR,eR);
-    }
-    
-    private void llenarListaRevistas(){
-        Revistas a = new Revistas("1", "Primera", "National Geographic", LocalDate.now(), "Autor 1");
-        Revistas b = new Revistas("2", "Especial", "Rolling Stone", LocalDate.now(), "Autor 3");
-        Revistas c = new Revistas("3", "Segunda", "Time", LocalDate.now(), "Autor 2");
-        Revistas d = new Revistas("4", "Segunda", "Vogué", LocalDate.now(), "Autor 3");
-        listaRevistas.addAll(a,b,c,d);
-        
-        Relacion aR = new Relacion("National Geographic", "Autor 1", "Revista");
-        Relacion bR = new Relacion("Rolling Stone", "Autor 3", "Revista");
-        Relacion cR = new Relacion("Time", "Autor 2", "Revista");
-        Relacion dR = new Relacion("Vogué", "Autor 3", "Revista");
-        listaRelacion.addAll(aR,bR,cR,dR);
-    }
-    
-    private void llenarListaTesis(){
-        Tesis a = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 1", LocalDate.now(), "Autor 3");
-        Tesis b = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 2", LocalDate.now(), "Autor 1");
-        Tesis c = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 3", LocalDate.now(), "Autor 2");
-        Tesis d = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 4", LocalDate.now(), "Autor 2");
-        listaTesis.addAll(a,b,c,d);
-        
-        Relacion aR = new Relacion("Tesis 1", "Autor 3", "Tesis");
-        Relacion bR = new Relacion("Tesis 2", "Autor 1", "Tesis");
-        Relacion cR = new Relacion("Tesis 3", "Autor 2", "Tesis");
-        Relacion dR = new Relacion("Tesis 4", "Autor 2", "Tesis");
-        listaRelacion.addAll(aR,bR,cR,dR);
-    }
-    
-    private void llenarListaPeriodicos(){
-        Periodico a = new Periodico("1", "Primera", "La Nación", LocalDate.now(), "Autor 2");
-        Periodico b = new Periodico("2", "Segunda", "La Teja", LocalDate.now(), "Autor 2");
-        Periodico c = new Periodico("3", "Tercera", "CRHoy", LocalDate.now(), "Autor 2");
-        Periodico d = new Periodico("4", "Cuarta", "Diario Extra", LocalDate.now(), "Autor 2");
-        listaPeriodicos.addAll(a,b,c,d);
-        
-        Relacion aR = new Relacion("La Nación", "Autor 2", "Periódico");
-        Relacion bR = new Relacion("La Teja", "Autor 2", "Periódico");
-        Relacion cR = new Relacion("CRHoy", "Autor 2", "Periódico");
-        Relacion dR = new Relacion("Diario Extra", "Autor 2", "Periódico");
-        listaRelacion.addAll(aR,bR,cR,dR);
-    }
-    
-    private void llenarListaMemorias(){
-        Memoria a = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 1", LocalDate.now(), "Autor 1");
-        Memoria b = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 2", LocalDate.now(), "Autor 2");
-        Memoria c = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 3", LocalDate.now(), "Autor 3");
-        Memoria d = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 4", LocalDate.now(), "Autor 1");
-        listaMemorias.addAll(a,b,c,d);
-        
-        Relacion aR = new Relacion("Memoria 1", "Autor 1", "Memoria");
-        Relacion bR = new Relacion("Memoria 2", "Autor 2", "Memoria");
-        Relacion cR = new Relacion("Memoria 3", "Autor 3", "Memoria");
-        Relacion dR = new Relacion("Memoria 4", "Autor 1", "Memoria");
-        listaRelacion.addAll(aR,bR,cR,dR);
-    }
-    
-    private void llenarListaOtros(){
-        Otro a = new Otro("*Inserte tipo :v*", "Otro 1", LocalDate.now(), "Autor 1");
-        Otro b = new Otro("*Inserte tipo :v*", "Otro 2", LocalDate.now(), "Autor 2");
-        Otro c = new Otro("*Inserte tipo :v*", "Otro 3", LocalDate.now(), "Autor 3");
-        Otro d = new Otro("*Inserte tipo :v*", "Otro 4", LocalDate.now(), "Autor 3");
-        listaOtros.addAll(a,b,c,d);
-        
-        Relacion aR = new Relacion("Otro 1", "Autor 1", "Otro");
-        Relacion bR = new Relacion("Otro 2", "Autor 2", "Otro");
-        Relacion cR = new Relacion("Otro 3", "Autor 3", "Otro");
-        Relacion dR = new Relacion("Otro 4", "Autor 3", "Otro");
-        listaRelacion.addAll(aR,bR,cR,dR);
-    }
+//    
+//    private void llenarListaRevistas(){
+//        Revistas a = new Revistas("1", "Primera", "National Geographic", LocalDate.now(), "Autor 1");
+//        Revistas b = new Revistas("2", "Especial", "Rolling Stone", LocalDate.now(), "Autor 3");
+//        Revistas c = new Revistas("3", "Segunda", "Time", LocalDate.now(), "Autor 2");
+//        Revistas d = new Revistas("4", "Segunda", "Vogué", LocalDate.now(), "Autor 3");
+//        listaRevistas.addAll(a,b,c,d);
+//        
+//        Relacion aR = new Relacion("National Geographic", "Autor 1", "Revista");
+//        Relacion bR = new Relacion("Rolling Stone", "Autor 3", "Revista");
+//        Relacion cR = new Relacion("Time", "Autor 2", "Revista");
+//        Relacion dR = new Relacion("Vogué", "Autor 3", "Revista");
+//        listaRelacion.addAll(aR,bR,cR,dR);
+//    }
+//    
+//    private void llenarListaTesis(){
+//        Tesis a = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 1", LocalDate.now(), "Autor 3");
+//        Tesis b = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 2", LocalDate.now(), "Autor 1");
+//        Tesis c = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 3", LocalDate.now(), "Autor 2");
+//        Tesis d = new Tesis("*Inserte resumen :v*", "*Inserte abstract :v", "Tesis 4", LocalDate.now(), "Autor 2");
+//        listaTesis.addAll(a,b,c,d);
+//        
+//        Relacion aR = new Relacion("Tesis 1", "Autor 3", "Tesis");
+//        Relacion bR = new Relacion("Tesis 2", "Autor 1", "Tesis");
+//        Relacion cR = new Relacion("Tesis 3", "Autor 2", "Tesis");
+//        Relacion dR = new Relacion("Tesis 4", "Autor 2", "Tesis");
+//        listaRelacion.addAll(aR,bR,cR,dR);
+//    }
+//    
+//    private void llenarListaPeriodicos(){
+//        Periodico a = new Periodico("1", "Primera", "La Nación", LocalDate.now(), "Autor 2");
+//        Periodico b = new Periodico("2", "Segunda", "La Teja", LocalDate.now(), "Autor 2");
+//        Periodico c = new Periodico("3", "Tercera", "CRHoy", LocalDate.now(), "Autor 2");
+//        Periodico d = new Periodico("4", "Cuarta", "Diario Extra", LocalDate.now(), "Autor 2");
+//        listaPeriodicos.addAll(a,b,c,d);
+//        
+//        Relacion aR = new Relacion("La Nación", "Autor 2", "Periódico");
+//        Relacion bR = new Relacion("La Teja", "Autor 2", "Periódico");
+//        Relacion cR = new Relacion("CRHoy", "Autor 2", "Periódico");
+//        Relacion dR = new Relacion("Diario Extra", "Autor 2", "Periódico");
+//        listaRelacion.addAll(aR,bR,cR,dR);
+//    }
+//    
+//    private void llenarListaMemorias(){
+//        Memoria a = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 1", LocalDate.now(), "Autor 1");
+//        Memoria b = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 2", LocalDate.now(), "Autor 2");
+//        Memoria c = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 3", LocalDate.now(), "Autor 3");
+//        Memoria d = new Memoria("*Inserte resumen :v*", "*Inserte abstract :v*", "*Inserte conferencia :v*", "Memoria 4", LocalDate.now(), "Autor 1");
+//        listaMemorias.addAll(a,b,c,d);
+//        
+//        Relacion aR = new Relacion("Memoria 1", "Autor 1", "Memoria");
+//        Relacion bR = new Relacion("Memoria 2", "Autor 2", "Memoria");
+//        Relacion cR = new Relacion("Memoria 3", "Autor 3", "Memoria");
+//        Relacion dR = new Relacion("Memoria 4", "Autor 1", "Memoria");
+//        listaRelacion.addAll(aR,bR,cR,dR);
+//    }
+//    
+//    private void llenarListaOtros(){
+//        Otro a = new Otro("*Inserte tipo :v*", "Otro 1", LocalDate.now(), "Autor 1");
+//        Otro b = new Otro("*Inserte tipo :v*", "Otro 2", LocalDate.now(), "Autor 2");
+//        Otro c = new Otro("*Inserte tipo :v*", "Otro 3", LocalDate.now(), "Autor 3");
+//        Otro d = new Otro("*Inserte tipo :v*", "Otro 4", LocalDate.now(), "Autor 3");
+//        listaOtros.addAll(a,b,c,d);
+//        
+//        Relacion aR = new Relacion("Otro 1", "Autor 1", "Otro");
+//        Relacion bR = new Relacion("Otro 2", "Autor 2", "Otro");
+//        Relacion cR = new Relacion("Otro 3", "Autor 3", "Otro");
+//        Relacion dR = new Relacion("Otro 4", "Autor 3", "Otro");
+//        listaRelacion.addAll(aR,bR,cR,dR);
+//    }
 
     public static ObservableList<Prestamo> getListaPrestamo() {
         return listaPrestamo;

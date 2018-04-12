@@ -68,45 +68,6 @@ public class PrincipalControllerTest {
     }
 
     /**
-     * Test of bibliotecario method, of class PrincipalController.
-     */
-    @Test
-    public void testBibliotecario() throws Exception {
-        System.out.println("bibliotecario");
-        ActionEvent event = null;
-        PrincipalController instance = new PrincipalController();
-        instance.bibliotecario(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of autor method, of class PrincipalController.
-     */
-    @Test
-    public void testAutor() throws Exception {
-        System.out.println("autor");
-        ActionEvent event = null;
-        PrincipalController instance = new PrincipalController();
-        instance.autor(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of cliente method, of class PrincipalController.
-     */
-    @Test
-    public void testCliente() throws Exception {
-        System.out.println("cliente");
-        ActionEvent event = null;
-        PrincipalController instance = new PrincipalController();
-        instance.cliente(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of registrarseButton method, of class PrincipalController.
      */
     @Test

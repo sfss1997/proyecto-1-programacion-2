@@ -184,7 +184,7 @@ public class IBClienteController extends Listas implements Initializable, OnActi
     
     public void llenaTipoIDComboBox(){
         tipoIDComboBox.setValue("Seleccione una opción");
-        tipoIDComboBox.getItems().add("Cédula");
+        tipoIDComboBox.getItems().addAll("Nacional", "Internacional", "Otro");
     }
     
     private void modificaUsuario(Cliente nuevoCliente){

@@ -259,7 +259,7 @@ public class IBAutorController extends Listas implements Initializable, OnAction
     
     public void llenaTipoIDComboBox(){
         tipoIDComboBox.setValue("Seleccione una opción");
-        tipoIDComboBox.getItems().add("Cédula");
+        tipoIDComboBox.getItems().addAll("Nacional", "Internacional", "Otro");
     }
     
     private void modificaUsuario(Autor nuevoAutor){

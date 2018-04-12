@@ -204,8 +204,8 @@ public class ObrasPrestamosController extends Listas implements Initializable {
             obrasComboBox.getItems().add(listaRelacion.get(i).getTituloObra());
         }
         
-        for (int i = 0; i < listaClientes.size(); i++) {
-            usuariosComboBox.getItems().add(listaClientes.get(i).getNombreUsuario());
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            usuariosComboBox.getItems().add(listaUsuarios.get(i).getNombre());
         }
         obrasComboBox.setValue("Seleccione una opción");
         usuariosComboBox.setValue("Seleccione una opción");

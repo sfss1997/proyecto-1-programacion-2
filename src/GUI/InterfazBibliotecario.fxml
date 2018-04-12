@@ -208,7 +208,7 @@
                               <TableView fx:id="prestamoTableView" prefHeight="139.0" prefWidth="205.0">
                                  <columns>
                                     <TableColumn fx:id="nombreObraTableColumn" prefWidth="180.0" text="Nombre" />
-                                    <TableColumn fx:id="categoriaObraTableColumn" minWidth="1.0" prefWidth="150.0" text="Categoría" />
+                                    <TableColumn fx:id="categoriaObraTableColumn" minWidth="1.0" prefWidth="150.0" text="Tipo" />
                                     <TableColumn fx:id="fechaDevolucionObraTableColumn" prefWidth="75.0" text="Fecha de devolución" />
                                  </columns>
                                  <columnResizePolicy>

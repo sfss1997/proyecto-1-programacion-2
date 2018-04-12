@@ -25,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -61,18 +62,7 @@ public class MuestraObrasController implements Initializable {
         //Llena el choiceBox 
         
         llenarComboBox();
-        
-        //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
-        //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
-        //se hubiera seleccionado
-        //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-       
-        
-        //Esto ni lo vea jaja solo se agrega y ya
-        //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
-        //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
-//        final ObservableList<Relacion> tablaRelacionSel = obrasTableView.getSelectionModel().getSelectedItems();
-//        tablaRelacionSel.addListener(selectorTablaObras);
+
     }    
     
      /**
@@ -86,38 +76,35 @@ public class MuestraObrasController implements Initializable {
     
     
     public void adminObrasButton(ActionEvent event) throws IOException{
-                
-        switch(tiposComboBox.getValue().toString()){
-            case "Libros":
-                cambioScene(event, "/GUI/BibliotecarioObras/IBLibro.fxml");
-                break;
-            case "Revistas":
-                cambioScene(event, "/GUI/BibliotecarioObras/IBRevista.fxml");
-                break;
-            case "Tesis":
-                cambioScene(event, "/GUI/BibliotecarioObras/IBTesis.fxml");
-                break;
-            case "Periódicos":
-                cambioScene(event, "/GUI/BibliotecarioObras/IBPeriodico.fxml");
-                break;
-            case "Memorias":
-                cambioScene(event, "/GUI/BibliotecarioObras/IBMemoria.fxml");
-                break;
-            case "Otras":
-                cambioScene(event, "/GUI/BibliotecarioObras/IBOtro.fxml");
-                break;
-        }
+        if(!tiposComboBox.getValue().equals("Seleccione una opción"))        
+            switch(tiposComboBox.getValue().toString()){
+                case "Libros":
+                    cambioScene(event, "/GUI/BibliotecarioObras/IBLibro.fxml");
+                    break;
+                case "Revistas":
+                    cambioScene(event, "/GUI/BibliotecarioObras/IBRevista.fxml");
+                    break;
+                case "Tesis":
+                    cambioScene(event, "/GUI/BibliotecarioObras/IBTesis.fxml");
+                    break;
+                case "Periódicos":
+                    cambioScene(event, "/GUI/BibliotecarioObras/IBPeriodico.fxml");
+                    break;
+                case "Memorias":
+                    cambioScene(event, "/GUI/BibliotecarioObras/IBMemoria.fxml");
+                    break;
+                case "Otras":
+                    cambioScene(event, "/GUI/BibliotecarioObras/IBOtro.fxml");
+                    break;
+            }
+        else JOptionPane.showMessageDialog(null, "Seleccione un tipo de obra.");
     }
 
     
     
     //Inicializa la tabla
     private void inicializarTablaRevista() {
-        //Solo hay que hacerlo con las columnas
-        //Ejemplo:
-//  nombre del TableColumb.setCellValueFactory(new PropertyValueFactory
-//  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
-        
+      
         tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Relacion, String>("tituloObra"));
         tipoTableColumn.setCellValueFactory(new PropertyValueFactory<Relacion, String>("nombreUnico"));
         autorTableColumn.setCellValueFactory(new PropertyValueFactory<Relacion, String>("tipoObra"));
@@ -138,7 +125,7 @@ public class MuestraObrasController implements Initializable {
     }
     
     public void llenarComboBox(){
-        
+        tiposComboBox.setValue("Seleccione una opción");
         tiposComboBox.getItems().add("Libros");
         tiposComboBox.getItems().add("Revistas");
         tiposComboBox.getItems().add("Tesis");
@@ -147,60 +134,5 @@ public class MuestraObrasController implements Initializable {
         tiposComboBox.getItems().add("Otras");
       
     }
-   
-  
-    
-    //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
-   
-    
-    //********* IMPORTANTE *********
-    
-    /**
-     * Estos metodos de aquí abajo no sé muy bien como funcionan, pero se necesitan para que sirva lo de eliminar
-     * y modificar.
-     * Estos metodos sirven para reconocer la fila que se seleccionó y los elementos de la fila.
-     * Estos metodos van junto al tablaLibroSel, que es la línea de codigo que está en el metodo initialize (la que
-     * empieza con final)
-     * Nada más tenga mucho cuidado a la hora de copiar y pegar, mucho ojo a lo que hay que cambiarle
-     */
-    
-    /**
-     * Listener de la tabla personas
-     */
-//    private final ListChangeListener<Relacion> selectorTablaObras =
-//            new ListChangeListener<Relacion>() {
-//                @Override
-//                public void onChanged(ListChangeListener.Change<? extends Relacion> c) {
-//                    ponerRelacionSeleccionada();
-//                }
-//            };
-
-    /**
-     * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaPersonas"
-     */
-//    public Relacion getTablaRelacionSeleccionada() {
-//        if (obrasTableView != null) {
-//            List<Relacion> tabla = obrasTableView.getSelectionModel().getSelectedItems();
-//            if (tabla.size() == 1) {
-//                final Relacion competicionSeleccionada = tabla.get(0);
-//                return competicionSeleccionada;
-//            }
-//        }
-//        return null;
-//    }
-
-    /**
-     * Método para poner en los textFields la tupla que selccionemos
-     */
-//    private void ponerRelacionSeleccionada() {
-//        final Relacion relacion = getTablaRelacionSeleccionada();
-//        posicionEnTabla = listaRelacion.indexOf(relacion);
-
-    
-            // Pongo los botones en su estado correspondiente
-//            libroButtonModificar.setDisable(false);
-//            libroButtonEliminar.setDisable(false);
-        
-//    }
 
 }

@@ -6,6 +6,7 @@
 package Domain;
 
 import javafx.beans.property.SimpleStringProperty;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Usuarios {
 
     public Usuarios(String nombre, String nombreUsuario, String contraseña, String identificacion, String tipoDeIdentificacion, String tipoDeUsuario) {
         this.nombreUsuario = new SimpleStringProperty(nombreUsuario);
-        this.contraseña = new SimpleStringProperty(contraseña);
+        this.contraseña = new SimpleStringProperty(DigestUtils.md5Hex(contraseña));
         this.nombre = new SimpleStringProperty(nombre);
         this.tipoDeIdentificacion = new SimpleStringProperty(tipoDeIdentificacion);
         this.identificacion = new SimpleStringProperty(identificacion);

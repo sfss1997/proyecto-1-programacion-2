@@ -21,6 +21,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -36,6 +37,8 @@ public class PrincipalController extends Listas implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        
+        
     } 
     
     public void iniciarButton(ActionEvent event) throws IOException{
@@ -46,7 +49,7 @@ public class PrincipalController extends Listas implements Initializable {
         else{
             for (int i = 0; i < listaUsuarios.size(); i++) {
                 if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuarioTextField.getText()) &&
-                   listaUsuarios.get(i).getContraseña().equals(contraseñaPasswordField.getText())){
+                   listaUsuarios.get(i).getContraseña().equals(DigestUtils.md5Hex(contraseñaPasswordField.getText()))){
                     x = true;
                     listaUsuarios.get(i).setEstado("activo");
                     System.out.println(listaUsuarios.get(i).getNombreUsuario()+ "  " + listaUsuarios.get(i).getEstado());

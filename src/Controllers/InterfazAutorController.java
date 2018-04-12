@@ -76,6 +76,7 @@ public class InterfazAutorController extends Listas implements Initializable {
     
     //Volver a la ventana principal
     public void salirButton(ActionEvent event) throws IOException{
+        buscaUsuarioActivo().setEstado("inactivo");
         cambioScene(event, "/GUI/Principal.fxml");
     }
     
@@ -86,9 +87,9 @@ public class InterfazAutorController extends Listas implements Initializable {
         obrasDeAutorTableView.setItems(llenaTablaObrasEscritas());
     }
     private void inicializaTablaObrasPrestadas(){
-        nombreObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("titulo"));
-        categoriaObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tema"));
-        fechaDevolucionObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, LocalDate>("fecha"));
+        nombreObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tituloObra"));
+        categoriaObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tipoObra"));
+        fechaDevolucionObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, LocalDate>("fechaVencimiento"));
         
         prestamoTableView.setItems(llenaTablaObrasPrestadas());
     }
@@ -96,8 +97,9 @@ public class InterfazAutorController extends Listas implements Initializable {
     private ObservableList llenaTablaObrasPrestadas(){
         ObservableList lista = FXCollections.observableArrayList();
         for (int i = 0; i < listaPrestamo.size(); i++) {
-            if(nombreUsuarioLabel.getText().equals(listaPrestamo.get(i).getNombreUnico()))
+            if(buscaUsuarioActivo().getNombreUsuario().equals(listaPrestamo.get(i).getNombreUnico())){
                 lista.add(listaPrestamo.get(i));
+            }
         }
         return lista;
     }

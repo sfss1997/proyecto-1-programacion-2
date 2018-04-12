@@ -7,6 +7,7 @@ package Controllers;
 
 import Datos.Listas;
 import static Datos.Listas.listaAutores;
+import static Datos.Listas.listaClientes;
 import static Datos.Listas.listaLibros;
 import static Datos.Listas.listaPrestamo;
 import static Datos.Listas.listaRelacion;
@@ -38,6 +39,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -64,11 +66,13 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     @FXML TextField buscarTextField;
     
     //Button
-    @FXML Button agregarClienteButton;
+    @FXML Button agregarButton;
+    @FXML Button modificarButton;
+    @FXML Button eliminarButton;
     
     //ChoiceBox
     @FXML ComboBox obrasComboBox;
-    @FXML ComboBox clientesComboBox;
+    @FXML ComboBox usuariosComboBox;
     
     //Esto es para reconocer el numero de la fila que se selecicona en la tabla
     private int posicionEnTabla;
@@ -87,17 +91,10 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         
         //Llena el choiceBox 
         llenarComboBox();
+
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
         
-        
-        //Este setValue del ChoiceBox lo que hace es que se seleccione lo que se pone entre parentecis
-        //en este caso puse "Autor" y cuando entre a esta interfaz va a aparecer "Autor" en el ChoiceBox como si
-        //se hubiera seleccionado
-        //SOLO SE PUEDE HACER ESO CON ELEMENTOS QUE YA ESTÁN AGREGADOS AL CHOICEBOX 
-        //autorComboBox.setValue("Autor");
-        
-        //Esto ni lo vea jaja solo se agrega y ya
-        //Ni yo se como funciona, pero es para que sirva lo de posicionEnTabla, osea, para que reconozca
-        //la fila de la tabla que se seleccionó y para que cargue los valores de la fila alos TextFields y al ChoiceBox
         final ObservableList<Prestamo> tablaLibroSel = prestamosTableView.getSelectionModel().getSelectedItems();
         tablaLibroSel.addListener(selectorTablaLibros);
     }
@@ -122,29 +119,24 @@ public class ObrasPrestamosController extends Listas implements Initializable {
                 tipo=listaRelacion.get(i).getTipoObra();
             }
         }
-        
         String estado="vigente";
-        if(LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())){
-            estado= "Vencido";
-        }
-        
         Prestamo prestamo = new Prestamo(obrasComboBox.getValue().toString(), 
-                                  clientesComboBox.getValue().toString(), 
+                                  usuariosComboBox.getValue().toString(), 
                                   tipo,
                                   estado,
                                   fechaPrestamoDatePicker.getValue(),
                                   fechaVencimientoDatePicker.getValue()); 
                                   
-       
+        
         
        
            
         if(validarInformacion() == true){
-            //Se utiliza la listaLibros de la clase Listas
-            super.listaPrestamo.add(prestamo);
-            
-//            acualizaAutor();
-            limpiarButton();  
+            if(verificaObrasPrestadas() == false){
+                super.listaPrestamo.add(prestamo);
+
+                limpiarButton();  
+            }
         }
         
     }
@@ -161,7 +153,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         }
         String estado="vigente";
         Prestamo prestamo = new Prestamo(obrasComboBox.getValue().toString(), 
-                                  clientesComboBox.getValue().toString(), 
+                                  usuariosComboBox.getValue().toString(), 
                                   tipo,
                                   estado,
                                   fechaPrestamoDatePicker.getValue(),
@@ -195,8 +187,12 @@ public class ObrasPrestamosController extends Listas implements Initializable {
        
         fechaVencimientoDatePicker.setValue(LocalDate.now());
         fechaPrestamoDatePicker.setValue(LocalDate.now());
-        clientesComboBox.setValue("clientes");
-        obrasComboBox.setValue("obras");
+        usuariosComboBox.setValue("Seleccione una opción");
+        obrasComboBox.setValue("Seleccione una opción");
+        
+        agregarButton.setDisable(false);
+        modificarButton.setDisable(true);
+        eliminarButton.setDisable(true);
     }
     
     //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
@@ -209,8 +205,10 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         }
         
         for (int i = 0; i < listaClientes.size(); i++) {
-            clientesComboBox.getItems().add(listaClientes.get(i).getNombreUsuario());
+            usuariosComboBox.getItems().add(listaClientes.get(i).getNombreUsuario());
         }
+        obrasComboBox.setValue("Seleccione una opción");
+        usuariosComboBox.setValue("Seleccione una opción");
     }
     
     @FXML
@@ -222,20 +220,15 @@ public class ObrasPrestamosController extends Listas implements Initializable {
      * Metodos ----------------------------- Metodos que se utilizan para otras funcionalidades que no son On Action
      */
     
-    
-    
-//    private void acualizaAutor(){
-//        String salida = "";
-//        for (int i = 0; i < listaAutores.size(); i++) {
-//            for (int j = 0; j < listaRelacion.size(); j++) {
-//                if(listaAutores.get(i).getNombre().equals(listaRelacion.get(j).getNombreUnico())){                   
-//                    salida += listaRelacion.get(j).getTituloObra() + " - ";
-//                    listaAutores.get(i).setListaObras(salida);
-//                }
-//            }
-//            salida = "";
-//        }
-//    }
+    private boolean verificaObrasPrestadas(){
+            for (int i = 0; i < listaPrestamo.size(); i++) {
+                if(listaPrestamo.get(i).getTituloObra().equals(obrasComboBox.getValue().toString())){
+                    JOptionPane.showMessageDialog(null, "Esta obra ya ha sido prestada.");
+                    return true;
+                }
+            }
+        return false;
+    }
     
     //Inicializa la tabla
     private void inicializarTablaLibro(){
@@ -269,12 +262,13 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     
     //Valida que los TextField esten con algo y que el ChoiceBox no sea "Autor"
     private boolean validarInformacion(){
-        if(obrasComboBox.getItems().equals("")||
-                clientesComboBox.getItems().equals("")||
-                fechaPrestamoDatePicker.getValue().equals("")||
-                fechaVencimientoDatePicker.getValue().equals("")
-          )   
+        if(obrasComboBox.getValue().equals("Seleccione una opción")||
+           usuariosComboBox.getValue().equals("Seleccione una opción") ||
+           fechaPrestamoDatePicker.getValue() == null ||
+           fechaVencimientoDatePicker.getValue() == null){ 
+            JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
             return false;
+        }
         return true;
     }
     
@@ -327,14 +321,14 @@ public class ObrasPrestamosController extends Listas implements Initializable {
             
             
             obrasComboBox.setValue(prestamo.getTituloObra());
-            clientesComboBox.setValue(prestamo.getNombreUnico());
+            usuariosComboBox.setValue(prestamo.getNombreUnico());
             fechaPrestamoDatePicker.setValue(prestamo.getFechaPrestamo());
             fechaVencimientoDatePicker.setValue(prestamo.getFechaVencimiento());
             
 
-            // Pongo los botones en su estado correspondiente
-//            libroButtonModificar.setDisable(false);
-//            libroButtonEliminar.setDisable(false);
+            agregarButton.setDisable(true);
+            modificarButton.setDisable(false);
+            eliminarButton.setDisable(false);
 
         }
     }

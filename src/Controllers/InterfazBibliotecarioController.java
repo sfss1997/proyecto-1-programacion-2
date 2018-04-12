@@ -7,6 +7,8 @@ package Controllers;
 
 import Datos.Listas;
 import static Datos.Listas.listaPrestamo;
+import static Datos.Listas.listaUsuarios;
+import Domain.Usuarios;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -18,7 +20,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 /**
@@ -29,24 +34,47 @@ import javafx.stage.Stage;
 public class InterfazBibliotecarioController extends Listas implements Initializable {
 
     
+    @FXML Label nombreLabel;
+    @FXML Label nombreUsuarioLabel;
+    @FXML Label iDLabel;
+    @FXML Label tipoIDLabel;
+    
+    @FXML TableView prestamoTableView;
+    @FXML TableColumn nombreObraTableColumn;
+    @FXML TableColumn categoriaObraTableColumn;
+    @FXML TableColumn fechaDevolucionObraTableColumn;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        modificaLabel();
     }   
     
     //Volver a la ventana principal
     public void salirButton(ActionEvent event) throws IOException{
-        buscaUsuarioActivo();
+        buscaUsuarioActivo().setEstado("inactivo");
         cambioScene(event, "/GUI/Principal.fxml");
     }
     
-    private void buscaUsuarioActivo(){
+    private Usuarios buscaUsuarioActivo(){
+        Usuarios autor = new Usuarios();
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if(listaUsuarios.get(i).getEstado().equals("activo"))
-                listaUsuarios.get(i).setEstado("inactivo");
+                autor = listaUsuarios.get(i);
+        }
+        return autor;
+    }
+    
+    private void modificaLabel(){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getEstado().equals("activo")){
+                nombreLabel.setText(listaUsuarios.get(i).getNombre());
+                nombreUsuarioLabel.setText(listaUsuarios.get(i).getNombreUsuario());
+                tipoIDLabel.setText(listaUsuarios.get(i).getTipoDeIdentificacion());
+                iDLabel.setText(listaUsuarios.get(i).getIdentificacion());
+            }
         }
     }
     

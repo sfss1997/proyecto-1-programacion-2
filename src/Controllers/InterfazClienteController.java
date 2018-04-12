@@ -9,6 +9,7 @@ import Datos.Listas;
 import static Datos.Listas.listaUsuarios;
 import Domain.Libro;
 import Domain.Prestamo;
+import Domain.Usuarios;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -72,7 +73,7 @@ public class InterfazClienteController extends Listas implements Initializable {
     
     //Cambiar a la ventada de bibliotecario
     public void salirButton(ActionEvent event) throws IOException{
-        buscaUsuarioActivo();
+        buscaUsuarioActivo().setEstado("inactivo");
         cambioScene(event, "/GUI/Principal.fxml");
     }
     
@@ -88,26 +89,29 @@ public class InterfazClienteController extends Listas implements Initializable {
         window.show();
     }
     
-    private void buscaUsuarioActivo(){
+    private Usuarios buscaUsuarioActivo(){
+        Usuarios usuario = new Usuarios();
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if(listaUsuarios.get(i).getEstado().equals("activo"))
-                listaUsuarios.get(i).setEstado("inactivo");
+               usuario = listaUsuarios.get(i);
         }
+        return usuario;
     }
     
     private void inicializaTabla(){
-        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("titulo"));
-        categoriaTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tema"));
-        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, LocalDate>("fecha"));
+        tituloTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tituloObra"));
+        categoriaTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tipoObra"));
+        fechaTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, LocalDate>("fechaVencimiento"));
         
-        prestamoTableView.setItems(llenaTabla());
+        prestamoTableView.setItems(llenaTablaObrasPrestadas());
     }
     
-    private ObservableList llenaTabla(){
+    private ObservableList llenaTablaObrasPrestadas(){
         ObservableList lista = FXCollections.observableArrayList();
         for (int i = 0; i < listaPrestamo.size(); i++) {
-            if(nombreUsuarioLabel.getText().equals(listaPrestamo.get(i).getNombreUnico()))
+            if(buscaUsuarioActivo().getNombreUsuario().equals(listaPrestamo.get(i).getNombreUnico())){
                 lista.add(listaPrestamo.get(i));
+            }
         }
         return lista;
     }

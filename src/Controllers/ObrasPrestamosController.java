@@ -118,7 +118,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
             if(obrasComboBox.getValue().equals(listaRelacion.get(i).getTituloObra())){
                 tipo=listaRelacion.get(i).getTipoObra();
             }
-        }
+        }//
         String estado="Vigente";
         
        if (LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())) {

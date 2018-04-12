@@ -143,12 +143,13 @@ public class IBOtroController extends Listas implements Initializable {
 
     @FXML
     public void eliminarButton(){
-        
-        eliminaRelacion();
-        listaOtros.remove(posicionEnTabla); 
+        if(verificaObraPrestada() == false){
+            eliminaRelacion();
+            listaOtros.remove(posicionEnTabla); 
 
-        acualizaAutor();
-        limpiarButton();
+            acualizaAutor();
+            limpiarButton();
+        }
     }
 
     @FXML
@@ -173,6 +174,18 @@ public class IBOtroController extends Listas implements Initializable {
     /**
      * Metodos ----------------------------- 
      */
+    
+    private boolean verificaObraPrestada(){
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            for (int j = 0; j < listaOtros.size(); j++) {
+                if(listaPrestamo.get(i).getTituloObra().equals(listaOtros.get(j).getTitulo())){
+                    JOptionPane.showMessageDialog(null, "Esta obra está prestada, no puede ser eliminada.");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     public void llenarBusquedaComboBox(){
         busquedaComboBox.getItems().addAll("Título", "Autor");

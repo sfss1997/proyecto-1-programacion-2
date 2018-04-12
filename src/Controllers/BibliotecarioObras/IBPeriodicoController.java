@@ -149,11 +149,13 @@ public class IBPeriodicoController extends Listas implements Initializable {
 
     @FXML
     public void eliminarButton(){
-        eliminaRelacion();
-        listaPeriodicos.remove(posicionEnTabla); 
+        if(verificaObraPrestada() == false){    
+            eliminaRelacion();
+            listaPeriodicos.remove(posicionEnTabla); 
 
-        acualizaAutor();
-        limpiarButton();
+            acualizaAutor();
+            limpiarButton();
+        }
     }
 
     @FXML
@@ -179,6 +181,18 @@ public class IBPeriodicoController extends Listas implements Initializable {
     /**
      * Metodos ----------------------------- 
      */
+    
+    private boolean verificaObraPrestada(){
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            for (int j = 0; j < listaPeriodicos.size(); j++) {
+                if(listaPrestamo.get(i).getTituloObra().equals(listaPeriodicos.get(j).getTitulo())){
+                    JOptionPane.showMessageDialog(null, "Esta obra está prestada, no puede ser eliminada.");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     public void llenarBusquedaComboBox(){
         busquedaComboBox.getItems().addAll("Título", "Autor", "Código");

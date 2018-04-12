@@ -148,12 +148,13 @@ public class IBTesisController extends Listas implements Initializable {
 
     @FXML
     public void eliminarButton(){
-        
-        eliminaRelacion();
-        listaTesis.remove(posicionEnTabla); 
+        if(verificaObraPrestada() == false){
+            eliminaRelacion();
+            listaTesis.remove(posicionEnTabla); 
 
-        acualizaAutor();
-        limpiarButton();
+            acualizaAutor();
+            limpiarButton();
+        }
     }
 
     @FXML
@@ -179,6 +180,18 @@ public class IBTesisController extends Listas implements Initializable {
     /**
      * Metodos ----------------------------- 
      */
+    
+    private boolean verificaObraPrestada(){
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            for (int j = 0; j < listaTesis.size(); j++) {
+                if(listaPrestamo.get(i).getTituloObra().equals(listaTesis.get(j).getTitulo())){
+                    JOptionPane.showMessageDialog(null, "Esta obra está prestada, no puede ser eliminada.");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     public void llenarBusquedaComboBox(){
         busquedaComboBox.getItems().addAll("Título", "Autor", "Código");

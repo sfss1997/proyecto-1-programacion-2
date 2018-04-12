@@ -71,7 +71,7 @@ public class InterfazClienteController extends Listas implements Initializable {
         }
     }
     
-    //Cambiar a la ventada de bibliotecario
+    //Cambiar a la ventada principal
     public void salirButton(ActionEvent event) throws IOException{
         buscaUsuarioActivo().setEstado("inactivo");
         cambioScene(event, "/GUI/Principal.fxml");

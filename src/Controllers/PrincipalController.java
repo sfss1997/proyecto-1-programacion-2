@@ -52,7 +52,7 @@ public class PrincipalController extends Listas implements Initializable {
                    listaUsuarios.get(i).getContraseña().equals(DigestUtils.md5Hex(contraseñaPasswordField.getText()))){
                     x = true;
                     listaUsuarios.get(i).setEstado("activo");
-                    System.out.println(listaUsuarios.get(i).getNombreUsuario()+ "  " + listaUsuarios.get(i).getEstado());
+                    
                     if(listaUsuarios.get(i).getTipoDeUsuario().equals("Bibliotecario"))
                         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
                     if(listaUsuarios.get(i).getTipoDeUsuario().equals("Autor"))

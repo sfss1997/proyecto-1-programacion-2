@@ -77,7 +77,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     //Esto es para reconocer el numero de la fila que se selecicona en la tabla
     private int posicionEnTabla;
     
-    //FilteredList filter = new FilteredList(listaLibros, e -> true);
+   
     
     
     /**
@@ -109,7 +109,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
     }
     
-    //Agrega un nuevo libro
+    //Agrega un nuevo prestamo
     @FXML
     public void agregarButton(){
         
@@ -200,7 +200,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         eliminarButton.setDisable(true);
     }
     
-    //Llena el ChoiceBox con todos los autores existentes (pero todavia no llena con autores :'v)
+    //Llena el ChoiceBox con todos los autores existentes
     @FXML
     public void llenarComboBox(){
         //El addAll es para agregar más de un elemento a la ves
@@ -338,33 +338,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         }
     }
 
-//    @FXML
-//    private void buscar(KeyEvent event) {
-//        
-//        buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-//           
-//            filter.setPredicate((Predicate<? super Libro>) (Libro libro)->{
-//            
-//            
-//                if(newValue.isEmpty() || newValue==null){
-//                    return true;
-//                }
-//                else if(libro.getTitulo().contains(newValue)){
-//                    return true;
-//                }
-//                
-//                
-//                return false;
-//            });
-//            
-//            
-//        });
-//        
-//        SortedList sort = new SortedList(filter);
-//        sort.comparatorProperty().bind(libroTableView.comparatorProperty());
-//        libroTableView.setItems(sort);
-//        
-//    }
+//  
     
     
     

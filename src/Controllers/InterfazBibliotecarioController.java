@@ -107,7 +107,7 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
         cambioScene(event, "/GUI/BibliotecarioObras/IBMemoria.fxml");
     }
     
-    //Cambiar a la ventada de memorias
+    //Cambiar a la ventada de otros
     public void otroButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/BibliotecarioObras/IBOtro.fxml");
     }
@@ -116,27 +116,27 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
      * Usuarios
      */
     
-    //Cambiar a la ventada de memorias
+    //Cambiar a la ventada de bibliotecario
     public void bibliotecarioButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/BibliotecarioUsuarios/IBBibliotecario.fxml");
     }
     
-    //Cambiar a la ventada de memorias
+    //Cambiar a la ventada de autor
     public void autorButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/BibliotecarioUsuarios/IBAutor.fxml");
     }
     
-    //Cambiar a la ventada de memorias
+    //Cambiar a la ventada de cliente
     public void clienteButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/BibliotecarioUsuarios/IBCliente.fxml");
     }
     
-    //Cambiar a la ventada de memorias
+    //Cambiar a la ventada de prestamo
     public void prestamoButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/ObrasPrestamos.fxml");
     }
     
-    //Cambiar a la ventada de memorias
+    //Cambiar a la ventada de morosos
     public void morososButton(ActionEvent event) throws IOException{
         
 
@@ -148,7 +148,7 @@ public class InterfazBibliotecarioController extends Listas implements Initializ
         cambioScene(event, "/GUI/UsuariosMorosos.fxml");
     }
     
-    //Cambiar a la ventada de memorias
+    //Cambiar a la ventada de muestra obras
     public void listaObrasButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/MuestraObras.fxml");
     }

@@ -71,7 +71,7 @@ public class InterfazRegistrarseController extends Listas implements Initializab
             System.out.println("caca");
     }
     
-    //Cambiar a la ventada de bibliotecario
+    //Cambiar a la ventada principal
     public void volverButton(ActionEvent event) throws IOException{
         cambioScene(event, "/GUI/Principal.fxml");
     }
@@ -128,7 +128,7 @@ public class InterfazRegistrarseController extends Listas implements Initializab
     
     private void verificaTipoUsuario(){
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            System.out.println("caca x2");
+            
                 Autor autor = new Autor();
                 Cliente cliente = new Cliente();
                 if(listaUsuarios.get(i).getTipoDeUsuario().equals("Autor")){

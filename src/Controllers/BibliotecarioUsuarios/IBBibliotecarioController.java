@@ -146,10 +146,12 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     public void eliminarButton(){
         
         if(verificaUsuarioActivo() == false){
-            eliminaUsuario();
-            listaBibliotecarios.remove(posicionEnTabla); 
+            if(validarPrestamoObras() == false){
+                eliminaUsuario();
+                listaBibliotecarios.remove(posicionEnTabla); 
 
-            limpiarButton();
+                limpiarButton();
+            }
         }
     }
 
@@ -176,6 +178,17 @@ public class IBBibliotecarioController extends Listas implements Initializable, 
     /**
      * Metodos ----------------------------- 
      */
+    
+    public boolean validarPrestamoObras(){
+        Bibliotecario bibliotecario= listaBibliotecarios.get(posicionEnTabla);
+        for (int i = 0; i < listaPrestamo.size(); i++) {
+            if(listaPrestamo.get(i).getNombreUnico().equals(bibliotecario.getNombreUsuario())){
+                JOptionPane.showMessageDialog(null, "El usuario que desea eliminar tiene una obra prestada.\nNo puede ser eliminado");
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void llenarBusquedaComboBox(){
         busquedaComboBox.getItems().addAll("Nombre de usuario");

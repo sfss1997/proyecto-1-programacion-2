@@ -39,23 +39,28 @@ public class PrincipalController extends Listas implements Initializable {
     } 
     
     public void iniciarButton(ActionEvent event) throws IOException{
-        for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuarioTextField.getText()) &&
-               listaUsuarios.get(i).getContraseña().equals(contraseñaPasswordField.getText())){
-                listaUsuarios.get(i).setEstado("activo");
-                System.out.println(listaUsuarios.get(i).getNombreUsuario()+ "  " + listaUsuarios.get(i).getEstado());
-                if(listaUsuarios.get(i).getTipoDeUsuario().equals("Bibliotecario"))
-                    cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
-                if(listaUsuarios.get(i).getTipoDeUsuario().equals("Autor"))
-                    cambioScene(event, "/GUI/InterfazAutor.fxml");
-                if(listaUsuarios.get(i).getTipoDeUsuario().equals("Cliente"))
-                    cambioScene(event, "/GUI/InterfazCliente.fxml");
-                
-            } else if(i == listaUsuarios.size()-1)
-                JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrecto.\nIntente de nuevo.");
-        }
-        
-        
+        boolean x = false;
+        if(nombreUsuarioTextField.getText().equals("") ||
+                contraseñaPasswordField.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Complete los espacios.");
+        else{
+            for (int i = 0; i < listaUsuarios.size(); i++) {
+                if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuarioTextField.getText()) &&
+                   listaUsuarios.get(i).getContraseña().equals(contraseñaPasswordField.getText())){
+                    x = true;
+                    listaUsuarios.get(i).setEstado("activo");
+                    System.out.println(listaUsuarios.get(i).getNombreUsuario()+ "  " + listaUsuarios.get(i).getEstado());
+                    if(listaUsuarios.get(i).getTipoDeUsuario().equals("Bibliotecario"))
+                        cambioScene(event, "/GUI/InterfazBibliotecario.fxml");
+                    if(listaUsuarios.get(i).getTipoDeUsuario().equals("Autor"))
+                        cambioScene(event, "/GUI/InterfazAutor.fxml");
+                    if(listaUsuarios.get(i).getTipoDeUsuario().equals("Cliente"))
+                        cambioScene(event, "/GUI/InterfazCliente.fxml");
+
+                }   
+            }
+            if(x == false) JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrecto.\nIntente de nuevo.");
+        } 
         
     }
     

@@ -19,9 +19,10 @@
             </Label>
             <TableView fx:id="clientesTableView" prefHeight="283.0" prefWidth="583.0">
                <columns>
-                  <TableColumn fx:id="nombreTableColumn" prefWidth="194.0" text="Nombre" />
-                  <TableColumn fx:id="fechaPrestamoTableColumn" prefWidth="197.0" text="Fecha de prestamo" />
-                  <TableColumn fx:id="fechaVencimientoTableColumn" prefWidth="191.0" text="Fecha de vencimiento" />
+                  <TableColumn fx:id="nombreTableColumn" prefWidth="150.0" text="Usuario" />
+                  <TableColumn fx:id="tituloObraTableColumn" prefWidth="156.0" text="Titulo Obra" />
+                  <TableColumn fx:id="fechaPrestamoTableColumn" prefWidth="141.0" text="Fecha de prestamo" />
+                  <TableColumn fx:id="fechaVencimientoTableColumn" prefWidth="134.0" text="Fecha de vencimiento" />
                </columns>
             </TableView>
          </children>

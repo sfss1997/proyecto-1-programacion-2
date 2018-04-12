@@ -43,6 +43,7 @@ public class UsuariosMorososController implements Initializable {
     ///Tabla
     @FXML TableView  clientesTableView;
     @FXML TableColumn nombreTableColumn;
+    @FXML TableColumn tituloObraTableColumn;
     @FXML TableColumn fechaPrestamoTableColumn;
     @FXML TableColumn fechaVencimientoTableColumn;
     
@@ -63,6 +64,7 @@ public class UsuariosMorososController implements Initializable {
 //  < El objeto que se va a usar en la tabla, El tipo del elemnto >( El nombre de la variable, tiene que ser igual al que está en la clase del objeto ));
         
         nombreTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("nombreUnico"));
+        tituloObraTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("tituloObra"));
         fechaPrestamoTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fechaPrestamo"));
         fechaVencimientoTableColumn.setCellValueFactory(new PropertyValueFactory<Prestamo, String>("fechaVencimiento"));
         

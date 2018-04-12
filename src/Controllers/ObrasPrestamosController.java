@@ -126,6 +126,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         if(LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())){
             estado= "Vencido";
         }
+        
         Prestamo prestamo = new Prestamo(obrasComboBox.getValue().toString(), 
                                   clientesComboBox.getValue().toString(), 
                                   tipo,

@@ -8,6 +8,7 @@ package Controllers;
 import Datos.Listas;
 import static Datos.Listas.listaAutores;
 import static Datos.Listas.listaLibros;
+import static Datos.Listas.listaPrestamo;
 import static Datos.Listas.listaRelacion;
 import Domain.Prestamo;
 import Domain.Relacion;
@@ -122,6 +123,9 @@ public class ObrasPrestamosController extends Listas implements Initializable {
             }
         }
         String estado="vigente";
+        if(LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())){
+            estado= "Vencido";
+        }
         Prestamo prestamo = new Prestamo(obrasComboBox.getValue().toString(), 
                                   clientesComboBox.getValue().toString(), 
                                   tipo,
@@ -129,7 +133,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
                                   fechaPrestamoDatePicker.getValue(),
                                   fechaVencimientoDatePicker.getValue()); 
                                   
-        
+       
         
        
            

@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Datos.Listas;
 import static Datos.Listas.listaRelacion;
 import Domain.Relacion;
 
@@ -32,7 +33,7 @@ import javax.swing.JOptionPane;
  *
  * @author fabian
  */
-public class MuestraObrasController implements Initializable {
+public class MuestraObrasController extends Listas implements Initializable {
 
  
     ///Tabla

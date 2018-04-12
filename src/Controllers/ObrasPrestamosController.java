@@ -112,7 +112,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     //Agrega un nuevo prestamo
     @FXML
     public void agregarButton(){
-        
+        if(validarInformacion() == true){
         String tipo="";
         for (int i = 0; i < listaRelacion.size(); i++) {
             if(obrasComboBox.getValue().equals(listaRelacion.get(i).getTituloObra())){
@@ -121,10 +121,9 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         }//
         String estado="Vigente";
         
-       if (LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())) {
-                   estado = "Vencido";
-            }
-        
+            if (LocalDate.now().isAfter(fechaVencimientoDatePicker.getValue())) {
+                        estado = "Vencido";
+                 }
         Prestamo prestamo = new Prestamo(obrasComboBox.getValue().toString(), 
                                   usuariosComboBox.getValue().toString(), 
                                   tipo,
@@ -136,7 +135,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
         
        
            
-        if(validarInformacion() == true){
+        
             if(verificaObrasPrestadas() == false){
                 super.listaPrestamo.add(prestamo);
 
@@ -149,7 +148,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
     //Modifica un elemento seleccionado en la tabla
     @FXML
     public void modificarButton(){
-        
+        if(validarInformacion() == true){
         String tipo="";
         for (int i = 0; i < listaRelacion.size(); i++) {
             if(obrasComboBox.getValue().equals(listaRelacion.get(i).getTituloObra())){
@@ -169,7 +168,7 @@ public class ObrasPrestamosController extends Listas implements Initializable {
                                   
         
         
-        if(validarInformacion() == true){
+        
             super.listaPrestamo.set(posicionEnTabla, prestamo);
 //            super.listaRelacion.set(posicionRelacion(), relacion);
 //            acualizaAutor();
@@ -275,6 +274,9 @@ public class ObrasPrestamosController extends Listas implements Initializable {
            fechaPrestamoDatePicker.getValue() == null ||
            fechaVencimientoDatePicker.getValue() == null){ 
             JOptionPane.showMessageDialog(null, "Complete todos los espacios.");
+            return false;
+        } else if(fechaPrestamoDatePicker.getValue().isAfter(fechaVencimientoDatePicker.getValue())){
+            JOptionPane.showMessageDialog(null, "Fechas no validas, ingreselas de nuevo.");
             return false;
         }
         return true;

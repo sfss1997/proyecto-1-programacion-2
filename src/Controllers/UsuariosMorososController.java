@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Datos.Listas;
 import static Datos.Listas.listaPrestamo;
 import static Datos.Listas.listaRelacion;
 import Domain.Prestamo;
@@ -33,7 +34,7 @@ import javafx.stage.Stage;
  *
  * @author fabian
  */
-public class UsuariosMorososController implements Initializable {
+public class UsuariosMorososController extends Listas implements Initializable {
 
     /**
      * Initializes the controller class.
